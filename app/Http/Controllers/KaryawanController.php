@@ -9,7 +9,7 @@ class KaryawanController extends Controller
     //
     public function index(){
         $karyawan = \App\Karyawan::all();
-        return view('karyawan/index', ['data_karyawan' => $karyawan]);
+        return view('/karyawan/index', ['data_karyawan' => $karyawan]);
     }
 
     public function create(Request $request){
@@ -25,12 +25,12 @@ class KaryawanController extends Controller
     
             //insert table karyawan
         $karyawan = \App\karyawan::create($request->all());
-        return redirect('karyawan');
+        return redirect('/karyawan');
     }
 
     public function edit($id){
         $data_karyawan = \App\Karyawan::find($id);
-        return view('karyawan/edit', ['data_karyawan' => $data_karyawan]);
+        return view('/karyawan/edit', ['data_karyawan' => $data_karyawan]);
     }
 
     public function update(Request $request, $id){

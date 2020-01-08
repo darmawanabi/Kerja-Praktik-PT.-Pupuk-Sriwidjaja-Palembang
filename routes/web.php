@@ -12,8 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::post('/postregister/create', 'RegisterController@create');
 
 //login
 Route::get('/login', 'AuthController@login')->name('login');
