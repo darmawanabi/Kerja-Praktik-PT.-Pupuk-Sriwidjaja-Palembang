@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKaryawansTable extends Migration
+class CreateContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateKaryawansTable extends Migration
      */
     public function up()
     {
-        Schema::create('karyawans', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->integer('user_id');
             $table->string('nama');
-            $table->string('jenis_kelamin');
-            $table->string('alamat');
+            $table->string('file');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateKaryawansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('karyawans');
+        Schema::dropIfExists('contracts');
     }
 }

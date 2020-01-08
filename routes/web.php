@@ -24,7 +24,7 @@ Route::get('logout', 'AuthController@logout');
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     // Route::get('/dashboard', 'DashboardController@index');
     Route::get('/karyawan', 'KaryawanController@index');
-    Route::post('/karyawan/create', 'KaryawanController@create');
+    Route::post('/karyawan', 'KaryawanController@store');
     Route::get('/karyawan/{id}/edit', 'KaryawanController@edit');
     Route::post('/karyawan/{id}/update', 'KaryawanController@update');
     Route::get('/karyawan/{id}/delete', 'KaryawanController@delete');
@@ -38,4 +38,6 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']], function(){
     // Route::get('/dashboard', 'AccessUser@index');
     Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/contractpool', 'ContractPoolController@index');
+    Route::post('/contractpool', 'ContractPoolController@store');
 });
