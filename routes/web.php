@@ -40,6 +40,11 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']], function(){
     // Route::get('/dashboard', 'AccessUser@index');
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/contractpool', 'ContractPoolController@index');
-    Route::post('/contractpool', 'ContractPoolController@store');
+    Route::get('/contracts', 'PostController@index');
+    Route::post('/contracts', 'PostController@store');
+    Route::get('/contracts/{contract}', 'PostController@show');
+    Route::post('/contracts/{contract}', 'ContractController@store');
 });
+
+Route::get('/contracts/{uuid}/download', 'PostController@download');
+Route::get('/contracts/{post_id}/{uuid}/download', 'ContractController@download');

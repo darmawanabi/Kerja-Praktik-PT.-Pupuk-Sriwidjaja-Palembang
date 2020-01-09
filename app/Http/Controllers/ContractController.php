@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Contract;
+use App\Post;
 
-class ContractPoolController extends Controller
+class ContractController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,7 @@ class ContractPoolController extends Controller
      */
     public function index()
     {
-        $contract = Contract::all();
-        return view('contract.index', ['contracts' => $contract]);
+        //
     }
 
     /**
@@ -37,36 +37,53 @@ class ContractPoolController extends Controller
      */
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Bangkok');
+
         $request->validate([
-            'nama' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,odt'
+            'file' => 'required|file|mimes:pdf,doc,docx,odt',
+            'keterangan' => 'required'
         ]);
 
         $contract = $request->all();
 
+        $contract['user_id'] = auth()->user()->id;
         $contract['uuid'] = Str::uuid();
+
+        $post = Post::find($contract['post_id']);
+
+        // Post::where('id', $contract['post_id'])->update([
+        //     'uuid' => $contract['uuid'],
+        //     'file' => $contract['file'],
+        //     'keterangan' => $contract['keterangan']
+        // ]);
 
         if($request->hasFile('file')) {
             $contract['file'] = $request->file->getClientOriginalName();
-            $request->file->storeAs(Str::kebab($contract['nama']), $contract['file']);
+            $request->file->storeAs(Str::kebab($post['nama']), $contract['file']);
         }
-
-        // $nama_file = time()."_".$contract->getClientOriginalName();
-
-        // $tujuan_upload = $request->nama;
 
         Contract::create($contract);
 
-        return redirect('/contractpool');
+        return back();
+    }
+
+    public function download($post_id, $uuid) {
+        $contract = Contract::where('uuid', $uuid)->firstOrFail();
+
+        $post = Post::find($post_id);
+
+        $pathToFile = storage_path('app/' . Str::kebab($post['nama']) . '/' . $contract->file);
+
+        return response()->download($pathToFile);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contract $contract)
+    public function show($id)
     {
         //
     }
@@ -74,10 +91,10 @@ class ContractPoolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contract $contract)
+    public function edit($id)
     {
         //
     }
@@ -86,10 +103,10 @@ class ContractPoolController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -97,10 +114,10 @@ class ContractPoolController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy($id)
     {
         //
     }
