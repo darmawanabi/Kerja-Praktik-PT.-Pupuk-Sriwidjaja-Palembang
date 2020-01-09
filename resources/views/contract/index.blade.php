@@ -66,7 +66,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/contractpool" method="post">
+                <form action="/contractpool" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Contract</label>

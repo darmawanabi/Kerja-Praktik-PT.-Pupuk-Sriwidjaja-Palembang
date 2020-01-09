@@ -40,19 +40,19 @@ class ContractPoolController extends Controller
             'file' => 'required'
         ]);
 
-        // $file = $request->file('file');
+        $file = $request->file('file');
 
-        // $nama_file = time()."_".$file->getClientOriginalName();
+        $nama_file = time()."_".$file->getClientOriginalName();
 
-        // $tujuan_upload = $request->nama;
+        $tujuan_upload = $request->nama;
 
-        // Contract::create([
-        //     'nama' =>$request->nama,
-        //     'file' => $nama_file,
-        //     'keterangan' => $request->keterangan
-        // ]);
+        Contract::create([
+            'nama' =>$request->nama,
+            'file' => $nama_file,
+            'keterangan' => $request->keterangan
+        ]);
 
-        // return redirect('/contractpool');
+        return redirect('/contractpool');
     }
 
     /**

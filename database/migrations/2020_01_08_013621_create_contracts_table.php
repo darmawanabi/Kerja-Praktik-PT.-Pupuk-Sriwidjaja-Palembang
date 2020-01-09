@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreateContractsTable extends Migration
 {
@@ -17,7 +18,7 @@ class CreateContractsTable extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->string('nama');
             $table->string('file');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
