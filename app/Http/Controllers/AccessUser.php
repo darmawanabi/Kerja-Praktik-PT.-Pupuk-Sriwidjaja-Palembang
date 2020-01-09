@@ -8,6 +8,7 @@ class AccessUser extends Controller
 {
     //
     public function index(){
-        return view('accessuser/index');
+        return 'bambank';
+        // return view('accessuser/index');
     }
 }

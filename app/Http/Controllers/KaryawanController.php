@@ -12,18 +12,26 @@ class KaryawanController extends Controller
         return view('/karyawan/index', ['data_karyawan' => $karyawan]);
     }
 
-    public function create(Request $request){
-            //insert table user
-            $user = new \App\User;
-            $user->id = $request->user_id;
-            $user->name = $request->nama;
-            $user->email = $request->email;
-            $user->role = $request->role;       
-            $user->password = bcrypt('12345678');
-            $user->remember_token = str_random(60);
-            $user->save();       
-    
-            //insert table karyawan
+    public function store(Request $request){
+        $request->validate([
+            'user_id' => 'required|integer',
+            'nama' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            'role' => 'required'
+        ]);
+
+        //insert table user
+        $user = new \App\User;
+        $user->id = $request->user_id;
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->password = bcrypt('12345678');
+        $user->remember_token = str_random(60);
+        $user->save();
+
+        //insert table karyawan
         $karyawan = \App\karyawan::create($request->all());
         return redirect('/karyawan');
     }

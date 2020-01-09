@@ -8,6 +8,7 @@ class StandarUser extends Controller
 {
     //
     public function index(){
-        return view('stduser/index');
+        return 'bujank';
+        // return view('stduser/index');
     }
 }
