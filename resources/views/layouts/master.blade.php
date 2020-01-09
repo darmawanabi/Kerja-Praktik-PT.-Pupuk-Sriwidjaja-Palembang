@@ -37,10 +37,10 @@
       <!-- /.container-fluid -->
 
       <!-- Sticky Footer -->
-      
+
     </div>
     <!-- /.content-wrapper -->
-    
+
 </div>
 <!-- /#wrapper -->
 @include('layouts/includes/_footer')
@@ -56,6 +56,10 @@
   <!-- Core plugin JavaScript-->
   <script src="{{('/admin/assets/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
+  <!-- Custom scripts for Upload File -->
+  <script src="{{('/admin/assets/js/compiled-4.11.0.min.js')}}"></script>
+  <script src="{{('/admin/assets/js/mdb-plugins-gathered.min.js')}}"></script>
+
   <!-- Page level plugin JavaScript-->
   <script src="{{('/admin/assets/vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/jquery.dataTables.js')}}"></script>
@@ -67,7 +71,6 @@
   <!-- Demo scripts for this page-->
   <script src="{{('/admin/assets/js/demo/datatables-demo.js')}}"></script>
   <script src="{{('/admin/assets/js/demo/chart-area-demo.js')}}"></script>
-
 </body>
 
 </html>
