@@ -6,17 +6,17 @@
 </div>
     <form action="/karyawan/{{$data_karyawan->id}}/update" method="post">
     @csrf
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="exampleInputEmail1">User ID</label>
             <input name="user_id" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Lengkap" value="{{$data_karyawan->user_id}}">
-        </div>
+        </div> -->
         <div class="form-group">
             <label for="exampleInputEmail1">Nama Lengkap</label>
             <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Lengkap" value="{{$data_karyawan->nama}}">
         </div>
         <!-- <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
-            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" value="{{$user->email}}">
         </div> -->
         <div class="form-group">
             <label for="exampleFormControlSelect1">Jenis Kelamin</label>

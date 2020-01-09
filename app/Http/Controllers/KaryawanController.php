@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\NotifPendaftaranKaryawan;
 
 class KaryawanController extends Controller
 {
@@ -22,7 +23,9 @@ class KaryawanController extends Controller
             $user->password = bcrypt('12345678');
             $user->remember_token = str_random(60);
             $user->save();       
-    
+
+            \Mail::to($user->email)->send(new NotifPendaftaranKaryawan);
+
             //insert table karyawan
         $karyawan = \App\karyawan::create($request->all());
         return redirect('/karyawan');
