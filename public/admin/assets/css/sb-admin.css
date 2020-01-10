@@ -48,6 +48,10 @@
   box-sizing: border-box;
 }
 
+#dataLog_filter input { width: 108px }
+
+#dataLog_info { font-size: x-small }
+
 html {
   font-family: sans-serif;
   line-height: 1.15;

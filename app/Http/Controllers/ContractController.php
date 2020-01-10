@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contract;
+use App\Log;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ContractController extends Controller
@@ -40,16 +42,28 @@ class ContractController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,odt',
+            'file' => 'required|file|mimes:pdf,doc,docx,odt,txt',
             'keterangan' => 'required'
         ]);
+
+        $post = Post::find($request->post_id);
+
+        // $pathToFile = storage_path('app\\' . Str::kebab($post['nama']) . '\\');
+
+        // dd($pathToFile);
+
+        $exist = Storage::disk('local')->exists(Str::kebab($post['nama']) . '/' . $request->file->getClientOriginalName());
+
+        // dd($exist);
+
+        if($exist){
+            return back()->with('error', 'The file is already exist.');
+        }
 
         $contract = $request->all();
 
         $contract['user_id'] = auth()->user()->id;
         $contract['uuid'] = Str::uuid();
-
-        $post = Post::find($contract['post_id']);
 
         $temp = $post;
 
@@ -58,6 +72,13 @@ class ContractController extends Controller
             'user_id' => $contract['user_id'],
             'file' => $request->file->getClientOriginalName(),
             'keterangan' => $contract['keterangan']
+        ]);
+
+        Log::create([
+            'user_id' => $contract['user_id'],
+            'post_id' => $contract['post_id'],
+            'file' => $request->file->getClientOriginalName(),
+            'keterangan' => "Revisi"
         ]);
 
         $contract['uuid'] = $temp['uuid'];
@@ -72,15 +93,24 @@ class ContractController extends Controller
 
         Contract::create($contract);
 
-        return back();
+        return back()->with('status', 'Revisi Berhasil Ditambahkan.');
     }
 
     public function download($post_id, $uuid) {
+        date_default_timezone_set('Asia/Bangkok');
+
         $contract = Contract::where('uuid', $uuid)->firstOrFail();
 
-        $post = Post::find($post_id);
+        $post = Post::where('id', $post_id)->firstOrFail();
 
-        $pathToFile = storage_path('app/' . Str::kebab($post['nama']) . '/' . $contract->file);
+        $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $contract->file);
+
+        Log::create([
+            'user_id' => auth()->user()->id,
+            'post_id' => $contract->post_id,
+            'file' => $contract->file,
+            'keterangan' => "Download"
+        ]);
 
         return response()->download($pathToFile);
     }

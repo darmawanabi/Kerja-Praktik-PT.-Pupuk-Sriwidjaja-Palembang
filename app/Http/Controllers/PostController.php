@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -58,13 +59,31 @@ class PostController extends Controller
 
         Post::create($contract);
 
+        $post = Post::where('uuid', $contract['uuid'])->firstOrFail();
+
+        Log::create([
+            'user_id' => $contract['user_id'],
+            'post_id' => $post['id'],
+            'file' => $contract['file'],
+            'keterangan' => "Upload"
+        ]);
+
         return redirect('/contracts');
     }
 
     public function download($uuid) {
+        date_default_timezone_set('Asia/Bangkok');
+
         $post = Post::where('uuid', $uuid)->firstOrFail();
 
-        $pathToFile = storage_path('app/' . Str::kebab($post['nama']) . '/' . $post->file);
+        $pathToFile = storage_path('app/' . Str::kebab($post->nama) . '/' . $post->file);
+
+        Log::create([
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id,
+            'file' => $post->file,
+            'keterangan' => "Download"
+        ]);
 
         return response()->download($pathToFile);
     }

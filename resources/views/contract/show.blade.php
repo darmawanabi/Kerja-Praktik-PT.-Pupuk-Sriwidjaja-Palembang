@@ -16,6 +16,51 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif --}}
 <!-- DataTables Example -->
+@if (session('status'))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('status') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+@elseif (session('error'))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+@else
+    <div class="row">
+        <div class="col-md-12">
+            @error('file')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
+            @error('keterangan')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
+        </div>
+    </div>
+@endif
+
 <div class="card mb-3">
     <div class="card-header">
         <div class="float-left">
@@ -25,14 +70,18 @@
                 &nbsp;
             </a>
         </div>
-        <div class="float-right">
-            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Tambah Revisi</button>
-        </div>
+        @if(auth()->user()->role == 'access_user' || auth()->user()->role == 'admin')
+            <div class="float-right">
+                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Tambah Revisi</button>
+            </div>
+        @else
+        @endif
     </div>
     <div class="card-body">
         <h1 class="card-title">{{ $post->nama }}</h1>
         <p class="card-text">{{ $post->keterangan }}</p>
-        <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+            <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+            <small id="helpId" class="text-muted">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">
         {{ $post->user->name }} | {{ $post->updated_at }}
@@ -40,20 +89,11 @@
 </div>
 
 <div class="row">
-    <div class="col-md-9">
-        @include('contract.display', ['contracts' => $post->contracts, 'post_id' => $post->id])
+    <div class="col-md-8">
+        @include('contract.oldContracts', ['contracts' => $post->contracts, 'post_id' => $post->id])
     </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Log Activity</h4>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Item 1</li>
-                <li class="list-group-item">Item 2</li>
-                <li class="list-group-item">Item 3</li>
-            </ul>
-        </div>
+    <div class="col-md-4">
+        @include('contract.logs', ['logs' => $post->logs, 'post_id' => $post->id])
     </div>
 </div>
 
@@ -72,6 +112,10 @@
                     @csrf
                     <input type="hidden" name="post_id" value="{{ $post->id }}" />
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Nama Contract</label>
+                        <div class="form-control" aria-describedby="emailHelp">{{ $post->nama }}</div>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -80,19 +124,13 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('file') is-invalid @enderror" id="inputGroupFile01"
                                 aria-describedby="inputGroupFileAddon01" name="file">
-                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                <label class="custom-file-label" for="inputGroupFile01">{{ $post->file }}</label>
                             </div>
                         </div>
-                        @error('file')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{ old('keterangan') }}</textarea>
-                        @error('keterangan')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{ $post->keterangan }}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
