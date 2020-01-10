@@ -16,6 +16,7 @@ class CreatePostContractsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid')->nullable();
+            $table->integer('user_id')->unsigned();
             $table->string('nama');
             $table->string('file')->nullable();
             $table->text('keterangan');

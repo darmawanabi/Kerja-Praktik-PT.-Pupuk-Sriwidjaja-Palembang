@@ -11,7 +11,11 @@ class Post extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['uuid','nama','file','keterangan'];
+    protected $fillable = ['uuid','user_id','nama','file','keterangan'];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function contracts(){
         return $this->hasMany(Contract::class)->whereNull('parent_id');
