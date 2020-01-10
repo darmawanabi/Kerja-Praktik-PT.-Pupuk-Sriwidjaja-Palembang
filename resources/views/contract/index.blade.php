@@ -20,9 +20,12 @@
     <div class="card-header">
         <i class="fas fa-table"></i>
         Contract Pool
-        <div class="float-right">
-        <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Tambah Contract</button>
-        </div>
+        @if(auth()->user()->role == 'access_user' || auth()->user()->role == 'admin')
+            <div class="float-right">
+                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Tambah Contract</button>
+            </div>
+        @else
+        @endif
     </div>
     <div class="card-body">
         <div class="table-responsive">

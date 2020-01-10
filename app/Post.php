@@ -20,4 +20,8 @@ class Post extends Model
     public function contracts(){
         return $this->hasMany(Contract::class)->whereNull('parent_id');
     }
+
+    public function logs(){
+        return $this->hasMany(Log::class)->whereNull('parent_id');
+    }
 }

@@ -9,6 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  {{-- <title>@yield('title')</title> --}}
   <title>SB Admin - Dashboard</title>
 
   <!-- Custom fonts for this template-->
@@ -25,7 +26,7 @@
 <body id="page-top">
 <!-- navbar -->
 @include('layouts/includes/_navbar')
-  <div id="wrapper">
+<div id="wrapper">
 
     <!-- Sidebar -->
     @include('layouts/includes/_sidebar')
@@ -41,6 +42,9 @@
     </div>
     <!-- /.content-wrapper -->
 
+</div>
+<div class="container">
+    <div class="row pb-3"></div>
 </div>
 <!-- /#wrapper -->
 @include('layouts/includes/_footer')
@@ -70,7 +74,10 @@
             "order": [[ 1, "desc" ]]
         });
         $('#dataContract').DataTable({
-            "order": [[ 2, "desc" ]]
+            "order": [[ 1, "desc" ]]
+        });
+        $('#dataLog').DataTable({
+            "ordering": false
         });
     });
   </script>
