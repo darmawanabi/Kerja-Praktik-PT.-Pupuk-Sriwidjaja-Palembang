@@ -64,6 +64,16 @@
   <script src="{{('/admin/assets/vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/jquery.dataTables.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#dataPost').DataTable({
+            "order": [[ 1, "desc" ]]
+        });
+        $('#dataContract').DataTable({
+            "order": [[ 2, "desc" ]]
+        });
+    });
+  </script>
 
   <!-- Custom scripts for all pages-->
   <script src="{{('/admin/assets/js/sb-admin.min.js')}}"></script>

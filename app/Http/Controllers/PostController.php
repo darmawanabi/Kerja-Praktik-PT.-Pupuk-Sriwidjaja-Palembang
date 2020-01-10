@@ -48,6 +48,7 @@ class PostController extends Controller
 
         $contract = $request->all();
 
+        $contract['user_id'] = auth()->user()->id;
         $contract['uuid'] = Str::uuid();
 
         if($request->hasFile('file')) {

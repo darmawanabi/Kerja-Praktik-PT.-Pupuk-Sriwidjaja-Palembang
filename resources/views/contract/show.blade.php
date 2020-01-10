@@ -35,7 +35,7 @@
         <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a>
     </div>
     <div class="card-footer text-muted">
-        {{ $post->updated_at }}
+        {{ $post->user->name }} | {{ $post->updated_at }}
     </div>
 </div>
 
@@ -79,7 +79,7 @@
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('file') is-invalid @enderror" id="inputGroupFile01"
-                                    aria-describedby="inputGroupFileAddon01" name="file">
+                                aria-describedby="inputGroupFileAddon01" name="file">
                                 <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                             </div>
                         </div>

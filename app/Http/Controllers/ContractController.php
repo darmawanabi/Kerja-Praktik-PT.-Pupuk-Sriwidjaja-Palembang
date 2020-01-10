@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Contract;
 use App\Post;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ContractController extends Controller
 {
@@ -51,15 +51,23 @@ class ContractController extends Controller
 
         $post = Post::find($contract['post_id']);
 
-        // Post::where('id', $contract['post_id'])->update([
-        //     'uuid' => $contract['uuid'],
-        //     'file' => $contract['file'],
-        //     'keterangan' => $contract['keterangan']
-        // ]);
+        $temp = $post;
+
+        Post::where('id', $contract['post_id'])->update([
+            'uuid' => $contract['uuid'],
+            'user_id' => $contract['user_id'],
+            'file' => $request->file->getClientOriginalName(),
+            'keterangan' => $contract['keterangan']
+        ]);
+
+        $contract['uuid'] = $temp['uuid'];
+        $contract['user_id'] = $temp['user_id'];
+        $contract['file'] = $temp['file'];
+        $contract['keterangan'] = $temp['keterangan'];
+        $contract['created_at'] = $temp['updated_at'];
 
         if($request->hasFile('file')) {
-            $contract['file'] = $request->file->getClientOriginalName();
-            $request->file->storeAs(Str::kebab($post['nama']), $contract['file']);
+            $request->file->storeAs(Str::kebab($post['nama']), $request->file->getClientOriginalName());
         }
 
         Contract::create($contract);
