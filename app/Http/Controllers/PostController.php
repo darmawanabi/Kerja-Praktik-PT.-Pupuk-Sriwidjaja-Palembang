@@ -84,8 +84,10 @@ class PostController extends Controller
             'file' => $post->file,
             'keterangan' => "Download"
         ]);
-
+        
         return response()->download($pathToFile);
+
+        // return back();
     }
 
     /**

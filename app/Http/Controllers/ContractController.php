@@ -111,8 +111,10 @@ class ContractController extends Controller
             'file' => $contract->file,
             'keterangan' => "Download"
         ]);
-
+        
         return response()->download($pathToFile);
+
+        // return back();
     }
 
     /**
