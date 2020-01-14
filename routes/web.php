@@ -44,8 +44,11 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']],
     Route::post('/contracts', 'PostController@store');
     Route::get('/contracts/{contract}', 'PostController@show');
     Route::post('/contracts/{contract}', 'ContractController@store');
+    Route::get('/perizinan', 'PostPerizinanController@index');
+    Route::post('/perizinan', 'PostPerizinanController@store');
+    Route::get('/perizinan/{perizinan}', 'PostPerizinanController@show')->name('perizinan');
+    Route::post('/perizinan/{perizinan}', 'PerizinanController@store');
 });
-
 
 // Download Contract
 Route::patch('/contracts', 'PostController@loggingDownload');
