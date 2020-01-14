@@ -105,30 +105,6 @@
         });
     });
   </script>
-  <script type="text/javascript">
-    $.fn.dataTable.ext.search.push(
-        function( settings, data, dataIndex ) {
-            var jenis = $('#jenis').val();
-            var jenis_data = toString( data[1] ) || 0; // use data for the age column
-
-            if ( ( isNaN( jenis ) ) ||
-                ( jenis_data.includes(jenis) ) )
-            {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    $(document).ready(function() {
-        var table = $('#dataPost').DataTable();
-
-        // Event listener to the two range filtering inputs to redraw on input
-        $('#jenis').keyup( function() {
-            table.draw();
-        } );
-    } );
-  </script>
 
   <!-- Custom scripts for all pages-->
   <script src="{{('/admin/assets/js/sb-admin.min.js')}}"></script>

@@ -70,7 +70,13 @@
                             <td>{{ $post->updated_at }}</td>
                             <td>
                             <a href="/contracts/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
-                            <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                            <form action="/contracts" class="d-inline" method="post">
+                                @csrf
+                                @method('patch')
+                                <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
+                                <button type="submit" class="btn btn-success btn-sm">Download</button>
+                            </form>
+                            {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach

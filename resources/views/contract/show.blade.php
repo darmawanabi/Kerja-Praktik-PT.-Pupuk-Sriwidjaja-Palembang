@@ -87,7 +87,7 @@
                 @csrf
                 @method('patch')
                 <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
-                <button type="submit" class="btn btn-success btn-sm">Download</button>
+                <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
             </form>
             {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
             <small id="helpId" class="text-muted d-inline">{{ $post->file }}</small>

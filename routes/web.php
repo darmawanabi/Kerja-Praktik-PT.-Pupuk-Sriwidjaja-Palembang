@@ -44,10 +44,15 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']],
     Route::post('/contracts', 'PostController@store');
     Route::get('/contracts/{contract}', 'PostController@show');
     Route::post('/contracts/{contract}', 'ContractController@store');
-    Route::patch('/contracts/{contract}', 'PostController@log_for_download');
 });
 
-Route::get('{uuid}/download', 'PostController@download');
 
-Route::get('/contracts/{uuid}/download', 'PostController@log_for_download');
-Route::get('/contracts/{post_id}/{uuid}/download', 'ContractController@download');
+// Download Contract
+Route::patch('/contracts', 'PostController@loggingDownload');
+Route::patch('/contracts/{contract}', 'PostController@loggingDownload');
+Route::put('/contracts/{contract}', 'ContractController@loggingDownload');
+Route::get('{uuid}/download', 'PostController@download');
+Route::get('{post_id}/{uuid}/download', 'ContractController@download');
+
+// Route::get('/contracts/{uuid}/download', 'PostController@log_for_download');
+// Route::get('/contracts/{post_id}/{uuid}/download', 'ContractController@download');

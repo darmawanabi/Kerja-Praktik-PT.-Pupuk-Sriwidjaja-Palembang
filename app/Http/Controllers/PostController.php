@@ -79,7 +79,7 @@ class PostController extends Controller
         return redirect('/contracts');
     }
 
-    public function log_for_download(Request $request) {
+    public function loggingDownload(Request $request) {
         date_default_timezone_set('Asia/Bangkok');
 
         $post = Post::where('uuid', $request->uuid)->firstOrFail();
@@ -99,7 +99,7 @@ class PostController extends Controller
 
         $post = Post::where('uuid', $uuid)->firstOrFail();
 
-        $pathToFile = storage_path('app/' . Str::kebab($post->nama) . '/' . $post->file);
+        $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $post->file);
 
         return response()->download($pathToFile);
     }
