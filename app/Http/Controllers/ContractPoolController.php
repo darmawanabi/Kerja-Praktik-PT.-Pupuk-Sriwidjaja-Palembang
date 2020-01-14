@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contract;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ContractPoolController extends Controller
 {
@@ -14,7 +15,8 @@ class ContractPoolController extends Controller
      */
     public function index()
     {
-        return view('contract/index');
+        $contract = Contract::all();
+        return view('contract.index', ['contracts' => $contract]);
     }
 
     /**
@@ -36,21 +38,24 @@ class ContractPoolController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|file|mimes:pdf,doc,docx,odt',
-            'file' => 'required'
+            'nama' => 'required',
+            'file' => 'required|file|mimes:pdf,doc,docx,odt'
         ]);
 
-        $file = $request->file('file');
+        $contract = $request->all();
 
-        $nama_file = time()."_".$file->getClientOriginalName();
+        $contract['uuid'] = Str::uuid();
 
-        $tujuan_upload = $request->nama;
+        if($request->hasFile('file')) {
+            $contract['file'] = $request->file->getClientOriginalName();
+            $request->file->storeAs(Str::kebab($contract['nama']), $contract['file']);
+        }
 
-        Contract::create([
-            'nama' =>$request->nama,
-            'file' => $nama_file,
-            'keterangan' => $request->keterangan
-        ]);
+        // $nama_file = time()."_".$contract->getClientOriginalName();
+
+        // $tujuan_upload = $request->nama;
+
+        Contract::create($contract);
 
         return redirect('/contractpool');
     }
