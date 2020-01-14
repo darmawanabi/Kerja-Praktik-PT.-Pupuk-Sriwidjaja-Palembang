@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Kategori;
+use App\Perizinan;
 use App\PostPerizinan;
 use App\LogPerizinan;
 use Illuminate\Http\Request;
@@ -11,10 +11,11 @@ use Illuminate\Support\Str;
 class PostPerizinanController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         $post = PostPerizinan::all();
-        return view('/perizinan/index', ['post' => $post]);
+        $perizinan = Perizinan::all();
+        return view('/perizinan/index', compact('post','perizinan'));
     }
 
     public function store(Request $request)

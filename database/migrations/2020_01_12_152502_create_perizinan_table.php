@@ -17,7 +17,7 @@ class CreatePerizinanTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->integer('post_id')->unsigned();
+            $table->integer('post_perizinan_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('kategori');
             $table->string('jenis_perizinan');

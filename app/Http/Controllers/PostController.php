@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Log;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -16,7 +17,14 @@ class PostController extends Controller
      */
     public function index()
     {
+        date_default_timezone_set('Asia/Bangkok');
+
         $post = Post::all();
+
+        // $now = now();
+        // $dates =  "2020-01-13 10:00:00.000000 Asia/Bangkok (+07:00)";
+        // $dates = substr_replace($now,"",-9);
+        // dd($now,$dates);
 
         return view('/contract/index', ['posts' => $post]);
     }
@@ -71,12 +79,10 @@ class PostController extends Controller
         return redirect('/contracts');
     }
 
-    public function download($uuid) {
+    public function loggingDownload(Request $request) {
         date_default_timezone_set('Asia/Bangkok');
 
-        $post = Post::where('uuid', $uuid)->firstOrFail();
-
-        $pathToFile = storage_path('app/' . Str::kebab($post->nama) . '/' . $post->file);
+        $post = Post::where('uuid', $request->uuid)->firstOrFail();
 
         Log::create([
             'user_id' => auth()->user()->id,
@@ -84,10 +90,18 @@ class PostController extends Controller
             'file' => $post->file,
             'keterangan' => "Download"
         ]);
-        
-        return response()->download($pathToFile);
 
-        // return back();
+        return redirect()->action('PostController@download', ['uuid' => $request->uuid]);
+    }
+
+    public function download($uuid) {
+        date_default_timezone_set('Asia/Bangkok');
+
+        $post = Post::where('uuid', $uuid)->firstOrFail();
+
+        $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $post->file);
+
+        return response()->download($pathToFile);
     }
 
     /**
@@ -99,7 +113,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('/contract/show', ['post' => $post]);
+        return view('contract.show', ['post' => $post]);
     }
 
     /**

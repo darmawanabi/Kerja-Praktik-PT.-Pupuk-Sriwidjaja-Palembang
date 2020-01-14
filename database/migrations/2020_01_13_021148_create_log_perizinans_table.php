@@ -16,7 +16,7 @@ class CreateLogPerizinansTable extends Migration
         Schema::create('log_perizinans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('post_id')->unsigned();
+            $table->integer('post_perizinan_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('file')->nullable();
             $table->text('keterangan');

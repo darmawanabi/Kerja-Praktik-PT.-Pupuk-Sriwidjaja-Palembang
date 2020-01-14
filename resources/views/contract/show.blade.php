@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', $post->nama)
+
 @section('content')
 {{-- @if(auth()->user()->role == 'admin')
     <h1>Contract Pool Admin</h1>
@@ -78,10 +80,17 @@
         @endif
     </div>
     <div class="card-body">
-        <h1 class="card-title">{{ $post->nama }}</h1>
+        <h1 class="card-title d-inline">{{ $post->nama }}</h1>
+        <h4 class="card-title">{{ $post->jenis }}</h4>
         <p class="card-text">{{ $post->keterangan }}</p>
-            <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a>
-            <small id="helpId" class="text-muted">{{ $post->file }}</small>
+            <form action="/contracts/{{ $post->id }}" class="d-inline" method="post">
+                @csrf
+                @method('patch')
+                <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
+                <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
+            </form>
+            {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
+            <small id="helpId" class="text-muted d-inline">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">
         {{ $post->user->name }} | {{ $post->updated_at }}
@@ -102,7 +111,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Revisi Contract</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Revisi Kontrak</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -112,7 +121,7 @@
                     @csrf
                     <input type="hidden" name="post_id" value="{{ $post->id }}" />
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nama Contract</label>
+                        <label for="exampleInputEmail1">Nama Kontrak</label>
                         <div class="form-control" aria-describedby="emailHelp">{{ $post->nama }}</div>
                     </div>
                     <div class="form-group">
@@ -124,7 +133,7 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('file') is-invalid @enderror" id="inputGroupFile01"
                                 aria-describedby="inputGroupFileAddon01" name="file">
-                                <label class="custom-file-label" for="inputGroupFile01">{{ $post->file }}</label>
+                                <label class="custom-file-label" for="inputGroupFile01">Pilih file</label>
                             </div>
                         </div>
                     </div>
@@ -134,8 +143,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
         </div>

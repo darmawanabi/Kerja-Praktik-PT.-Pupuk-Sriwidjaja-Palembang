@@ -40,7 +40,7 @@
                                 <small id="helpId" class="text-muted">{{ $izin->file }}</small>
                             </td>
                             <td>
-                                <a href="/perizinan/{{ $izin->id }}/{{ $izin->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                                <a href="/perizinan/{{ $postperizinan->id }}/{{ $izin->uuid }}/download" class="btn btn-success btn-sm">Download</a>
                             </td>
                         </tr>
                     @endforeach

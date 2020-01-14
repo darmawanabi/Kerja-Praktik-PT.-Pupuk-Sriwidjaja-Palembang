@@ -109,18 +109,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/perizinan/$postperizinan->id" method="post" enctype="multipart/form-data">
+                <form action="/perizinan/{{$postperizinan->id}}" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="post_perizinan_id" value="{{ $postperizinan->id }}" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Perizinan</label>
-                        <input name="nama" type="text" class="form-control @error('nama') is-inva   lid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Perizinan" value="{{$postperizinan->nama}}">
+                        <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Perizinan" value="{{$postperizinan->nama}}">
                         <!-- @error('nama')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror -->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                        <input name="jenis_perizinan" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{$postperizinan->jenis_perizinan}}">
+                        <input name="jenis_perizinan" type="text" class="form-control @error('jenis_pirizinan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{$postperizinan->jenis_perizinan}}">
                         <!-- @error('jenis')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror -->
@@ -155,7 +156,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tanggal Berakhir</label>
-                        <input name="tanggal_berakhir" type="date" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$postperizinan->tanggal_berakhir}}">
+                        <input name="tanggal_berakhir" type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$postperizinan->tanggal_berakhir}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
@@ -175,7 +176,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{ old('keterangan') }}</textarea>
+                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{$postperizinan->keterangan}}</textarea>
                         <!-- @error('keterangan')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror -->
