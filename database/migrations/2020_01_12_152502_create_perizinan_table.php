@@ -21,6 +21,7 @@ class CreatePerizinanTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('kategori');
             $table->string('jenis_perizinan');
+            $table->date('tanggal_berakhir');
             $table->string('file')->nullable();
             $table->text('keterangan');
             $table->timestamps();
@@ -35,6 +36,7 @@ class CreatePerizinanTable extends Migration
             $table->string('file')->nullable();
             $table->string('kategori');
             $table->string('jenis_perizinan');
+            $table->date('tanggal_berakhir');
             $table->text('keterangan');
             $table->timestamps();
             $table->softDeletes();
@@ -48,6 +50,7 @@ class CreatePerizinanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perizinan');
+        Schema::dropIfExists('perizinans');
+        Schema::dropIfExists('post_perizinans');
     }
 }

@@ -28,14 +28,25 @@
         @endif
     </div>
     <div class="card-body">
+        <div class="row">
+            <div class="cols-sm-12 col-md-5">
+                <div class="dataTables_type" id="dataPost_type">
+                    <form>
+                        <div class="form-group">
+                            <label id="typePost" for="exampleFormControlSelect1">Pilih Kategori Perizinan yang akan ditampilkan</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataPost" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataPostPerizinan" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Nama Akun</th>
                         <th>Nama Perizinan</th>
                         <th>Jenis Perizinan</th>
-                        <th>Kategori</th>
+                        <th id="kategori">Kategori</th>
                         <th>Tanggal Upload</th>
                         <th>Tanggal Berakhir</th>
                         <th>Aksi</th>
@@ -46,7 +57,7 @@
                         <th>Nama Akun</th>
                         <th>Nama Perizinan</th>
                         <th>Jenis Perizinan</th>
-                        <th>Kategori</th>
+                        <th id="kategori">Kategori</th>
                         <th>Tanggal Upload</th>
                         <th>Tanggal Berakhir</th>
                         <th>Aksi</th>
@@ -58,12 +69,18 @@
                             <td>{{$postperizinan->user->name}}</td>
                             <td>{{$postperizinan->nama}}</td>
                             <td>{{$postperizinan->jenis_perizinan}}</td>
-                            <td>{{$postperizinan->kategori}}</td>
+                            <td id="kategori">{{$postperizinan->kategori}}</td>
                             <td>{{$postperizinan->updated_at}}</td>
                             <td>{{$postperizinan->tanggal_berakhir}}</td>
                             <td>
-                            <a href="/perizinan/{{ $postperizinan->id }}" class="btn btn-primary btn-sm">Detail</a>
-                            <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                                <a href="/perizinan/{{ $postperizinan->id }}" class="btn btn-primary btn-sm">Detail</a>
+                                <form action="/perizinan" class="d-inline" method="post">
+                                    @csrf
+                                    @method('patch')
+                                    <input type="hidden" name="uuid" value="{{ $postperizinan->uuid }}" />
+                                    <button type="submit" class="btn btn-success btn-sm">Download</button>
+                                </form>
+                                {{-- <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach

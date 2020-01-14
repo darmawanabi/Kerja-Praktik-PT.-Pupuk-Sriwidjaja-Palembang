@@ -40,7 +40,14 @@
                                 <small id="helpId" class="text-muted">{{ $izin->file }}</small>
                             </td>
                             <td>
-                                <a href="/perizinan/{{ $postperizinan->id }}/{{ $izin->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                                <form action="/perizinan/{{ $postperizinan->id }}" class="d-inline" method="post">
+                                    @csrf
+                                    @method('put')
+                                    <input type="hidden" name="post_id" value="{{ $postperizinan->id }}" />
+                                    <input type="hidden" name="uuid" value="{{ $izin->uuid }}" />
+                                    <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
+                                </form>
+                                {{-- <a href="/perizinan/{{ $postperizinan->id }}/{{ $izin->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach

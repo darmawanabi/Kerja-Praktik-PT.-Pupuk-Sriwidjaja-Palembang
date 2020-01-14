@@ -47,7 +47,7 @@ class PostPerizinanController extends Controller
 
         LogPerizinan::create([
             'user_id' => $perizinan['user_id'],
-            'post_id' => $post['id'],
+            'post_perizinan_id' => $post['id'],
             'file' => $perizinan['file'],
             'keterangan' => "Upload"
         ]);
@@ -61,12 +61,29 @@ class PostPerizinanController extends Controller
         return view('/perizinan/show', ['postperizinan' => $postperizinan]);
     }
 
-    public function download($uuid) {
+    // public function download($uuid) {
+    //     date_default_timezone_set('Asia/Bangkok');
+
+    //     $post = PostPerizinan::where('uuid', $uuid)->firstOrFail();
+
+    //     $pathToFile = storage_path('app/' . Str::kebab($post->nama) . '/' . $post->file);
+
+    //     LogPerizinan::create([
+    //         'user_id' => auth()->user()->id,
+    //         'post_perizinan_id' => $post->id,
+    //         'file' => $post->file,
+    //         'keterangan' => "Download"
+    //     ]);
+
+    //     return response()->download($pathToFile);
+
+    //     // return back();
+    // }
+
+    public function loggingDownload(Request $request) {
         date_default_timezone_set('Asia/Bangkok');
 
-        $post = PostPerizinan::where('uuid', $uuid)->firstOrFail();
-
-        $pathToFile = storage_path('app/' . Str::kebab($post->nama) . '/' . $post->file);
+        $post = PostPerizinan::where('uuid', $request->uuid)->firstOrFail();
 
         LogPerizinan::create([
             'user_id' => auth()->user()->id,
@@ -74,9 +91,17 @@ class PostPerizinanController extends Controller
             'file' => $post->file,
             'keterangan' => "Download"
         ]);
-        
-        return response()->download($pathToFile);
 
-        // return back();
+        return redirect()->action('PostPerizinanController@download', ['uuid' => $request->uuid]);
+    }
+
+    public function download($uuid) {
+        date_default_timezone_set('Asia/Bangkok');
+
+        $post = PostPerizinan::where('uuid', $uuid)->firstOrFail();
+
+        $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $post->file);
+
+        return response()->download($pathToFile);
     }
 }

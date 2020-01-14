@@ -80,8 +80,15 @@
     </div>
     <div class="card-body">
         <h1 class="card-title">{{ $postperizinan->nama }}</h1>
+        <h4 class="card-title">{{ $postperizinan->jenis_perizinan }}</h4>
         <p class="card-text">{{ $postperizinan->keterangan }}</p>
-            <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+            <form action="/perizinan/{{ $postperizinan->id }}" class="d-inline" method="post">
+                @csrf
+                @method('patch')
+                <input type="hidden" name="uuid" value="{{ $postperizinan->uuid }}" />
+                <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
+            </form>
+            {{-- <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
             <small id="helpId" class="text-muted">{{ $postperizinan->file }}</small>
     </div>
     <div class="card-footer text-muted">
