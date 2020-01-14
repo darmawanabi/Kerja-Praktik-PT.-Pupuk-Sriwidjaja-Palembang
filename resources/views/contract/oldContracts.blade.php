@@ -37,7 +37,14 @@
                                 <small id="helpId" class="text-muted">{{ $contract->file }}</small>
                             </td>
                             <td>
-                                <a href="/contracts/{{ $post->id }}/{{ $contract->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                                <form action="/contracts/{{ $post->id }}" class="d-inline" method="post">
+                                    @csrf
+                                    @method('put')
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                                    <input type="hidden" name="uuid" value="{{ $contract->uuid }}" />
+                                    <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
+                                </form>
+                                {{-- <a href="/contracts/{{ $post->id }}/{{ $contract->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach

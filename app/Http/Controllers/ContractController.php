@@ -96,6 +96,23 @@ class ContractController extends Controller
         return back()->with('status', 'Revisi Berhasil Ditambahkan.');
     }
 
+    public function loggingDownload(Request $request) {
+        date_default_timezone_set('Asia/Bangkok');
+
+        $contract = Contract::where('uuid', $request->uuid)->firstOrFail();
+
+        $post = Post::where('id', $request->post_id)->firstOrFail();
+
+        Log::create([
+            'user_id' => auth()->user()->id,
+            'post_id' => $contract->post_id,
+            'file' => $contract->file,
+            'keterangan' => "Download"
+        ]);
+
+        return redirect()->action('ContractController@download', array('post_id' => $request->post_id, 'uuid' => $request->uuid));
+    }
+
     public function download($post_id, $uuid) {
         date_default_timezone_set('Asia/Bangkok');
 
@@ -105,16 +122,7 @@ class ContractController extends Controller
 
         $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $contract->file);
 
-        Log::create([
-            'user_id' => auth()->user()->id,
-            'post_id' => $contract->post_id,
-            'file' => $contract->file,
-            'keterangan' => "Download"
-        ]);
-        
         return response()->download($pathToFile);
-
-        // return back();
     }
 
     /**

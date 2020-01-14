@@ -25,11 +25,4 @@
         </a>
     </li>
     @endif
-    @if(auth()->user()->role == 'access_user')
-    <li class="nav-item">
-        <a class="nav-link" href="/perizinan">
-          <span>Perizinan (Full Access)</span>
-        </a>
-    </li>
-    @endif
     </ul>

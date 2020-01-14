@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Contract Pool')
+
 @section('content')
 @if(auth()->user()->role == 'admin')
     <h1>Contract Pool Admin</h1>
@@ -22,24 +24,39 @@
         Contract Pool
         @if(auth()->user()->role == 'access_user' || auth()->user()->role == 'admin')
             <div class="float-right">
-                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Tambah Contract</button>
+                <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal">Tambah Kontrak</button>
             </div>
         @else
         @endif
     </div>
     <div class="card-body">
+        <div class="row">
+            <div class="cols-sm-12 col-md-5">
+                <div class="dataTables_type" id="dataPost_type">
+                    <form>
+                        <div class="form-group">
+                            <label id="typePost" for="exampleFormControlSelect1">Pilih Jenis Kontrak yang akan ditampilkan</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table table-bordered" id="dataPost" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Nama Contract</th>
+                        <th>Nama Kontrak</th>
+                        <th class="jenis">Jenis Kontrak</th>
+                        <th>Nama Akun</th>
                         <th>Tanggal</th>
-                        <th class="w-25">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Nama Contract</th>
+                        <th>Nama Kontrak</th>
+                        <th class="jenis">Jenis Kontrak</th>
+                        <th>Nama Akun</th>
                         <th>Tanggal</th>
                         <th>Aksi</th>
                     </tr>
@@ -48,10 +65,18 @@
                     @foreach ($posts as $post)
                         <tr>
                             <td>{{ $post->nama }}</td>
+                            <td class="jenis">{{ $post->jenis }}</td>
+                            <td>{{ $post->user->name }}</td>
                             <td>{{ $post->updated_at }}</td>
                             <td>
                             <a href="/contracts/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
-                            <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                            <form action="/contracts" class="d-inline" method="post">
+                                @csrf
+                                @method('patch')
+                                <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
+                                <button type="submit" class="btn btn-success btn-sm">Download</button>
+                            </form>
+                            {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach
@@ -66,7 +91,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Contract</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kontrak</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,9 +100,16 @@
                 <form action="/contracts" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nama Contract</label>
-                        <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Contract" value="{{ old('nama') }}">
+                        <label for="exampleInputEmail1">Nama Kontrak</label>
+                        <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Kontrak" value="{{ old('nama') }}">
                         @error('nama')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Jenis Kontrak</label>
+                        <input name="jenis" type="text" class="form-control @error('jenis') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="{{ old('jenis') }}">
+                        @error('jenis')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -90,7 +122,7 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('file') is-invalid @enderror" id="inputGroupFile01"
                                     aria-describedby="inputGroupFileAddon01" name="file">
-                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                <label class="custom-file-label" for="inputGroupFile01">Pilih file</label>
                             </div>
                         </div>
                         @error('file')
@@ -106,8 +138,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
         </div>

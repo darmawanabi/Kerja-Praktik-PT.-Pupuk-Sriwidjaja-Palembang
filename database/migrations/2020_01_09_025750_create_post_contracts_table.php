@@ -18,6 +18,7 @@ class CreatePostContractsTable extends Migration
             $table->uuid('uuid')->nullable();
             $table->integer('user_id')->unsigned();
             $table->string('nama');
+            $table->string('jenis');
             $table->string('file')->nullable();
             $table->text('keterangan');
             $table->timestamps();

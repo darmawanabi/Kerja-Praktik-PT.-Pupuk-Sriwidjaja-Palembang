@@ -50,7 +50,7 @@
 
 #dataLog_filter input { width: 108px }
 
-#dataLog_info { font-size: x-small }
+#dataLog_info { visibility: hidden }
 
 html {
   font-family: sans-serif;
