@@ -8,9 +8,10 @@
             <table class="table table-bordered" id="dataContract" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Upload</th>
+                        <th>Tanggal Berakhir</th>
+                        <th>Kategori</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
                         <th class="w-25">Aksi</th>
@@ -18,26 +19,28 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Upload</th>
+                        <th>Tanggal Berakhir</th>
+                        <th>Kategori</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($contracts as $contract)
+                    @foreach ($perizinan as $izin)
                         <tr>
-                            {{-- <td>{{ $loop->iteration }}</td> --}}
-                            <td>{{ $contract->user->name }}</td>
-                            <td>{{ $contract->created_at }}</td>
-                            <td>{{ $contract->keterangan }}</td>
+                            <td>{{ $izin->user->name }}</td>
+                            <td>{{ $izin->created_at }}</td>
+                            <td>{{ $izin->tanggal_berakhir }}</td>
+                            <td>{{ $izin->kategori }}</td>
+                            <td>{{ $izin->keterangan }}</td>
                             <td>
-                                <small id="helpId" class="text-muted">{{ $contract->file }}</small>
+                                <small id="helpId" class="text-muted">{{ $izin->file }}</small>
                             </td>
                             <td>
-                                <a href="/contracts/{{ $post->id }}/{{ $contract->uuid }}/download" class="btn btn-success btn-sm">Download</a>
+                                <a href="/perizinan/{{ $postperizinan->id }}/{{ $izin->uuid }}/download" class="btn btn-success btn-sm">Download</a>
                             </td>
                         </tr>
                     @endforeach
