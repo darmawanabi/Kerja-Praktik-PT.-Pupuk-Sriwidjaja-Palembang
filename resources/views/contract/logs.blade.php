@@ -71,7 +71,7 @@
                                         <tr>
                                             <td>{{ $log->user->name }}</td>
                                             <td>{{ $log->keterangan }}</td>
-                                            <td>{{ $log->file }}</td>
+                                            <td><small id="helpId" class="text-muted d-inline">{{ $log->file }}</small></td>
                                             <td>{{ $log->created_at }}</td>
                                         </tr>
                                     @endforeach

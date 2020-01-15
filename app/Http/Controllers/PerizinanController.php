@@ -42,7 +42,8 @@ class PerizinanController extends Controller
             'uuid' => $perizinan['uuid'],
             'user_id' => $perizinan['user_id'],
             'file' => $request->file->getClientOriginalName(),
-            'kategori' =>$perizinan['kategori'],
+            'kategori' => $perizinan['kategori'],
+            'tanggal_berakhir' => $perizinan['tanggal_berakhir'],
             'keterangan' => $perizinan['keterangan']
         ]);
 

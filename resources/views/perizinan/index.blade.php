@@ -175,26 +175,10 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Kategori</label>
                         <select name="kategori" class="form-control @error('kategori') is-invalid @enderror" id="exampleFormControlSelect1">
-                        @if (old('kategori') == "3 Bulan")
-                            <option value="3 Bulan" selected>3 Bulan</option>
-                        @else
-                            <option value="3 Bulan">3 Bulan</option>
-                        @endif
-                        @if (old('kategori') == "6 Bulan")
-                            <option value="6 Bulan" selected>6 Bulan</option>
-                        @else
-                            <option value="6 Bulan">6 Bulan</option>
-                        @endif
-                        @if (old('kategori') == "1 Tahun")
-                            <option value="1 Tahun" selected>1 Tahun</option>
-                        @else
-                            <option value="1 Tahun">1 Tahun</option>
-                        @endif
-                        @if (old('kategori') == "2 Tahun")
-                            <option value="2 Tahun" selected>2 Tahun</option>
-                        @else
-                            <option value="2 Tahun">2 Tahun</option>
-                        @endif
+                            <option value="3 Bulan" @if(old('kategori') == '3 Bulan') selected @endif>3 Bulan</option>
+                            <option value="6 Bulan" @if(old('kategori') == '6 Bulan') selected @endif>6 Bulan</option>
+                            <option value="1 Tahun" @if(old('kategori') == '1 Tahun') selected @endif>1 Tahun</option>
+                            <option value="2 Tahun" @if(old('kategori') == '2 Tahun') selected @endif>2 Tahun</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -220,8 +204,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
         </div>

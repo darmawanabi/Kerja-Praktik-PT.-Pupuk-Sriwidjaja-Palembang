@@ -8,7 +8,6 @@
             <table class="table table-bordered" id="dataContract" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
                         <th>Tanggal Upload</th>
                         <th>Keterangan</th>
@@ -18,7 +17,6 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
                         <th>Tanggal Upload</th>
                         <th>Keterangan</th>
@@ -29,7 +27,6 @@
                 <tbody>
                     @foreach ($contracts as $contract)
                         <tr>
-                            {{-- <td>{{ $loop->iteration }}</td> --}}
                             <td>{{ $contract->user->name }}</td>
                             <td>{{ $contract->created_at }}</td>
                             <td>{{ $contract->keterangan }}</td>

@@ -68,69 +68,11 @@
   <script src="{{('/admin/assets/vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/jquery.dataTables.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-        $('#dataPost').DataTable({
-            "order": [[ 3, "desc" ]],
-            initComplete: function () {
-                this.api().columns('.jenis').every( function () {
-                    var column = this;
-                    var select = $('<select name="dataPost_length" aria-controls="dataPost" class="custom-select custom-select-sm form-control form-control-sm" id="exampleFormControlSelect1"><option value=""></option></select>')
-                        .appendTo( $('#typePost') )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        });
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    });
-                });
-            }
-        });
-        $('#dataPostPerizinan').DataTable({
-            "order": [[ 4, "desc" ]],
-            initComplete: function () {
-                this.api().columns('#kategori').every( function () {
-                    var column = this;
-                    var select = $('<select name="dataPost_length" aria-controls="dataPost" class="custom-select custom-select-sm form-control form-control-sm" id="exampleFormControlSelect1"><option value=""></option></select>')
-                        .appendTo( $('#typePost') )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        });
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    });
-                });
-            }
-        });
-        $('#dataContract').DataTable({
-            "order": [[ 1, "desc" ]]
-        });
-        $('#dataLog').DataTable({
-            "ordering": false,
-            "lengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]]
-        });
-        $('#dataLogDetail').DataTable({
-            "order": [[ 3, "desc" ]]
-        });
-    });
-  </script>
 
   <!-- Custom scripts for all pages-->
   <script src="{{('/admin/assets/js/sb-admin.min.js')}}"></script>
+  <script src="{{('/admin/assets/js/datatables-custom.js')}}"></script>
+  <script src="{{('/admin/assets/js/reminder-button.js')}}"></script>
 
   <!-- Demo scripts for this page-->
   <script src="{{('/admin/assets/js/demo/datatables-demo.js')}}"></script>

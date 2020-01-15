@@ -85,7 +85,7 @@
                       </label>
                   </div> -->
                   <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-                  <a class="nav-link js-scroll-trigger" href="#register">Register</a>
+                  {{-- <a class="nav-link js-scroll-trigger" href="#register">Register</a> --}}
                   <!-- <div class="bottom">
                       <span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
                   </div> -->

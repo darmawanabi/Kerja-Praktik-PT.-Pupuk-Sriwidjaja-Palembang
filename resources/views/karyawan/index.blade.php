@@ -110,20 +110,9 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Role</label>
                     <select name="role" class="form-control @error('role') is-invalid @enderror" id="exampleFormControlSelect1">
-                        @if (old('role') == "std_user")
-                            <option value="std_user" selected>Standard User</option>
-                        @else
-                            <option value="std_user">Standard User</option>
-                        @endif
-                        @if (old('role') == "access_user")
-                            <option value="access_user" selected>Full Access User</option>
-                        @else
-                            <option value="access_user">Full Access User</option>
-                        @endif
-                        @if (old('role') == "admin")
-                            <option value="admin" selected>Admin</option>
-                        @else
-                            <option value="admin">Admin</option>
+                        <option value="std_user" @if($post->kategori == 'std_user') selected @endif>Standard User</option>
+                        <option value="access_user" @if($post->kategori == 'access_user') selected @endif>Access User</option>
+                        <option value="admin" @if($post->kategori == 'admin') selected @endif>Admin</option>
                         @endif
                     </select>
                     @error('role')
