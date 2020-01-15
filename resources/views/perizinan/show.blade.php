@@ -1,7 +1,7 @@
 @extends('layouts/master')
 
 @section('content')
-@if(auth()->user()->role == 'admin')
+{{-- @if(auth()->user()->role == 'admin')
     <h1>Perizinan Admin</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif
@@ -14,9 +14,21 @@
 @if(auth()->user()->role == 'access_user')
     <h1>Perizinan Full Access User</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
-@endif
+@endif --}}
 
-<!-- DataTables Example -->
+{{-- Form Error --}}
+@if (session('error'))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+@endif
 @if (session('status'))
     <div class="row">
         <div class="col-md-12">
@@ -28,39 +40,38 @@
             </div>
         </div>
     </div>
-@elseif (session('error'))
+@else
     <div class="row">
         <div class="col-md-12">
+            @error('kategori')
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>{{ session('error') }}</strong>
+                <strong>{{ $message }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        </div>
-    </div>
-@else
-    <div class="row">
-        <div class="col-md-12">
-            @error('file')
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
             @enderror
-            @error('keterangan')
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            @error('tanggal_berakhir')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ $message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @enderror
+            @error('file')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ $message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             @enderror
         </div>
     </div>
 @endif
+
+<!-- DataTables Example -->
 
 <div class="card mb-3">
     <div class="card-header">
@@ -81,6 +92,10 @@
     <div class="card-body">
         <h1 class="card-title">{{ $postperizinan->nama }}</h1>
         <h4 class="card-title">{{ $postperizinan->jenis_perizinan }}</h4>
+        <p class="card-text d-inline">Kategori</p>
+        <strong class="card-title d-inline"> {{ $postperizinan->kategori }} | </strong>
+        <p class="card-text d-inline">Tanggal Berakhir</p>
+        <strong class="card-title"> {{ $postperizinan->tanggal_berakhir }}</strong><br><br>
         <p class="card-text">{{ $postperizinan->keterangan }}</p>
             <form action="/perizinan/{{ $postperizinan->id }}" class="d-inline" method="post">
                 @csrf
@@ -121,18 +136,16 @@
                     <input type="hidden" name="post_perizinan_id" value="{{ $postperizinan->id }}" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Perizinan</label>
-                        <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Perizinan" value="{{$postperizinan->nama}}">
-                        <!-- @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
+                        <div class="form-control" aria-describedby="emailHelp">{{ $postperizinan->nama }}</div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                        <input name="jenis_perizinan" type="text" class="form-control @error('jenis_pirizinan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{$postperizinan->jenis_perizinan}}">
-                        <!-- @error('jenis')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
+                        <div class="form-control" aria-describedby="emailHelp">{{ $postperizinan->jenis_perizinan }}</div>
                     </div>
+                    {{-- <div class="form-group">
+                        <label for="exampleInputEmail1">Kategori Perizinan</label>
+                        <div class="form-control" aria-describedby="emailHelp">{{ $postperizinan->kategori }}</div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Kategori</label>
                         <select name="kategori" class="form-control @error('kategori') is-invalid @enderror" id="exampleFormControlSelect1">
@@ -157,9 +170,6 @@
                             <option value="{{$postperizinan->kategori}}">2 Tahun</option>
                         @endif
                         </select>
-                        <!-- @error('jenis_kelamin')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tanggal Berakhir</label>
@@ -177,21 +187,15 @@
                                 <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                             </div>
                         </div>
-                        <!-- @error('file')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{$postperizinan->keterangan}}</textarea>
-                        <!-- @error('keterangan')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
+                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$postperizinan->keterangan}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
             </form>
         </div>

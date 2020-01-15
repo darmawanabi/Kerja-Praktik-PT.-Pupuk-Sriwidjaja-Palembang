@@ -10,17 +10,17 @@
                     <tr>
                         {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Upload</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
-                        <th class="w-25">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Upload</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
                         <th>Aksi</th>

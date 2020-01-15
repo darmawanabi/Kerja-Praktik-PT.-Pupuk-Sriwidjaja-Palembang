@@ -10,19 +10,15 @@
                     <tr>
                         <th>Nama Akun</th>
                         <th>Tanggal Upload</th>
-                        <th>Tanggal Berakhir</th>
-                        <th>Kategori</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
-                        <th class="w-25">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Nama Akun</th>
                         <th>Tanggal Upload</th>
-                        <th>Tanggal Berakhir</th>
-                        <th>Kategori</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
                         <th>Aksi</th>
@@ -33,8 +29,6 @@
                         <tr>
                             <td>{{ $izin->user->name }}</td>
                             <td>{{ $izin->created_at }}</td>
-                            <td>{{ $izin->tanggal_berakhir }}</td>
-                            <td>{{ $izin->kategori }}</td>
                             <td>{{ $izin->keterangan }}</td>
                             <td>
                                 <small id="helpId" class="text-muted">{{ $izin->file }}</small>

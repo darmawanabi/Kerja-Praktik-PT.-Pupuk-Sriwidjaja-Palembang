@@ -22,16 +22,15 @@ class PostPerizinanController extends Controller
     {
         date_default_timezone_set('Asia/Bangkok');
 
-        // $request->validate([
-        //     'nama'=>'required',
-        //     'file' => 'required|file|mimes:pdf,doc,docx,odt',
-        //     'keterangan'=>'required',
-        // ]);
+        $request->validate([
+            'nama'=>'required',
+            'file' => 'required|file|mimes:pdf',
+            'jenis_perizinan'=>'required',
+            'kategori'=>'required',
+            'tanggal_berakhir'=>'required'
+        ]);
 
         $perizinan = $request->all();
-        // $postperizinan = PostPerizinan::all();
-        // $postperizinan->created_at->format('d.m.Y');
-        // $perizinan = $request->tanggal_berakhir->format('d.m.Y');
 
         $perizinan['user_id'] = auth()->user()->id;
         $perizinan['uuid'] = Str::uuid();
@@ -52,7 +51,7 @@ class PostPerizinanController extends Controller
             'keterangan' => "Upload"
         ]);
 
-        return redirect('/perizinan');
+        return redirect('/perizinan')->with('status', 'Perizinan Berhasil Ditambahkan.');
     }
 
     public function show($id)

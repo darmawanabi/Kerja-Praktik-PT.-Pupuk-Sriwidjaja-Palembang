@@ -19,9 +19,6 @@ class CreatePerizinanTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('post_perizinan_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
-            $table->string('kategori');
-            $table->string('jenis_perizinan');
-            $table->date('tanggal_berakhir');
             $table->string('file')->nullable();
             $table->text('keterangan');
             $table->timestamps();

@@ -18,19 +18,14 @@ class PerizinanController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,odt,txt',
-            'keterangan' => 'required'
+            'file' => 'required|file|mimes:pdf',
+            'kategori' => 'required',
+            'tanggal_berakhir' => 'required'
         ]);
 
         $post = PostPerizinan::find($request->post_perizinan_id);
 
-        // $pathToFile = storage_path('app\\' . Str::kebab($post['nama']) . '\\');
-
-        // dd($pathToFile);
-
         $exist = Storage::disk('local')->exists(Str::kebab($post['nama']) . '/' . $request->file->getClientOriginalName());
-
-        // dd($exist);
 
         if($exist){
             return back()->with('error', 'The file is already exist.');
@@ -47,7 +42,6 @@ class PerizinanController extends Controller
             'uuid' => $perizinan['uuid'],
             'user_id' => $perizinan['user_id'],
             'file' => $request->file->getClientOriginalName(),
-            'jenis_perizinan' => $perizinan['jenis_perizinan'],
             'kategori' =>$perizinan['kategori'],
             'keterangan' => $perizinan['keterangan']
         ]);

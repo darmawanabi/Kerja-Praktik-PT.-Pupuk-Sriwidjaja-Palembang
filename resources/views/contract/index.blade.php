@@ -17,6 +17,62 @@
     <h1>Contract Pool Full Access User</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif
+
+{{-- Form Error --}}
+@if (session('error'))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+@endif
+@if (session('status'))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('status') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+@else
+    <div class="row">
+        <div class="col-md-12">
+            @error('nama')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
+            @error('jenis')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
+            @error('file')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ $message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @enderror
+        </div>
+    </div>
+@endif
+
 <!-- DataTables Example -->
 <div class="card mb-3">
     <div class="card-header">
@@ -48,7 +104,7 @@
                         <th>Nama Kontrak</th>
                         <th class="jenis">Jenis Kontrak</th>
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Pembaharuan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -57,7 +113,7 @@
                         <th>Nama Kontrak</th>
                         <th class="jenis">Jenis Kontrak</th>
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Pembaharuan</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>
@@ -102,16 +158,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kontrak</label>
                         <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Kontrak" value="{{ old('nama') }}">
-                        @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Jenis Kontrak</label>
                         <input name="jenis" type="text" class="form-control @error('jenis') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="{{ old('jenis') }}">
-                        @error('jenis')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
@@ -125,16 +175,10 @@
                                 <label class="custom-file-label" for="inputGroupFile01">Pilih file</label>
                             </div>
                         </div>
-                        @error('file')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{ old('keterangan') }}</textarea>
-                        @error('keterangan')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ old('keterangan') }}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
