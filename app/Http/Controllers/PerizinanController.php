@@ -18,19 +18,14 @@ class PerizinanController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,odt,txt',
-            'keterangan' => 'required'
+            'file' => 'required|file|mimes:pdf',
+            'kategori' => 'required',
+            'tanggal_berakhir' => 'required'
         ]);
 
         $post = PostPerizinan::find($request->post_perizinan_id);
 
-        // $pathToFile = storage_path('app\\' . Str::kebab($post['nama']) . '\\');
-
-        // dd($pathToFile);
-
         $exist = Storage::disk('local')->exists(Str::kebab($post['nama']) . '/' . $request->file->getClientOriginalName());
-
-        // dd($exist);
 
         if($exist){
             return back()->with('error', 'The file is already exist.');
@@ -47,7 +42,6 @@ class PerizinanController extends Controller
             'uuid' => $perizinan['uuid'],
             'user_id' => $perizinan['user_id'],
             'file' => $request->file->getClientOriginalName(),
-            'jenis_perizinan' => $perizinan['jenis_perizinan'],
             'kategori' =>$perizinan['kategori'],
             'keterangan' => $perizinan['keterangan']
         ]);
@@ -75,6 +69,44 @@ class PerizinanController extends Controller
     }
 
 
+    // public function download($post_id, $uuid) {
+    //     date_default_timezone_set('Asia/Bangkok');
+
+    //     $perizinan = Perizinan::where('uuid', $uuid)->firstOrFail();
+
+    //     $post = PostPerizinan::where('id', $post_id)->firstOrFail();
+
+    //     $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $perizinan->file);
+
+    //     LogPerizinan::create([
+    //         'user_id' => auth()->user()->id,
+    //         'post_perizinan_id' => $perizinan->post_perizinan_id,
+    //         'file' => $perizinan->file,
+    //         'keterangan' => "Download"
+    //     ]);
+
+    //     return response()->download($pathToFile);
+
+    //     // return back();
+    // }
+
+    public function loggingDownload(Request $request) {
+        date_default_timezone_set('Asia/Bangkok');
+
+        $perizinan = Perizinan::where('uuid', $request->uuid)->firstOrFail();
+
+        $post = PostPerizinan::where('id', $request->post_id)->firstOrFail();
+
+        LogPerizinan::create([
+            'user_id' => auth()->user()->id,
+            'post_perizinan_id' => $perizinan->post_perizinan_id,
+            'file' => $perizinan->file,
+            'keterangan' => "Download"
+        ]);
+
+        return redirect()->action('PerizinanController@download', array('post_id' => $request->post_id, 'uuid' => $request->uuid));
+    }
+
     public function download($post_id, $uuid) {
         date_default_timezone_set('Asia/Bangkok');
 
@@ -84,15 +116,6 @@ class PerizinanController extends Controller
 
         $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $perizinan->file);
 
-        LogPerizinan::create([
-            'user_id' => auth()->user()->id,
-            'post_perizinan_id' => $perizinan->post_perizinan_id,
-            'file' => $perizinan->file,
-            'keterangan' => "Download"
-        ]);
-        
         return response()->download($pathToFile);
-
-        // return back();
     }
 }

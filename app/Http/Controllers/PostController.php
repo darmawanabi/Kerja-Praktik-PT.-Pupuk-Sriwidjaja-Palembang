@@ -51,8 +51,8 @@ class PostController extends Controller
 
         $request->validate([
             'nama'=>'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,odt',
-            'keterangan'=>'required',
+            'jenis'=>'required',
+            'file' => 'required|file|mimes:pdf,doc,docx,odt,txt'
         ]);
 
         $contract = $request->all();
