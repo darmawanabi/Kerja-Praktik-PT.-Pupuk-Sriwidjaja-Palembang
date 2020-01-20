@@ -78,12 +78,26 @@ class PerizinanController extends Controller
         }
 
         $reminder = date("Y-m-d H:i:s", strtotime($request->tanggal_berakhir . $kategori . "-7 days"));
-        Todo::where('post_id', $post['id'])->update([
-            'name' => $post['nama'],
-            'repeat' => 3,
-            'when' => $reminder,
-            'to' => $post->user->email
-        ]);
+        Todo::where('post_id', $post['id'])->updateOrCreate(
+            ['post_id' => $post['id'], 'name' => $post['nama']],
+            ['repeat' => 3, 'when' => $reminder, 'to' => $post->user->email]
+        );
+        // if (Todo::where('post_id', '=', $post['id'])->exists()){
+        //     Todo::where('post_id', $post['id'])->update([
+        //         'name' => $post['nama'],
+        //         'repeat' => 3,
+        //         'when' => $reminder,
+        //         'to' => $post->user->email
+        //     ]);
+        // } else {
+        //     Todo::create([
+        //         'post_id' => $post['id'],
+        //         'name' => $post['nama'],
+        //         'repeat' => 3,
+        //         'when' => $reminder,
+        //         'to' => $post->user->email
+        //     ]);
+        // }
 
         return back()->with('status', 'Revisi Berhasil Ditambahkan.');
     }
