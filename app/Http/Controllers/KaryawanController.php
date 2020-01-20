@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifRegistrasi;
 use Illuminate\Http\Request;
 
 class KaryawanController extends Controller
@@ -31,6 +32,8 @@ class KaryawanController extends Controller
         $user->remember_token = str_random(60);
         $user->save();
 
+        \Mail::to($user->email)->send(new NotifRegistrasi);
+
         //insert table karyawan
         $karyawan = \App\karyawan::create($request->all());
         return redirect('/karyawan');
@@ -51,6 +54,8 @@ class KaryawanController extends Controller
     {
         $data_karyawan = \App\Karyawan::find($id);
         $data_karyawan->delete();
+        $data_user = \App\User::find($data_karyawan->user_id);
+        $data_user->delete();
         return redirect('/karyawan');
     }
 }

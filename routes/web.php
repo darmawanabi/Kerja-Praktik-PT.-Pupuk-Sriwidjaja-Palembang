@@ -22,6 +22,8 @@ Route::get('/login', 'AuthController@login')->name('login');
 Route::post('/postlogin', 'AuthController@postlogin');
 Route::get('logout', 'AuthController@logout');
 
+Route::get('email', 'EmailController@sendEmail');
+
 //karyawan-admin
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     // Route::get('/dashboard', 'DashboardController@index');
