@@ -387,6 +387,7 @@ class ComposerStaticInit4e1b7fb7959dd31d89636d39b5f527f7
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\SendEmails' => __DIR__ . '/../..' . '/app/Console/Commands/SendEmails.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Contract' => __DIR__ . '/../..' . '/app/Contract.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -401,7 +402,6 @@ class ComposerStaticInit4e1b7fb7959dd31d89636d39b5f527f7
         'App\\Http\\Controllers\\ContractPoolController' => __DIR__ . '/../..' . '/app/Http/Controllers/ContractPoolController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
-        'App\\Http\\Controllers\\EmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmailController.php',
         'App\\Http\\Controllers\\KaryawanController' => __DIR__ . '/../..' . '/app/Http/Controllers/KaryawanController.php',
         'App\\Http\\Controllers\\LogController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogController.php',
         'App\\Http\\Controllers\\PerizinanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PerizinanController.php',
@@ -409,6 +409,7 @@ class ComposerStaticInit4e1b7fb7959dd31d89636d39b5f527f7
         'App\\Http\\Controllers\\PostPerizinanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostPerizinanController.php',
         'App\\Http\\Controllers\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegisterController.php',
         'App\\Http\\Controllers\\StandarUser' => __DIR__ . '/../..' . '/app/Http/Controllers/StandarUser.php',
+        'App\\Http\\Controllers\\TodoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TodoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -421,8 +422,8 @@ class ComposerStaticInit4e1b7fb7959dd31d89636d39b5f527f7
         'App\\Karyawan' => __DIR__ . '/../..' . '/app/Karyawan.php',
         'App\\Log' => __DIR__ . '/../..' . '/app/Log.php',
         'App\\LogPerizinan' => __DIR__ . '/../..' . '/app/LogPerizinan.php',
+        'App\\Mail\\EmailReminder' => __DIR__ . '/../..' . '/app/Mail/EmailReminder.php',
         'App\\Mail\\NotifRegistrasi' => __DIR__ . '/../..' . '/app/Mail/NotifRegistrasi.php',
-        'App\\Mail\\NotifReminder' => __DIR__ . '/../..' . '/app/Mail/NotifReminder.php',
         'App\\Perizinan' => __DIR__ . '/../..' . '/app/Perizinan.php',
         'App\\Post' => __DIR__ . '/../..' . '/app/Post.php',
         'App\\PostPerizinan' => __DIR__ . '/../..' . '/app/PostPerizinan.php',
@@ -431,6 +432,7 @@ class ComposerStaticInit4e1b7fb7959dd31d89636d39b5f527f7
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Todo' => __DIR__ . '/../..' . '/app/Todo.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'BeyondCode\\DumpServer\\DumpServerCommand' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',

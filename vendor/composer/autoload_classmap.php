@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\SendEmails' => $baseDir . '/app/Console/Commands/SendEmails.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Contract' => $baseDir . '/app/Contract.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -20,7 +21,6 @@ return array(
     'App\\Http\\Controllers\\ContractPoolController' => $baseDir . '/app/Http/Controllers/ContractPoolController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DashboardController' => $baseDir . '/app/Http/Controllers/DashboardController.php',
-    'App\\Http\\Controllers\\EmailController' => $baseDir . '/app/Http/Controllers/EmailController.php',
     'App\\Http\\Controllers\\KaryawanController' => $baseDir . '/app/Http/Controllers/KaryawanController.php',
     'App\\Http\\Controllers\\LogController' => $baseDir . '/app/Http/Controllers/LogController.php',
     'App\\Http\\Controllers\\PerizinanController' => $baseDir . '/app/Http/Controllers/PerizinanController.php',
@@ -28,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\PostPerizinanController' => $baseDir . '/app/Http/Controllers/PostPerizinanController.php',
     'App\\Http\\Controllers\\RegisterController' => $baseDir . '/app/Http/Controllers/RegisterController.php',
     'App\\Http\\Controllers\\StandarUser' => $baseDir . '/app/Http/Controllers/StandarUser.php',
+    'App\\Http\\Controllers\\TodoController' => $baseDir . '/app/Http/Controllers/TodoController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -40,8 +41,8 @@ return array(
     'App\\Karyawan' => $baseDir . '/app/Karyawan.php',
     'App\\Log' => $baseDir . '/app/Log.php',
     'App\\LogPerizinan' => $baseDir . '/app/LogPerizinan.php',
+    'App\\Mail\\EmailReminder' => $baseDir . '/app/Mail/EmailReminder.php',
     'App\\Mail\\NotifRegistrasi' => $baseDir . '/app/Mail/NotifRegistrasi.php',
-    'App\\Mail\\NotifReminder' => $baseDir . '/app/Mail/NotifReminder.php',
     'App\\Perizinan' => $baseDir . '/app/Perizinan.php',
     'App\\Post' => $baseDir . '/app/Post.php',
     'App\\PostPerizinan' => $baseDir . '/app/PostPerizinan.php',
@@ -50,6 +51,7 @@ return array(
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\Todo' => $baseDir . '/app/Todo.php',
     'App\\User' => $baseDir . '/app/User.php',
     'BeyondCode\\DumpServer\\DumpServerCommand' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerCommand.php',
     'BeyondCode\\DumpServer\\DumpServerServiceProvider' => $vendorDir . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',

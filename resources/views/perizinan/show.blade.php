@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', $postperizinan->nama)
+
 @section('content')
 {{-- @if(auth()->user()->role == 'admin')
     <h1>Perizinan Admin</h1>

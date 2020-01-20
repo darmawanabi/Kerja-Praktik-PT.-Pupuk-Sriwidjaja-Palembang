@@ -33,7 +33,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">
                         <i class="fas fa-bell"></i>&nbsp;
-                        Reminder Perizinan
+                        Perizinan yang harus diperbaharui
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
