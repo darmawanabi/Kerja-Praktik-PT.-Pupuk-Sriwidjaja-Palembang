@@ -30,10 +30,8 @@ class DashboardController extends Controller
                 $kategori = "-2 years";
             }
 
-            array_push($tgl_reminder, date("Y-m-d", strtotime(Arr::get($tgl, 'tanggal_berakhir') . $kategori)));
+            array_push($tgl_reminder, date("Y-m-d", strtotime(Arr::get($tgl, 'tanggal_berakhir') . $kategori . "-7 days")));
         }
-
-        // $tgl_reminder = ["2020-01-10", "2020-01-20"];
 
         $now = now();
         // $dates =  "2020-01-13 10:00:00.000000 Asia/Bangkok (+07:00)";
@@ -52,8 +50,6 @@ class DashboardController extends Controller
             //     array_push($check, $array);
             // }
         }
-
-        // dd($now,$today,$tanggal,$tgl_reminder,$check);
 
         return view('dashboard/index', ['check' => $check], ['show_notif' => $show_notif]);
     }

@@ -73,6 +73,11 @@
   <script src="{{('/admin/assets/js/sb-admin.min.js')}}"></script>
   <script src="{{('/admin/assets/js/datatables-custom.js')}}"></script>
   <script src="{{('/admin/assets/js/reminder-button.js')}}"></script>
+  <script type="text/javascript">
+    window.setTimeout(function () {
+        $(".alert").alert('close');
+    }, 5000);
+  </script>
 
   <!-- Demo scripts for this page-->
   <script src="{{('/admin/assets/js/demo/datatables-demo.js')}}"></script>

@@ -28,6 +28,6 @@ class NotifRegistrasi extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.sites.registrasi');
+        return $this->markdown('emails.sites.pendaftaran');
     }
 }

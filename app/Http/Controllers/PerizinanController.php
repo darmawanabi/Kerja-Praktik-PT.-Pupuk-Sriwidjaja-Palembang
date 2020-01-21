@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Kategori;
+use App\LogPerizinan;
 use App\Perizinan;
 use App\PostPerizinan;
-use App\LogPerizinan;
+use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -67,6 +68,38 @@ class PerizinanController extends Controller
         }
 
         Perizinan::create($perizinan);
+
+        if ($request->kategori == "3 Bulan"){
+            $kategori = "-3 months";
+        } elseif ($request->kategori == "6 Bulan"){
+            $kategori = "-6 months";
+        } elseif ($request->kategori == "1 Tahun"){
+            $kategori = "-1 years";
+        } elseif ($request->kategori == "2 Tahun"){
+            $kategori = "-2 years";
+        }
+
+        $reminder = date("Y-m-d H:i:s", strtotime($request->tanggal_berakhir . $kategori . "-7 days"));
+        Todo::where('post_id', $post['id'])->updateOrCreate(
+            ['post_id' => $post['id'], 'name' => $post['nama']],
+            ['repeat' => 3, 'when' => $reminder, 'to' => $post->user->email]
+        );
+        // if (Todo::where('post_id', '=', $post['id'])->exists()){
+        //     Todo::where('post_id', $post['id'])->update([
+        //         'name' => $post['nama'],
+        //         'repeat' => 3,
+        //         'when' => $reminder,
+        //         'to' => $post->user->email
+        //     ]);
+        // } else {
+        //     Todo::create([
+        //         'post_id' => $post['id'],
+        //         'name' => $post['nama'],
+        //         'repeat' => 3,
+        //         'when' => $reminder,
+        //         'to' => $post->user->email
+        //     ]);
+        // }
 
         return back()->with('status', 'Revisi Berhasil Ditambahkan.');
     }
