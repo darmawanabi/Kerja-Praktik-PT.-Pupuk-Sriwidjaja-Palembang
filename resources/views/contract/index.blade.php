@@ -159,9 +159,20 @@
                         <label for="exampleInputEmail1">Nama Kontrak</label>
                         <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Kontrak" value="{{ old('nama') }}">
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="exampleInputEmail1">Jenis Kontrak</label>
                         <input name="jenis" type="text" class="form-control @error('jenis') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="{{ old('jenis') }}">
+                    </div> --}}
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Jenis Kontrak</label>
+                        <select name="jenis" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
+                            @foreach ($tablemaster as $tm)
+                                    <option value="{{$tm['jenis_kontrak']}}" @if(old('jenis') == $tm['jenis_kontrak']) selected @endif>{{$tm['jenis_kontrak']}}</option>
+                            @endforeach
+                        </select>
+                        @error('jenis')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>

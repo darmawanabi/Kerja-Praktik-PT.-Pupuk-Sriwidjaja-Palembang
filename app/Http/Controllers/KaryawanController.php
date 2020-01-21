@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifRegistrasi;
 use Illuminate\Http\Request;
+use App\Karyawan;
+use App\User;
 
 class KaryawanController extends Controller
 {
@@ -18,7 +21,9 @@ class KaryawanController extends Controller
             'nama' => 'required',
             'email' => 'required',
             'alamat' => 'required',
-            'role' => 'required'
+            'role' => 'required',
+            'jenis_kontrak' => 'required',
+            'jenis_perizinan' => 'required'
         ]);
 
         //insert table user
@@ -31,6 +36,9 @@ class KaryawanController extends Controller
         $user->remember_token = str_random(60);
         $user->save();
 
+        //send email registrasi
+        \Mail::to($user->email)->send(new NotifRegistrasi);
+
         //insert table karyawan
         $karyawan = \App\karyawan::create($request->all());
         return redirect('/karyawan');
@@ -42,8 +50,18 @@ class KaryawanController extends Controller
     }
 
     public function update(Request $request, $id){
-        $data_karyawan = \App\Karyawan::find($id);
-        $data_karyawan->update($request->all());
+        $data_karyawan = Karyawan::find($id);
+        
+        Karyawan::where('id', $id)->update([
+            'nama' => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'alamat' => $request->alamat
+        ]);
+
+        User::where('id', $data_karyawan['user_id'])->update([
+            'name' => $request->nama,
+            'role' => $request->role
+        ]);
         return redirect('/karyawan');
     }
 
@@ -51,6 +69,39 @@ class KaryawanController extends Controller
     {
         $data_karyawan = \App\Karyawan::find($id);
         $data_karyawan->delete();
+        $data_user = \App\User::find($data_karyawan->user_id);
+        $data_user->delete();
         return redirect('/karyawan');
+    }
+    
+    public function masterIndex(){
+        return view('karyawan/masterindex');
+    }
+    
+    public function master()
+    {   
+        $masterkontrak = \App\TableMaster::all();
+        $masterperizinan = \App\TableMasterPerizinan::all();
+        return view('karyawan/tablemaster', ['masterkontrak' => $masterkontrak], ['masterperizinan' => $masterperizinan]);
+    }
+
+    public function masterKontrakStore(Request $request)
+    {
+        //insert table tablemaster
+        $masterkontrak = \App\TableMaster::create($request->all());
+        return redirect('/master');
+    }
+    public function masterPerizinanStore(Request $request)
+    {
+        //insert table tablemasterperizinan
+        $masterperizinan = \App\TableMasterPerizinan::create($request->all());
+        return redirect('/master');
+    }
+
+    public function masterEdit($id){
+        $masterkontrak = \App\TableMaster::find($id);
+        $masterperizinan = \App\TableMasterPerizinan::find($id);
+        return view('karyawan/masteredit', ['masterkontrak' => $masterkontrak], ['masterperizinan' => $masterperizinan]);
+       
     }
 }

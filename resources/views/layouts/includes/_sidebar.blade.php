@@ -11,6 +11,14 @@
         </a>
     </li>
     @endif
+    @if(auth()->user()->role == 'admin')
+    <li class="nav-item">
+        <a class="nav-link" href="/master">
+          <span>Master Kontrak & Perizinan</span>
+        </a>
+    </li>
+    @endif
+
     @if(auth()->user()->role == 'std_user')
     <li class="nav-item">
         <a class="nav-link" href="/contracts">
@@ -18,6 +26,14 @@
         </a>
     </li>
     @endif
+    @if(auth()->user()->role == 'std_user')
+    <li class="nav-item">
+        <a class="nav-link" href="/perizinan">
+          <span>Perizinan</span>
+        </a>
+    </li>
+    @endif
+
     @if(auth()->user()->role == 'access_user')
     <li class="nav-item">
         <a class="nav-link" href="/contracts">

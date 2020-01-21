@@ -21,6 +21,17 @@
             <label for="exampleFormControlTextarea1">Alamat</label>
             <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$data_karyawan->alamat}}</textarea>
         </div>
+        @php
+            $user = \App\User::find($data_karyawan->user_id)
+        @endphp
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Role</label>
+            <select name="role" class="form-control" id="exampleFormControlSelect1">
+            <option value="admin" @if($user->role == 'admin') selected @endif>Admin</option>
+            <option value="std_user" @if($user->role == 'std_user') selected @endif>Standard User</option>
+            <option value="access_user" @if($user->role == 'access_user') selected @endif>Full Access User</option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <a class="btn btn-danger" href="/karyawan" role="button">Cancel</a>

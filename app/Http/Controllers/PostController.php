@@ -20,13 +20,14 @@ class PostController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $post = Post::all();
+        $tablemaster = \App\TableMaster::all('jenis_kontrak')->toArray();
 
         // $now = now();
         // $dates =  "2020-01-13 10:00:00.000000 Asia/Bangkok (+07:00)";
         // $dates = substr_replace($now,"",-9);
         // dd($now,$dates);
 
-        return view('/contract/index', ['posts' => $post]);
+        return view('/contract/index', ['posts' => $post], ['tablemaster' => $tablemaster]);
     }
 
     /**

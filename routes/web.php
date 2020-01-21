@@ -24,12 +24,16 @@ Route::get('logout', 'AuthController@logout');
 
 //karyawan-admin
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
-    // Route::get('/dashboard', 'DashboardController@index');
     Route::get('/karyawan', 'KaryawanController@index');
     Route::post('/karyawan', 'KaryawanController@store');
     Route::get('/karyawan/{id}/edit', 'KaryawanController@edit');
     Route::post('/karyawan/{id}/update', 'KaryawanController@update');
     Route::get('/karyawan/{id}/delete', 'KaryawanController@delete');
+    route::get('/masterIndex', 'KaryawanController@masterIndex');
+    Route::get('/master', 'KaryawanController@master');
+    Route::post('/masterkontrak', 'KaryawanController@masterKontrakStore');
+    Route::post('/masterperizinan', 'KaryawanController@masterPerizinanStore');
+    Route::get('/masterEdit/{id}/edit','KaryawanController@masterEdit');
 });
 //std_user
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){

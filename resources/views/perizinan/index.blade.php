@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Perizinan')
+
 @section('content')
 @if(auth()->user()->role == 'admin')
     <h1>Perizinan Admin</h1>
@@ -169,8 +171,15 @@
                         <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Perizinan" value="{{ old('nama') }}">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Jenis Perizinan</label>
-                        <input name="jenis_perizinan" type="text" class="form-control @error('jenis_perizinan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{ old('jenis') }}">
+                        <label for="exampleFormControlSelect1">Jenis Perizinan</label>
+                        <select name="jenis_perizinan" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
+                            @foreach ($tablemasterperizinan as $tmp)
+                                    <option value="{{$tmp['jenis_perizinan']}}" @if(old('jenis') == $tmp['jenis_perizinan']) selected @endif>{{$tmp['jenis_perizinan']}}</option>
+                            @endforeach
+                        </select>
+                        @error('jenis')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Kategori</label>
