@@ -21,9 +21,7 @@ class KaryawanController extends Controller
             'nama' => 'required',
             'email' => 'required',
             'alamat' => 'required',
-            'role' => 'required',
-            'jenis_kontrak' => 'required',
-            'jenis_perizinan' => 'required'
+            'role' => 'required'
         ]);
 
         //insert table user

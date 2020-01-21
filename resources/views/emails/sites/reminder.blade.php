@@ -24,7 +24,7 @@ Administrasi Departemen Hukum
 
 @slot('footer')
 @component('mail::footer')
-© {{ date('Y') }} PT. PUPUK SRIWIDJAJA PALEMBANG. @lang('All rights reserved.')
+© {{ date('Y') }} PT. Pupuk Sriwidjaja Palembang. @lang('All rights reserved.')
 @endcomponent
 @endslot
 @endcomponent

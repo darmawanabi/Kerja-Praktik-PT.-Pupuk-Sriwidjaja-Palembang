@@ -1,4 +1,10 @@
-@component('mail::message')
+@component('mail::layout')
+@slot('header')
+@component('mail::header', ['url' => $link])
+PT. PUPUK SRIWIDJAJA PALEMBANG
+@endcomponent
+@endslot
+
 # Registrasi Contract Pool dan Reminder Perizinan Departemen Hukum
 
 Selamat registrasi anda di website Contract Pool Departemen Hukum berhasil. <br>
@@ -9,5 +15,11 @@ Klik di sini!
 @endcomponent
 
 Terima Kasih,<br>
-Administrasi Contract Pool dan Reminder Perizinan  Departemen Hukum
+Administrasi Departemen Hukum
+
+@slot('footer')
+@component('mail::footer')
+© {{ date('Y') }} PT. Pupuk Sriwidjaja Palembang. @lang('All rights reserved.')
+@endcomponent
+@endslot
 @endcomponent
