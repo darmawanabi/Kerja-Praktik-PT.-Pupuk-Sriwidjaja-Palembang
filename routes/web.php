@@ -34,8 +34,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     Route::get('/master', 'KaryawanController@master');
     Route::post('/master', 'KaryawanController@masterKontrakStore');
     Route::put('/master', 'KaryawanController@masterPerizinanStore');
-    Route::patch('/master', 'KaryawanController@masterUpdate');
     Route::get('/masterEdit/{check}/{id}/edit','KaryawanController@masterEdit');
+    Route::patch('/master', 'KaryawanController@masterUpdate');
 });
 //std_user
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){
