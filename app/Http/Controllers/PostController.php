@@ -77,7 +77,7 @@ class PostController extends Controller
             'keterangan' => "Upload"
         ]);
 
-        return redirect('/contracts');
+        return redirect('/contracts')->with('status', 'Kontrak Berhasil Ditambahkan.');
     }
 
     public function loggingDownload(Request $request) {

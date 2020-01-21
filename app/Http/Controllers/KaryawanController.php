@@ -49,7 +49,7 @@ class KaryawanController extends Controller
 
     public function update(Request $request, $id){
         $data_karyawan = Karyawan::find($id);
-        
+
         Karyawan::where('id', $id)->update([
             'nama' => $request->nama,
             'jenis_kelamin' => $request->jenis_kelamin,
@@ -71,13 +71,13 @@ class KaryawanController extends Controller
         $data_user->delete();
         return redirect('/karyawan');
     }
-    
+
     public function masterIndex(){
         return view('karyawan/masterindex');
     }
-    
+
     public function master()
-    {   
+    {
         $masterkontrak = \App\TableMaster::all();
         $masterperizinan = \App\TableMasterPerizinan::all();
         return view('karyawan/tablemaster', ['masterkontrak' => $masterkontrak], ['masterperizinan' => $masterperizinan]);
@@ -86,20 +86,31 @@ class KaryawanController extends Controller
     public function masterKontrakStore(Request $request)
     {
         //insert table tablemaster
+        $request->validate([
+            'jenis_kontrak' => 'required|unique:table_masters'
+        ]);
+
         $masterkontrak = \App\TableMaster::create($request->all());
-        return redirect('/master');
+        return redirect('/master')->with('status', 'Jenis Kontrak Berhasil Ditambahkan.');
     }
     public function masterPerizinanStore(Request $request)
     {
+        $request->validate([
+            'jenis_perizinan' => 'required|unique:table_master_perizinans'
+        ]);
         //insert table tablemasterperizinan
         $masterperizinan = \App\TableMasterPerizinan::create($request->all());
-        return redirect('/master');
+        return redirect('/master')->with('status', 'Jenis Perizinan Berhasil Ditambahkan.');
     }
 
-    public function masterEdit($id){
+    public function masterEdit($check, $id){
+        if ($check == "kontrak") {
+            $check = true;
+        }else{
+            $check = false;
+        }
         $masterkontrak = \App\TableMaster::find($id);
         $masterperizinan = \App\TableMasterPerizinan::find($id);
-        return view('karyawan/masteredit', ['masterkontrak' => $masterkontrak], ['masterperizinan' => $masterperizinan]);
-       
+        return view('karyawan/masteredit', compact('masterkontrak', 'masterperizinan', 'check'));
     }
 }

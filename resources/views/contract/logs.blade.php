@@ -4,7 +4,7 @@
             <h5 class="card-title d-inline">Log Activity</h5>
         </div>
         <div class="float-right">
-            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#logDetail">Detail</button>
+            <button class="btn btn-logs btn-sm" type="button" data-toggle="modal" data-target="#logDetail">Detail</button>
         </div>
     </div>
     <div class="card-body">

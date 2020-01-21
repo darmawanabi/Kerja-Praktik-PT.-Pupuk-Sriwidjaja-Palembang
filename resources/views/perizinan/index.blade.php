@@ -136,7 +136,7 @@
 
                             <td>{{$postperizinan->tanggal_berakhir}}</td>
                             <td>
-                                <a href="/perizinan/{{ $postperizinan->id }}" class="btn btn-primary btn-sm">Detail</a>
+                                <a href="/perizinan/{{ $postperizinan->id }}" class="btn btn-info btn-sm">Detail</a>
                                 <form action="/perizinan" class="d-inline" method="post">
                                     @csrf
                                     @method('patch')

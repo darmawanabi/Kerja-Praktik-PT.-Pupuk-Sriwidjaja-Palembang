@@ -47,16 +47,12 @@
                                     <input type="hidden" name="post_perizinan_id" value="{{ $post->id }}" />
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nama Perizinan</label>
-                                        <div class="form-control" aria-describedby="emailHelp">{{ $post->nama }}</div>
+                                        <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                                        <div class="form-control" aria-describedby="emailHelp">{{ $post->jenis_perizinan }}</div>
+                                        <input class="form-control" type="text" value="{{ $post->jenis_perizinan }}" readonly>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label for="exampleInputEmail1">Kategori Perizinan</label>
-                                        <div class="form-control" aria-describedby="emailHelp">{{ $post->kategori }}</div>
-                                    </div> --}}
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Kategori</label>
                                         <select name="kategori" class="form-control @error('kategori') is-invalid @enderror" id="exampleFormControlSelect1">
