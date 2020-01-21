@@ -39,9 +39,6 @@
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#login">Login</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#register">Register</a>
-            </li>
         </ul>
       </div>
     </div>
@@ -62,61 +59,8 @@
     </div>
   </header>
 
-  <!-- Register Section -->
-  <section class="page-section" id="register">
-    <div class="container">
-      <h2 class="text-center mt-0">Register</h2>
-      <hr class="divider my-4">
-      <div class="row">
-          <div class="col-md-12">
-          <form action="/postregister/create" method="post">
-            @csrf
-                <div class="form-group">
-                    <label for="exampleInputEmail1">No Badge</label>
-                    <input name="user_id" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="No Badge">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Lengkap</label>
-                    <input name="nama" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Lengkap">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                </div>
-                <!-- <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                </div> -->
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                    <select name="jenis_kelamin" class="form-control" id="exampleFormControlSelect1">
-                    <option value="L">Laki - laki</option>
-                    <option value="P">Perempuan</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Alamat</label>
-                    <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Role</label>
-                    <select name="role" class="form-control" id="exampleFormControlSelect1">
-                    <option value="std_user">Standard User</option>
-                    <option value="access_user">Full Access User</option>
-                    </select>
-                </div>
-           </div>
-           <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            </form>
-          </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Login Section -->
-  <section class="page-section bg-dark text-white" id="login">
+  <section class="page-section" id="login">
   <div class="container">
       <h2 class="text-center mt-0">Login</h2>
         <hr class="divider my-4">
@@ -141,7 +85,7 @@
                       </label>
                   </div> -->
                   <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-                  <a class="nav-link js-scroll-trigger" href="#register">Register</a>
+                  {{-- <a class="nav-link js-scroll-trigger" href="#register">Register</a> --}}
                   <!-- <div class="bottom">
                       <span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
                   </div> -->

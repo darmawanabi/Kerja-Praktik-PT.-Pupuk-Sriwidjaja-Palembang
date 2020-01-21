@@ -42,8 +42,7 @@ class ContractController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $request->validate([
-            'file' => 'required|file|mimes:pdf,doc,docx,odt,txt',
-            'keterangan' => 'required'
+            'file' => 'required|file|mimes:pdf,doc,docx,odt,txt'
         ]);
 
         $post = Post::find($request->post_id);

@@ -17,23 +17,25 @@
     <h1>Contract Pool Full Access User</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif --}}
-<!-- DataTables Example -->
-@if (session('status'))
+
+{{-- Form Error --}}
+@if (session('error'))
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ session('status') }}</strong>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         </div>
     </div>
-@elseif (session('error'))
+@endif
+@if (session('status'))
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>{{ session('error') }}</strong>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('status') }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -51,17 +53,11 @@
                     </button>
                 </div>
             @enderror
-            @error('keterangan')
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @enderror
         </div>
     </div>
 @endif
+
+<!-- DataTables Example -->
 
 <div class="card mb-3">
     <div class="card-header">
@@ -111,7 +107,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Revisi Kontrak</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Revisi Data Kontrak</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -123,6 +119,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kontrak</label>
                         <div class="form-control" aria-describedby="emailHelp">{{ $post->nama }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Jenis Kontrak</label>
+                        <div class="form-control" aria-describedby="emailHelp">{{ $post->jenis }}</div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
@@ -139,12 +139,12 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{ $post->keterangan }}</textarea>
+                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $post->keterangan }}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Tambah</button>
+                    <button type="submit" class="btn btn-primary">Revisi</button>
                 </div>
             </form>
         </div>

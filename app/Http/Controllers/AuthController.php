@@ -9,14 +9,14 @@ class AuthController extends Controller
 {
     //
     public function login(){
-        return view('auth/login');
+        return redirect('/');
     }
 
     public function postlogin(Request $request){
         if (Auth::attempt($request->only('id', 'password'))){
             return redirect('/dashboard');
         }
-        return redirect('/login');
+        return redirect('/');
     }
 
     public function logout()

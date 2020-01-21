@@ -22,6 +22,8 @@ Route::get('/login', 'AuthController@login')->name('login');
 Route::post('/postlogin', 'AuthController@postlogin');
 Route::get('logout', 'AuthController@logout');
 
+Route::get('email', 'EmailController@sendEmail');
+
 //karyawan-admin
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     // Route::get('/dashboard', 'DashboardController@index');
@@ -44,15 +46,27 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']],
     Route::post('/contracts', 'PostController@store');
     Route::get('/contracts/{contract}', 'PostController@show');
     Route::post('/contracts/{contract}', 'ContractController@store');
+    Route::get('/perizinan', 'PostPerizinanController@index');
+    Route::post('/perizinan', 'PostPerizinanController@store');
+    Route::get('/perizinan/{perizinan}', 'PostPerizinanController@show')->name('perizinan');
+    Route::post('/perizinan/{perizinan}', 'PerizinanController@store');
 });
-
 
 // Download Contract
 Route::patch('/contracts', 'PostController@loggingDownload');
 Route::patch('/contracts/{contract}', 'PostController@loggingDownload');
 Route::put('/contracts/{contract}', 'ContractController@loggingDownload');
-Route::get('{uuid}/download', 'PostController@download');
-Route::get('{post_id}/{uuid}/download', 'ContractController@download');
+
+Route::get('contracts/{uuid}/download', 'PostController@download');
+Route::get('contracts/{post_id}/{uuid}/download', 'ContractController@download');
+
+// Download Perizinan
+Route::patch('/perizinan', 'PostPerizinanController@loggingDownload');
+Route::patch('/perizinan/{perizinan}', 'PostPerizinanController@loggingDownload');
+Route::put('/perizinan/{perizinan}', 'PerizinanController@loggingDownload');
+
+Route::get('perizinan/{uuid}/download', 'PostPerizinanController@download');
+Route::get('perizinan/{post_id}/{uuid}/download', 'PerizinanController@download');
 
 // Route::get('/contracts/{uuid}/download', 'PostController@log_for_download');
 // Route::get('/contracts/{post_id}/{uuid}/download', 'ContractController@download');

@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifPendaftaranKaryawan extends Mailable
+class NotifRegistrasi extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +28,6 @@ class NotifPendaftaranKaryawan extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.sites.registrasi');
+        return $this->markdown('emails.sites.pendaftaran');
     }
 }

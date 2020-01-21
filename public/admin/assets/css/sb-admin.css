@@ -48,7 +48,7 @@
   box-sizing: border-box;
 }
 
-#dataLog_filter input { width: 108px }
+#dataLog_filter input { width: 105px }
 
 #dataLog_info { visibility: hidden }
 
