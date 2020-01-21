@@ -118,11 +118,11 @@
                     <input type="hidden" name="post_id" value="{{ $post->id }}" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kontrak</label>
-                        <div class="form-control" aria-describedby="emailHelp">{{ $post->nama }}</div>
+                        <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Jenis Kontrak</label>
-                        <div class="form-control" aria-describedby="emailHelp">{{ $post->jenis }}</div>
+                        <input class="form-control" type="text" value="{{ $post->jenis }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>

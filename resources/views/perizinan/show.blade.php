@@ -136,11 +136,11 @@
                     <input type="hidden" name="post_perizinan_id" value="{{ $postperizinan->id }}" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Perizinan</label>
-                        <div class="form-control" aria-describedby="emailHelp">{{ $postperizinan->nama }}</div>
+                        <input class="form-control" type="text" value="{{ $postperizinan->nama }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                        <div class="form-control" aria-describedby="emailHelp">{{ $postperizinan->jenis_perizinan }}</div>
+                        <input class="form-control" type="text" value="{{ $postperizinan->jenis_perizinan }}" readonly>
                     </div>
                     {{-- <div class="form-group">
                         <label for="exampleInputEmail1">Kategori Perizinan</label>

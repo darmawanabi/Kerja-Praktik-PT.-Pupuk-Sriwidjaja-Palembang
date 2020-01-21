@@ -1,9 +1,8 @@
 @component('mail::message')
-# Pendaftaran Sistem Contract Pool Dept. Hukum | PT. Pupuk Sriwidjaja Palembang
+# Registrasi Contract Pool Departemen Hukum | PT. Pupuk Sriwidjaja Palembang
 
-Anda telah terdaftar pada sistem aplikasi Contract Pool Departemen Hukum
-PT. Pupuk Sriwidjaja Palembang.
-Silakan Login dengan No. Badge dengan password : 12345678
+Anda telah teregistrasi di Contract Pool Dept. Hukum | PT. Pupuk Sriwidjaja Palembang
+silakan login dengan menggunakan No. Badge dan password = 12345678
 
 @component('mail::button', ['url' => 'http://localhost:8000/'])
 Klik Disini

@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Dashboard | Departemen Hukum')
+
 @section('content')
 
 <script src="{{ asset('js/jquery.min.js') }}"></script>

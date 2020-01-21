@@ -15,7 +15,8 @@ class PostPerizinanController extends Controller
     {
         $post = PostPerizinan::all();
         $perizinan = Perizinan::all();
-        return view('/perizinan/index', compact('post','perizinan'));
+        $tablemasterperizinan = \App\TableMasterPerizinan::all('jenis_perizinan')->toArray();
+        return view('/perizinan/index', compact('post','perizinan','tablemasterperizinan'));
     }
 
     public function store(Request $request)
