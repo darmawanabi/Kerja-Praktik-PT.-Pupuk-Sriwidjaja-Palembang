@@ -58,8 +58,6 @@ class PerizinanController extends Controller
         $perizinan['uuid'] = $temp['uuid'];
         $perizinan['user_id'] = $temp['user_id'];
         $perizinan['file'] = $temp['file'];
-        $perizinan['kategori'] = $temp['kategori'];
-        $perizinan['jenis_perizinan'] = $temp['jenis_perizinan'];
         $perizinan['keterangan'] = $temp['keterangan'];
         $perizinan['created_at'] = $temp['updated_at'];
 
