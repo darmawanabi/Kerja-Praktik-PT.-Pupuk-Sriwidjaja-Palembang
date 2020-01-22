@@ -31,11 +31,10 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     Route::get('/karyawan/{id}/edit', 'KaryawanController@edit');
     Route::post('/karyawan/{id}/update', 'KaryawanController@update');
     Route::get('/karyawan/{id}/delete', 'KaryawanController@delete');
-    Route::get('/master', 'KaryawanController@master');
-    Route::post('/master', 'KaryawanController@masterKontrakStore');
-    Route::put('/master', 'KaryawanController@masterPerizinanStore');
-    Route::get('/masterEdit/{check}/{id}/edit','KaryawanController@masterEdit');
-    Route::patch('/master', 'KaryawanController@masterUpdate');
+    Route::get('/master', 'TableMasterController@index');
+    Route::post('/master', 'TableMasterController@store');
+    Route::patch('/master', 'TableMasterController@update');
+    Route::get('/master/{jenis}/{id}/delete', 'TableMasterController@delete');
 });
 //std_user
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){
