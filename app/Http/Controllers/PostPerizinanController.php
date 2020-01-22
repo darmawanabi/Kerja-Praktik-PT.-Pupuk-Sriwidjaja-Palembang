@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Perizinan;
 use App\PostPerizinan;
 use App\LogPerizinan;
+use App\TableMasterPerizinan;
 use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -33,10 +34,13 @@ class PostPerizinanController extends Controller
             'tanggal_berakhir'=>'required'
         ]);
 
+        $jenis = TableMasterPerizinan::where('jenis_perizinan', $request->jenis_perizinan)->firstOrFail();
+
         $perizinan = $request->all();
 
         $perizinan['user_id'] = auth()->user()->id;
         $perizinan['uuid'] = Str::uuid();
+        $perizinan['table_master_perizinan_id'] = $jenis->id;
 
         if($request->hasFile('file')) {
             $perizinan['file'] = $request->file->getClientOriginalName();

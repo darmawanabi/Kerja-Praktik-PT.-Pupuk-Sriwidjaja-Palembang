@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Log;
 use App\Post;
+use App\TableMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -20,7 +21,7 @@ class PostController extends Controller
         date_default_timezone_set('Asia/Bangkok');
 
         $post = Post::all();
-        $tablemaster = \App\TableMaster::all('jenis_kontrak')->toArray();
+        $tablemaster = TableMaster::all('jenis_kontrak')->toArray();
 
         // $now = now();
         // $dates =  "2020-01-13 10:00:00.000000 Asia/Bangkok (+07:00)";
@@ -56,10 +57,13 @@ class PostController extends Controller
             'file' => 'required|file|mimes:pdf,doc,docx,odt,txt'
         ]);
 
+        $jenis = TableMaster::where('jenis_kontrak', $request->jenis)->firstOrFail();
+
         $contract = $request->all();
 
         $contract['user_id'] = auth()->user()->id;
         $contract['uuid'] = Str::uuid();
+        $contract['table_masters_id'] = $jenis->id;
 
         if($request->hasFile('file')) {
             $contract['file'] = $request->file->getClientOriginalName();

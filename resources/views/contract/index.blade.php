@@ -167,7 +167,7 @@
                         <label for="exampleFormControlSelect1">Jenis Kontrak</label>
                         <select name="jenis" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
                             @foreach ($tablemaster as $tm)
-                                    <option value="{{$tm['jenis_kontrak']}}" @if(old('jenis') == $tm['jenis_kontrak']) selected @endif>{{$tm['jenis_kontrak']}}</option>
+                                <option value="{{$tm['jenis_kontrak']}}" @if(old('jenis') == $tm['jenis_kontrak']) selected @endif>{{$tm['jenis_kontrak']}}</option>
                             @endforeach
                         </select>
                         @error('jenis')

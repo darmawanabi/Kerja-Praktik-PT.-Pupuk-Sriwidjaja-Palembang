@@ -80,13 +80,13 @@
     $( document ).ready(function() {
         $('button[id^="btnEditKontrak"]').on('click', function() {
             var full_id = this.id;
-            var id = full_id.charAt(full_id.length - 1);
+            var id = full_id.replace("btnEditKontrak", "");
             var tr = $('#kontrak' + id);
             var jenis = document.getElementById("jenisKontrak" + id).innerHTML;
 
             tr.children().remove();
 
-            var td = $('<td colspan="2"><form action="/master" method="post">@method("patch")@csrf<input type="hidden" name="id" value="' + id + '" /><input type="hidden" name="jenis" value="kontrak" /><div class="row no-gutters"><div class="col-md-8 text-left justify-content-center align-self-cente"><div class="form-group mb-0"><input name="jenis_kontrak" type="text" class="form-control @error("jenis_kontrak") is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="' + jenis + '"></div></div><div class="col-md-4 text-right justify-content-center align-self-center"><button type="submit" class="btn btn-primary btn-sm">Ubah</button>\n<button type="button" class="btn btn-secondary btn-sm" id="btnBatalKontrak' + id + '">Batal</button></div></div></form></td>').appendTo($('#kontrak' + id));
+            var td = $('<td colspan="2"><form action="/master" method="post">@method("patch")@csrf<input type="hidden" name="id" value="' + id + '" /><input type="hidden" name="jenis" value="kontrak" /><div class="row no-gutters"><div class="col-md-8 text-left justify-content-center align-self-center"><div class="form-group mb-0"><input name="jenis_kontrak" type="text" class="form-control @error("jenis_kontrak") is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="' + jenis + '"></div></div><div class="col-md-4 text-right justify-content-center align-self-center"><button type="submit" class="btn btn-primary btn-sm">Ubah</button>\n<button type="button" class="btn btn-secondary btn-sm" id="btnBatalKontrak' + id + '">Batal</button></div></div></form></td>').appendTo($('#kontrak' + id));
 
             $('button[id^="btnBatalKontrak"]').on('click', function() {
                 tr.children().remove();
@@ -96,13 +96,13 @@
         });
         $('button[id^="btnEditPerizinan"]').on('click', function() {
             var full_id = this.id;
-            var id = full_id.charAt(full_id.length - 1);
+            var id = full_id.replace("btnEditPerizinan", "");
             var tr = $('#perizinan' + id);
             var jenis = document.getElementById("jenisPerizinan" + id).innerHTML;
 
             tr.children().remove();
 
-            var td = $('<td colspan="2"><form action="/master" method="post">@method("patch")@csrf<input type="hidden" name="id" value="' + id + '" /><input type="hidden" name="jenis" value="perizinan" /><div class="row no-gutters"><div class="col-md-8 text-left justify-content-center align-self-cente"><div class="form-group mb-0"><input name="jenis_perizinan" type="text" class="form-control @error("jenis_perizinan") is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="' + jenis + '"></div></div><div class="col-md-4 text-right justify-content-center align-self-center"><button type="submit" class="btn btn-primary btn-sm">Ubah</button>\n<button type="button" class="btn btn-secondary btn-sm" id="btnBatalPerizinan' + id + '">Batal</button></div></div></form></td>').appendTo($('#perizinan' + id));
+            var td = $('<td colspan="2"><form action="/master" method="post">@method("patch")@csrf<input type="hidden" name="id" value="' + id + '" /><input type="hidden" name="jenis" value="perizinan" /><div class="row no-gutters"><div class="col-md-8 text-left justify-content-center align-self-center"><div class="form-group mb-0"><input name="jenis_perizinan" type="text" class="form-control @error("jenis_perizinan") is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="' + jenis + '"></div></div><div class="col-md-4 text-right justify-content-center align-self-center"><button type="submit" class="btn btn-primary btn-sm">Ubah</button>\n<button type="button" class="btn btn-secondary btn-sm" id="btnBatalPerizinan' + id + '">Batal</button></div></div></form></td>').appendTo($('#perizinan' + id));
 
             $('button[id^="btnBatalPerizinan"]').on('click', function() {
                 tr.children().remove();

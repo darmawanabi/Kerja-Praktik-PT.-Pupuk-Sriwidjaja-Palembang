@@ -11,7 +11,7 @@ class Post extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['uuid','user_id','nama','jenis','file','keterangan'];
+    protected $fillable = ['uuid','user_id','table_master_id','parent_id','nama','jenis','file','keterangan'];
 
     public function user(){
         return $this->belongsTo(User::class);

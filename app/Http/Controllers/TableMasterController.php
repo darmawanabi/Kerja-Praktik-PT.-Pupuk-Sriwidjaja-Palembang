@@ -25,7 +25,7 @@ class TableMasterController extends Controller
 
             TableMaster::create($request->all());
 
-            return redirect('/master')->with('status', $request->jenis_kontrak . ' berhasil ditambahkan.');
+            return redirect('/master')->with('status', 'Jenis kontrak ' . $request->jenis_kontrak . ' berhasil ditambahkan.');
         } elseif ($request->jenis == "perizinan") {
             // insert table tablemasterperizinan
             $request->validate([
@@ -34,7 +34,7 @@ class TableMasterController extends Controller
 
             TableMasterPerizinan::create($request->all());
 
-            return redirect('/master')->with('status', $request->jenis_perizinan . ' berhasil ditambahkan.');
+            return redirect('/master')->with('status', 'Jenis perizinan ' . $request->jenis_perizinan . ' berhasil ditambahkan.');
         }
     }
     public function update(Request $request)
@@ -47,11 +47,15 @@ class TableMasterController extends Controller
 
             $kontrak = TableMaster::find($request->id);
 
+            if(count($kontrak->kontrak) > 0){
+                return redirect('/master')->with('error', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' tidak bisa diubah, karena jenis kontrak ini sudah digunakan.');
+            }
+
             TableMaster::where('id', $request->id)->update([
                 'jenis_kontrak' => $request->jenis_kontrak
             ]);
 
-            return redirect('/master')->with('status', $kontrak->jenis_kontrak . ' berhasil diubah menjadi ' . $request->jenis_kontrak .'.');
+            return redirect('/master')->with('status', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' berhasil diubah menjadi ' . $request->jenis_kontrak .'.');
         } elseif ($request->jenis == "perizinan") {
             // insert table tablemasterperizinan
             $request->validate([
@@ -60,11 +64,15 @@ class TableMasterController extends Controller
 
             $perizinan = TableMasterPerizinan::find($request->id);
 
+            if(count($perizinan->perizinan) > 0){
+                return redirect('/master')->with('error', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' tidak bisa diubah, karena jenis perizinan ini sudah digunakan.');
+            }
+
             TableMasterPerizinan::where('id', $request->id)->update([
                 'jenis_perizinan' => $request->jenis_perizinan
             ]);
 
-            return redirect('/master')->with('status', $perizinan->jenis_perizinan . ' berhasil diubah menjadi ' . $request->jenis_perizinan . '.');
+            return redirect('/master')->with('status', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' berhasil diubah menjadi ' . $request->jenis_perizinan . '.');
         }
     }
 
@@ -72,14 +80,24 @@ class TableMasterController extends Controller
     {
         if($jenis == "kontrak"){
             $kontrak = TableMaster::find($id);
+
+            if(count($kontrak->kontrak) > 0){
+                return redirect('/master')->with('error', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' tidak bisa dihapus, karena jenis kontrak ini sudah digunakan.');
+            }
+
             TableMaster::destroy($id);
 
-            return redirect('/master')->with('status', $kontrak->jenis_kontrak . ' berhasil dihapuskan.');
+            return redirect('/master')->with('status', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' berhasil dihapuskan.');
         } elseif ($jenis == "perizinan") {
             $perizinan = TableMasterPerizinan::find($id);
+
+            if(count($perizinan->perizinan) > 0){
+                return redirect('/master')->with('error', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' tidak bisa dihapus, karena jenis perizinan ini sudah digunakan.');
+            }
+
             TableMasterPerizinan::destroy($id);
 
-            return redirect('/master')->with('status', $perizinan->jenis_perizinan . ' berhasil dihapuskan.');
+            return redirect('/master')->with('status', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' berhasil dihapuskan.');
         }
     }
 }
