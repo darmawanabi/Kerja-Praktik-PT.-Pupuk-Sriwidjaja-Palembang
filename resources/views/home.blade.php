@@ -49,7 +49,7 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">Contract Pool<br>Departemen Hukum <br>PT. Pupuk Sriwidjaja Palembang</h1>
+          <h1 class="text-uppercase text-white font-weight-bold">Sistem Pengelolaan<br>Kontrak dan Perizinan<br>PT. Pupuk Sriwidjaja Palembang</h1>
           <hr class="divider my-4">
         </div>
         <div class="col-lg-8 align-self-baseline">
@@ -98,7 +98,7 @@
   <!-- Footer -->
   <footer class="bg-light py-5">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 - PT. Pupuk Sriwidjaja</div>
+        <div class="small text-center text-muted">© {{ date('Y') }} PT. Pupuk Sriwidjaja Palembang. @lang('All rights reserved.')</div>
     </div>
   </footer>
 
