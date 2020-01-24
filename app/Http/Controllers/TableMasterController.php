@@ -40,7 +40,7 @@ class TableMasterController extends Controller
     public function update(Request $request)
     {
         if($request->jenis == "kontrak"){
-            // insert table tablemaster
+            // update table tablemaster
             $request->validate([
                 'jenis_kontrak' => 'required|unique:table_masters'
             ]);
@@ -57,7 +57,7 @@ class TableMasterController extends Controller
 
             return redirect('/master')->with('status', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' berhasil diubah menjadi ' . $request->jenis_kontrak .'.');
         } elseif ($request->jenis == "perizinan") {
-            // insert table tablemasterperizinan
+            // update table tablemasterperizinan
             $request->validate([
                 'jenis_perizinan' => 'required|unique:table_master_perizinans'
             ]);

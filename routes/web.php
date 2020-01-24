@@ -22,8 +22,6 @@ Route::get('/login', 'AuthController@login')->name('login');
 Route::post('/postlogin', 'AuthController@postlogin');
 Route::get('logout', 'AuthController@logout');
 
-Route::get('email', 'EmailController@sendEmail');
-
 //karyawan-admin
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     Route::get('/karyawan', 'KaryawanController@index');
@@ -36,14 +34,8 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
     Route::patch('/master', 'TableMasterController@update');
     Route::get('/master/{jenis}/{id}/delete', 'TableMasterController@delete');
 });
-//std_user
-Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){
-    // Route::get('/dashboard', 'StandarUser@index');
-    // Route::get('/dashboard', 'DashboardController@index');
-});
-//access_user
+//access_user & std_user
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']], function(){
-    // Route::get('/dashboard', 'AccessUser@index');
     Route::get('/dashboard', 'DashboardController@index');
     Route::get('/contracts', 'PostController@index');
     Route::post('/contracts', 'PostController@store');
@@ -70,6 +62,3 @@ Route::put('/perizinan/{perizinan}', 'PerizinanController@loggingDownload');
 
 Route::get('perizinan/{uuid}/download', 'PostPerizinanController@download');
 Route::get('perizinan/{post_id}/{uuid}/download', 'PerizinanController@download');
-
-// Route::get('/contracts/{uuid}/download', 'PostController@log_for_download');
-// Route::get('/contracts/{post_id}/{uuid}/download', 'ContractController@download');

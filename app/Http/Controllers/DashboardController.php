@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract;
 use App\Perizinan;
+use App\Post;
 use App\PostPerizinan;
+use App\TableMaster;
+use App\TableMasterPerizinan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -12,8 +16,6 @@ class DashboardController extends Controller
     //
     public function index(){
         date_default_timezone_set('Asia/Bangkok');
-
-        // $dateTemp = Perizinan::find($id);
 
         $tanggal = PostPerizinan::all('id','tanggal_berakhir','kategori')->toArray();
 
@@ -67,4 +69,80 @@ class DashboardController extends Controller
             });
         </script>";
     }
+
+    public static function totalContract(){
+        $posts = Post::all();
+        $contracts = Contract::all();
+
+        return count($contracts) + count($posts);
+    }
+
+    public static function totalPerizinan(){
+        $posts = PostPerizinan::all();
+        $perizinan = PostPerizinan::all();
+
+        return count($perizinan) + count($perizinan);
+    }
+
+    public static function contractByJenis(){
+        $table = TableMaster::all('jenis_kontrak')->toArray();
+
+        $array = Array();
+        foreach ($table as $tab) {
+            $post = Post::where('jenis', $tab['jenis_kontrak'])->get();
+            if(count($post) > 0) {
+                $total = count($post);
+                foreach ($post as $po) {
+                    $contract = Contract::where('post_id', $po->id)->get();
+                    $total += count($contract);
+                }
+                array_push($array, Arr::add(['jenis' => $tab['jenis_kontrak']], 'total', $total));
+            }
+        }
+
+        return $array;
+    }
+
+    public static function perizinanByJenis(){
+        $table = TableMasterPerizinan::all('jenis_perizinan')->toArray();
+
+        $array = Array();
+        foreach ($table as $tab) {
+            $post = PostPerizinan::where('jenis_perizinan', $tab['jenis_perizinan'])->get();
+            if(count($post) > 0) {
+                $total = count($post);
+                foreach ($post as $po) {
+                    $perizinan = Perizinan::where('post_perizinan_id', $po->id)->get();
+                    $total += count($perizinan);
+                }
+                array_push($array, Arr::add(['jenis' => $tab['jenis_perizinan']], 'total', $total));
+            }
+        }
+
+        return $array;
+    }
+
+    public static function perizinanByKategori(){
+        $kategori = Array();
+        array_push($kategori, ['kategori' => '3 Bulan']);
+        array_push($kategori, ['kategori' => '6 Bulan']);
+        array_push($kategori, ['kategori' => '1 Tahun']);
+        array_push($kategori, ['kategori' => '2 Tahun']);
+
+        $array = Array();
+        foreach ($kategori as $ktg) {
+            $post = PostPerizinan::where('kategori', $ktg['kategori'])->get();
+            if(count($post) > 0) {
+                $total = count($post);
+                foreach ($post as $po) {
+                    $perizinan = Perizinan::where('post_perizinan_id', $po->id)->get();
+                    $total += count($perizinan);
+                }
+                array_push($array, Arr::add(['kategori' => $ktg['kategori']], 'total', $total));
+            }
+        }
+
+        return $array;
+    }
+
 }

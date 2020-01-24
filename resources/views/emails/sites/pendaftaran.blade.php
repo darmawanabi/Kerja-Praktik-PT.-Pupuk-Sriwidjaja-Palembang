@@ -1,6 +1,6 @@
 @component('mail::layout')
 @slot('header')
-@component('mail::header', ['url' => $link])
+@component('mail::header', ['url' => 'http://localhost:8000'])
 PT. PUPUK SRIWIDJAJA PALEMBANG
 @endcomponent
 @endslot
