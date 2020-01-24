@@ -95,7 +95,18 @@
                 <div class="dataTables_type" id="dataPost_type">
                     <form>
                         <div class="form-group">
-                            <label id="typePost" for="exampleFormControlSelect1">Pilih Kategori Perizinan yang akan ditampilkan</label>
+                            <label id="typePostJenis" for="exampleFormControlSelect1">Pilih Jenis Perizinan yang akan ditampilkan</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cols-sm-12 col-md-5">
+                <div class="dataTables_type" id="dataPost_type">
+                    <form>
+                        <div class="form-group">
+                            <label id="typePostKategori" for="exampleFormControlSelect1">Pilih Kategori Perizinan yang akan ditampilkan</label>
                         </div>
                     </form>
                 </div>
@@ -107,7 +118,7 @@
                     <tr>
                         <th>Nama Akun</th>
                         <th>Nama Perizinan</th>
-                        <th>Jenis Perizinan</th>
+                        <th id="jenis">Jenis Perizinan</th>
                         <th id="kategori">Kategori</th>
                         <th>Tanggal Pembaharuan</th>
                         <th>Tanggal Berakhir</th>
@@ -118,7 +129,7 @@
                     <tr>
                         <th>Nama Akun</th>
                         <th>Nama Perizinan</th>
-                        <th>Jenis Perizinan</th>
+                        <th id="jenis">Jenis Perizinan</th>
                         <th id="kategori">Kategori</th>
                         <th>Tanggal Pembaharuan</th>
                         <th>Tanggal Berakhir</th>
@@ -130,7 +141,7 @@
                         <tr>
                             <td>{{$postperizinan->user->name}}</td>
                             <td>{{$postperizinan->nama}}</td>
-                            <td>{{$postperizinan->jenis_perizinan}}</td>
+                            <td id="jenis">{{$postperizinan->jenis_perizinan}}</td>
                             <td id="kategori">{{$postperizinan->kategori}}</td>
                             <td>{{$postperizinan->updated_at}}</td>
 

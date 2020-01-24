@@ -26,10 +26,28 @@
         $('#dataPostPerizinan').DataTable({
             "order": [[ 4, "desc" ]],
             initComplete: function () {
+                this.api().columns('#jenis').every( function () {
+                    var column = this;
+                    var select = $('<select name="dataPost_length" aria-controls="dataPost" class="custom-select custom-select-sm form-control form-control-sm" id="exampleFormControlSelect1"><option value=""></option></select>')
+                        .appendTo( $('#typePostJenis') )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        });
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    });
+                });
                 this.api().columns('#kategori').every( function () {
                     var column = this;
                     var select = $('<select name="dataPost_length" aria-controls="dataPost" class="custom-select custom-select-sm form-control form-control-sm" id="exampleFormControlSelect1"><option value=""></option></select>')
-                        .appendTo( $('#typePost') )
+                        .appendTo( $('#typePostKategori') )
                         .on( 'change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
