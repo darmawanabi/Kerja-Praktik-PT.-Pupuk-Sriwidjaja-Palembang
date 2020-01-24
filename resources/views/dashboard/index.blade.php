@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
+                        <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Keterangan</th>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
+                        <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Jenis</th>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
+                        <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Jenis</th>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
+                        <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Kategori</th>
