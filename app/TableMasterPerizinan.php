@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TableMasterPerizinan extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'jenis_perizinan'
    ];

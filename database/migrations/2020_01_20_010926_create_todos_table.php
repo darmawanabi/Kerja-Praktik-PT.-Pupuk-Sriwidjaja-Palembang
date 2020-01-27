@@ -16,11 +16,9 @@ class CreateTodosTable extends Migration
         Schema::create('todos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('post_id');
-            $table->string('name');
             $table->integer('repeat');
             $table->date('when');
             $table->string('to');
-            $table->timestamps();
         });
     }
 

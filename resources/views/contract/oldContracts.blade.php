@@ -26,9 +26,12 @@
                 </tfoot>
                 <tbody>
                     @foreach ($contracts as $contract)
+                     @php
+                        $date = date("d-m-Y | H:i:s", strtotime($contract->created_at));
+                     @endphp
                         <tr>
                             <td>{{ $contract->user->name }}</td>
-                            <td>{{ $contract->created_at }}</td>
+                            <td>{{ $date }}</td>
                             <td>{{ $contract->keterangan }}</td>
                             <td>
                                 <small id="helpId" class="text-muted">{{ $contract->file }}</small>

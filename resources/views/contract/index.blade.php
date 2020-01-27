@@ -119,19 +119,23 @@
                 </tfoot>
                 <tbody>
                     @foreach ($posts as $post)
+                    @php
+                        $jenis = \App\TableMaster::where('id', $post->table_master_id)->get('nama');
+                        $date = date("d-m-Y | H:i:s", strtotime($post->updated_at));
+                    @endphp
                         <tr>
                             <td>{{ $post->nama }}</td>
-                            <td class="jenis">{{ $post->jenis }}</td>
+                            <td class="jenis">{{$jenis[0]['nama']}}</td>
                             <td>{{ $post->user->name }}</td>
-                            <td>{{ $post->updated_at }}</td>
-                            <td>
-                            <a href="/contracts/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
-                            <form action="/contracts" class="d-inline" method="post">
-                                @csrf
-                                @method('patch')
-                                <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
-                                <button type="submit" class="btn btn-success btn-sm">Download</button>
-                            </form>
+                            <td>{{ $date }}</td>
+                            <td class="text-center justify-content-center align-self-center">
+                                <a href="/contracts/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
+                                <form action="/contracts" class="d-inline" method="post">
+                                    @csrf
+                                    @method('patch')
+                                    <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
+                                    <button type="submit" class="btn btn-success btn-sm">Download</button>
+                                </form>
                             {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
@@ -167,7 +171,7 @@
                         <label for="exampleFormControlSelect1">Jenis Kontrak</label>
                         <select name="jenis" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
                             @foreach ($tablemaster as $tm)
-                                <option value="{{$tm['jenis_kontrak']}}" @if(old('jenis') == $tm['jenis_kontrak']) selected @endif>{{$tm['jenis_kontrak']}}</option>
+                                <option value="{{$tm['id']}}" @if(old('jenis') == $tm['id']) selected @endif>{{$tm['nama']}}</option>
                             @endforeach
                         </select>
                         @error('jenis')

@@ -72,10 +72,32 @@
                       <tbody>
                         @foreach ($masterkontrak as $mkontrak)
                             <tr id="kontrak{{ $mkontrak->id }}">
-                                <td id="jenisKontrak{{ $mkontrak->id }}">{{$mkontrak->jenis_kontrak}}</td>
+                                <td id="jenisKontrak{{ $mkontrak->id }}">{{$mkontrak->nama}}</td>
                                 <td class="text-right">
                                     <button type="button" class="btn btn-warning btn-sm" id="btnEditKontrak{{ $mkontrak->id }}">Edit</button>
-                                    <a href="/master/kontrak/{{ $mkontrak->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus?')">Delete</a>
+                                    <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#modalDelKontrak{{ $mkontrak->id }}">Delete</button>
+
+                                    <div class="modal fade bd-example-modal-lg" id="modalDelKontrak{{ $mkontrak->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-left">
+                                                    <h6 class="mb-0">
+                                                        Apakah anda yakin untuk menghapus jenis kontrak <strong>{{$mkontrak->nama}}</strong>?
+                                                    </h6>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                    <a href="/master/kontrak/{{ $mkontrak->id }}/delete" class="btn btn-primary" >Yakin</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -114,10 +136,32 @@
                       <tbody>
                         @foreach ($masterperizinan as $mperizinan)
                             <tr id="perizinan{{ $mperizinan->id }}">
-                                <td id="jenisPerizinan{{ $mperizinan->id }}">{{$mperizinan->jenis_perizinan}}</td>
+                                <td id="jenisPerizinan{{ $mperizinan->id }}">{{$mperizinan->nama}}</td>
                                 <td class="text-right">
                                     <button type="button" class="btn btn-warning btn-sm" id="btnEditPerizinan{{ $mperizinan->id }}">Edit</button>
-                                    <a href="/master/perizinan/{{ $mperizinan->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus?')">Delete</a>
+                                    <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#modalDelPerizinan{{ $mperizinan->id }}">Delete</button>
+
+                                    <div class="modal fade bd-example-modal-lg" id="modalDelPerizinan{{ $mperizinan->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-left">
+                                                    <h6 class="mb-0">
+                                                        Apakah anda yakin untuk menghapus jenis perizinan <strong>{{$mperizinan->nama}}</strong>?
+                                                    </h6>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                    <a href="/master/perizinan/{{ $mperizinan->id }}/delete" class="btn btn-primary" >Yakin</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -130,57 +174,57 @@
           </div>
         </div>
 
-        <div class="modal fade bd-example-modal-lg" id="modalKontrak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Jenis Kontrak</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/master" method="post">
-                            @csrf
-                            <input type="hidden" name="jenis" value="kontrak" />
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Jenis Kontrak</label>
-                                <input name="jenis_kontrak" type="text" class="form-control @error('jenis_kontrak') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="{{ old('jenis_kontrak') }}">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-primary">Tambah</button>
-                        </div>
-                    </form>
+    <div class="modal fade bd-example-modal-lg" id="modalKontrak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Jenis Kontrak</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <form action="/master" method="post">
+                        @csrf
+                        <input type="hidden" name="jenis" value="kontrak" />
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Jenis Kontrak</label>
+                            <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="{{ old('nama') }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
-        <div class="modal fade bd-example-modal-lg" id="modalPerizinan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Tambah Jenis Perizinan</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/master" method="post">
-                            @csrf
-                            <input type="hidden" name="jenis" value="perizinan" />
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Jenis Perizinan</label>
-                                <input name="jenis_perizinan" type="text" class="form-control @error('jenis_perizinan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{ old('jenis_perizinan') }}">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-primary">Tambah</button>
-                        </div>
-                    </form>
+    <div class="modal fade bd-example-modal-lg" id="modalPerizinan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Jenis Perizinan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <form action="/master" method="post">
+                        @csrf
+                        <input type="hidden" name="jenis" value="perizinan" />
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Jenis Perizinan</label>
+                            <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{ old('nama') }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 @stop

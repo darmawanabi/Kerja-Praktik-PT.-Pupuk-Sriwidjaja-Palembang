@@ -26,9 +26,12 @@
                 </tfoot>
                 <tbody>
                     @foreach ($perizinan as $izin)
+                        @php
+                            $date = date("d-m-Y | H:i:s", strtotime($izin->created_at));
+                        @endphp
                         <tr>
                             <td>{{ $izin->user->name }}</td>
-                            <td>{{ $izin->created_at }}</td>
+                            <td>{{ $date }}</td>
                             <td>{{ $izin->keterangan }}</td>
                             <td>
                                 <small id="helpId" class="text-muted">{{ $izin->file }}</small>

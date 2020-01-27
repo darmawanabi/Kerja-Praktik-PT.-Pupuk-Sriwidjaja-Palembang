@@ -21,7 +21,6 @@ class CreateLogPerizinansTable extends Migration
             $table->string('file')->nullable();
             $table->text('keterangan');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

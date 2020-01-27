@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostPerizinan extends Model
 {
-    //
-    protected $fillable = ['uuid','user_id','table_master_perizinan_id','parent_id','nama','file','keterangan','kategori','jenis_perizinan','tanggal_berakhir','created_at'];
+    protected $fillable = ['uuid','user_id','table_master_id','parent_id','nama','file','keterangan','kategori','tanggal_berakhir','created_at'];
 
     public function user(){
         return $this->belongsTo(User::class);

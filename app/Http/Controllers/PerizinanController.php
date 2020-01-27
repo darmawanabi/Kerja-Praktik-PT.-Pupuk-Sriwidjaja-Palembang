@@ -79,7 +79,7 @@ class PerizinanController extends Controller
 
         $reminder = date("Y-m-d H:i:s", strtotime($request->tanggal_berakhir . $kategori . "-7 days"));
         Todo::where('post_id', $post['id'])->updateOrCreate(
-            ['post_id' => $post['id'], 'name' => $post['nama']],
+            ['post_id' => $post['id']],
             ['repeat' => 3, 'when' => $reminder, 'to' => $post->user->email]
         );
         // if (Todo::where('post_id', '=', $post['id'])->exists()){

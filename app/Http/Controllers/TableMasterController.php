@@ -11,68 +11,51 @@ class TableMasterController extends Controller
 {
     public function index()
     {
-        $masterkontrak = TableMaster::all();
-        $masterperizinan = TableMasterPerizinan::all();
+        $masterkontrak = TableMaster::where('jenis', 'kontrak')->select('id','nama')->get();
+        $masterperizinan = TableMaster::where('jenis', 'perizinan')->select('id','nama')->get();
         return view('karyawan/tablemaster', ['masterkontrak' => $masterkontrak], ['masterperizinan' => $masterperizinan]);
     }
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|unique:table_masters'
+        ]);
+
+        TableMaster::create($request->all());
+
         if($request->jenis == "kontrak"){
-            // insert table tablemaster
-            $request->validate([
-                'jenis_kontrak' => 'required|unique:table_masters'
-            ]);
-
-            TableMaster::create($request->all());
-
-            return redirect('/master')->with('status', 'Jenis kontrak ' . $request->jenis_kontrak . ' berhasil ditambahkan.');
+            return redirect('/master')->with('status', 'Jenis kontrak ' . $request->nama . ' berhasil ditambahkan.');
         } elseif ($request->jenis == "perizinan") {
-            // insert table tablemasterperizinan
-            $request->validate([
-                'jenis_perizinan' => 'required|unique:table_master_perizinans'
-            ]);
-
-            TableMasterPerizinan::create($request->all());
-
-            return redirect('/master')->with('status', 'Jenis perizinan ' . $request->jenis_perizinan . ' berhasil ditambahkan.');
+            return redirect('/master')->with('status', 'Jenis perizinan ' . $request->nama . ' berhasil ditambahkan.');
         }
     }
     public function update(Request $request)
     {
-        if($request->jenis == "kontrak"){
-            // update table tablemaster
-            $request->validate([
-                'jenis_kontrak' => 'required|unique:table_masters'
-            ]);
+        // update table tablemaster
+        $request->validate([
+            'nama' => 'required|unique:table_masters'
+        ]);
 
-            $kontrak = TableMaster::find($request->id);
+        $table = TableMaster::find($request->id);
 
-            if(count($kontrak->kontrak) > 0){
-                return redirect('/master')->with('error', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' tidak bisa diubah, karena jenis kontrak ini sudah digunakan.');
+        if($request->jenis == "kontrak") {
+            if(count($table->kontrak) > 0) {
+                return redirect('/master')->with('error', 'Jenis kontrak ' . $table->nama . ' tidak bisa diubah, karena jenis kontrak ini sudah digunakan.');
             }
+        } elseif($request->jenis == "perizinan") {
+            if(count($table->perizinan) > 0) {
+                return redirect('/master')->with('error', 'Jenis perizinan ' . $table->nama . ' tidak bisa diubah, karena jenis perizinan ini sudah digunakan.');
+            }
+        }
 
-            TableMaster::where('id', $request->id)->update([
-                'jenis_kontrak' => $request->jenis_kontrak
-            ]);
+        TableMaster::where('id', $request->id)->update([
+            'nama' => $request->nama
+        ]);
 
-            return redirect('/master')->with('status', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' berhasil diubah menjadi ' . $request->jenis_kontrak .'.');
+        if($request->jenis == "kontrak") {
+            return redirect('/master')->with('status', 'Jenis kontrak ' . $table->nama . ' berhasil diubah menjadi ' . $request->nama .'.');
         } elseif ($request->jenis == "perizinan") {
-            // update table tablemasterperizinan
-            $request->validate([
-                'jenis_perizinan' => 'required|unique:table_master_perizinans'
-            ]);
-
-            $perizinan = TableMasterPerizinan::find($request->id);
-
-            if(count($perizinan->perizinan) > 0){
-                return redirect('/master')->with('error', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' tidak bisa diubah, karena jenis perizinan ini sudah digunakan.');
-            }
-
-            TableMasterPerizinan::where('id', $request->id)->update([
-                'jenis_perizinan' => $request->jenis_perizinan
-            ]);
-
-            return redirect('/master')->with('status', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' berhasil diubah menjadi ' . $request->jenis_perizinan . '.');
+            return redirect('/master')->with('status', 'Jenis perizinan ' . $table->nama . ' berhasil diubah menjadi ' . $request->nama . '.');
         }
     }
 

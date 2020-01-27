@@ -18,7 +18,7 @@ class PostPerizinanController extends Controller
     {
         $post = PostPerizinan::all();
         $perizinan = Perizinan::all();
-        $tablemasterperizinan = \App\TableMasterPerizinan::all('jenis_perizinan')->toArray();
+        $tablemasterperizinan = \App\TableMaster::where('jenis','perizinan')->select('id','nama')->get();
         return view('/perizinan/index', compact('post','perizinan','tablemasterperizinan'));
     }
 
@@ -34,13 +34,11 @@ class PostPerizinanController extends Controller
             'tanggal_berakhir'=>'required'
         ]);
 
-        $jenis = TableMasterPerizinan::where('jenis_perizinan', $request->jenis_perizinan)->firstOrFail();
-
         $perizinan = $request->all();
 
         $perizinan['user_id'] = auth()->user()->id;
         $perizinan['uuid'] = Str::uuid();
-        $perizinan['table_master_perizinan_id'] = $jenis->id;
+        $perizinan['table_master_id'] = $request->jenis_perizinan;
 
         if($request->hasFile('file')) {
             $perizinan['file'] = $request->file->getClientOriginalName();
@@ -71,7 +69,6 @@ class PostPerizinanController extends Controller
         $reminder = date("Y-m-d H:i:s", strtotime($request->tanggal_berakhir . $kategori . "-7 days"));
         Todo::create([
             'post_id' => $post['id'],
-            'name' => $request->nama,
             'repeat' => 3,
             'when' => $reminder,
             'to' => $post->user->email

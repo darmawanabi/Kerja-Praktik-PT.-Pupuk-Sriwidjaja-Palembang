@@ -72,16 +72,14 @@ class DashboardController extends Controller
 
     public static function totalContract(){
         $posts = Post::all();
-        $contracts = Contract::all();
 
-        return count($contracts) + count($posts);
+        return count($posts);
     }
 
     public static function totalPerizinan(){
         $posts = PostPerizinan::all();
-        $perizinan = PostPerizinan::all();
 
-        return count($perizinan) + count($perizinan);
+        return count($posts);
     }
 
     public static function contractByJenis(){
@@ -92,10 +90,6 @@ class DashboardController extends Controller
             $post = Post::where('jenis', $tab['jenis_kontrak'])->get();
             if(count($post) > 0) {
                 $total = count($post);
-                foreach ($post as $po) {
-                    $contract = Contract::where('post_id', $po->id)->get();
-                    $total += count($contract);
-                }
                 array_push($array, Arr::add(['jenis' => $tab['jenis_kontrak']], 'total', $total));
             }
         }
@@ -111,10 +105,6 @@ class DashboardController extends Controller
             $post = PostPerizinan::where('jenis_perizinan', $tab['jenis_perizinan'])->get();
             if(count($post) > 0) {
                 $total = count($post);
-                foreach ($post as $po) {
-                    $perizinan = Perizinan::where('post_perizinan_id', $po->id)->get();
-                    $total += count($perizinan);
-                }
                 array_push($array, Arr::add(['jenis' => $tab['jenis_perizinan']], 'total', $total));
             }
         }
@@ -134,10 +124,6 @@ class DashboardController extends Controller
             $post = PostPerizinan::where('kategori', $ktg['kategori'])->get();
             if(count($post) > 0) {
                 $total = count($post);
-                foreach ($post as $po) {
-                    $perizinan = Perizinan::where('post_perizinan_id', $po->id)->get();
-                    $total += count($perizinan);
-                }
                 array_push($array, Arr::add(['kategori' => $ktg['kategori']], 'total', $total));
             }
         }

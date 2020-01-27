@@ -76,8 +76,11 @@
         @endif
     </div>
     <div class="card-body">
+        @php
+            $jenis = \App\TableMaster::find($post->table_master_id);
+        @endphp
         <h1 class="card-title d-inline">{{ $post->nama }}</h1>
-        <h4 class="card-title">{{ $post->jenis }}</h4>
+        <h4 class="card-title">{{ $jenis->nama }}</h4>
         <p class="card-text">{{ $post->keterangan }}</p>
             <form action="/contracts/{{ $post->id }}" class="d-inline" method="post">
                 @csrf
@@ -89,7 +92,10 @@
             <small id="helpId" class="text-muted d-inline">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">
-        {{ $post->user->name }} | {{ $post->updated_at }}
+        @php
+            $date = date("d-m-Y | H:i:s", strtotime($post->updated_at));
+        @endphp
+        {{ $post->user->name }} | {{ $date }}
     </div>
 </div>
 
@@ -121,8 +127,11 @@
                         <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
                     </div>
                     <div class="form-group">
+                        @php
+                            $jenis = \App\TableMaster::find($post->id);
+                        @endphp
                         <label for="exampleInputEmail1">Jenis Kontrak</label>
-                        <input class="form-control" type="text" value="{{ $post->jenis }}" readonly>
+                        <input class="form-control" type="text" value="{{ $jenis->nama }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>

@@ -20,11 +20,9 @@ class CreatePostContractsTable extends Migration
             $table->integer('table_master_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('nama');
-            $table->string('jenis');
             $table->string('file')->nullable();
             $table->text('keterangan');
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('contracts', function (Blueprint $table) {
@@ -36,7 +34,6 @@ class CreatePostContractsTable extends Migration
             $table->string('file')->nullable();
             $table->text('keterangan');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

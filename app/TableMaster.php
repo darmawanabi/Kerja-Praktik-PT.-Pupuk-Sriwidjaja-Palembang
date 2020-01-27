@@ -6,13 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class TableMaster extends Model
 {
-    //
+    public $timestamps = false;
+
     protected $fillable = [
-         'jenis_kontrak'
+         'jenis',
+         'nama'
     ];
 
     public function kontrak(){
         return $this->hasMany(Post::class)->whereNull('parent_id');
+    }
+
+    public function perizinan(){
+        return $this->hasMany(PostPerizinan::class)->whereNull('parent_id');
     }
 
 }

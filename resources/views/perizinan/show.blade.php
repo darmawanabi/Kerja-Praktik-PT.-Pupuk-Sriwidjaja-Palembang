@@ -92,12 +92,16 @@
         @endif
     </div>
     <div class="card-body">
+        @php
+            $date = date("d-m-Y", strtotime($postperizinan->tanggal_berakhir));
+            $jenis = \App\TableMaster::find($postperizinan->table_master_id);
+        @endphp
         <h1 class="card-title">{{ $postperizinan->nama }}</h1>
-        <h4 class="card-title">{{ $postperizinan->jenis_perizinan }}</h4>
+        <h4 class="card-title">{{ $jenis->nama }}</h4>
         <p class="card-text d-inline">Kategori</p>
         <strong class="card-title d-inline"> {{ $postperizinan->kategori }} | </strong>
         <p class="card-text d-inline">Tanggal Berakhir</p>
-        <strong class="card-title"> {{ $postperizinan->tanggal_berakhir }}</strong><br><br>
+        <strong class="card-title"> {{ $date }}</strong><br><br>
         <p class="card-text">{{ $postperizinan->keterangan }}</p>
             <form action="/perizinan/{{ $postperizinan->id }}" class="d-inline" method="post">
                 @csrf
@@ -109,7 +113,10 @@
             <small id="helpId" class="text-muted">{{ $postperizinan->file }}</small>
     </div>
     <div class="card-footer text-muted">
-        {{ $postperizinan->user->name }} | {{ $postperizinan->updated_at }}
+        @php
+            $date = date("d-m-Y | H:i:s", strtotime($postperizinan->updated_at));
+        @endphp
+        {{ $postperizinan->user->name }} | {{ $date }}
     </div>
 </div>
 
@@ -141,8 +148,11 @@
                         <input class="form-control" type="text" value="{{ $postperizinan->nama }}" readonly>
                     </div>
                     <div class="form-group">
+                        @php
+                            $jenis = \App\TableMaster::find($postperizinan->table_master_id);
+                        @endphp
                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                        <input class="form-control" type="text" value="{{ $postperizinan->jenis_perizinan }}" readonly>
+                        <input class="form-control" type="text" value="{{ $jenis->nama }}" readonly>
                     </div>
                     {{-- <div class="form-group">
                         <label for="exampleInputEmail1">Kategori Perizinan</label>

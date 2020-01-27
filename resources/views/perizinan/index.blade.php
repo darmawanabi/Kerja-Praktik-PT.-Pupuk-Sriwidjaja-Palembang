@@ -137,24 +137,29 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($post as $postperizinan)
+                    @foreach ($post as $post)
+                        @php
+                            $jenis = \App\TableMaster::where('id',$post->table_master_id)->get('nama');
+                            $date1 = date("d-m-Y | H:i:s", strtotime($post->updated_at));
+                            $date2 = date("d-m-Y", strtotime($post->tanggal_berakhir));
+                        @endphp
                         <tr>
-                            <td>{{$postperizinan->user->name}}</td>
-                            <td>{{$postperizinan->nama}}</td>
-                            <td id="jenis">{{$postperizinan->jenis_perizinan}}</td>
-                            <td id="kategori">{{$postperizinan->kategori}}</td>
-                            <td>{{$postperizinan->updated_at}}</td>
+                            <td>{{$post->user->name}}</td>
+                            <td>{{$post->nama}}</td>
+                            <td id="jenis">{{$jenis[0]['nama']}}</td>
+                            <td id="kategori">{{$post->kategori}}</td>
+                            <td>{{$date1}}</td>
 
-                            <td>{{$postperizinan->tanggal_berakhir}}</td>
+                            <td>{{$date2}}</td>
                             <td>
-                                <a href="/perizinan/{{ $postperizinan->id }}" class="btn btn-info btn-sm">Detail</a>
+                                <a href="/perizinan/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
                                 <form action="/perizinan" class="d-inline" method="post">
                                     @csrf
                                     @method('patch')
-                                    <input type="hidden" name="uuid" value="{{ $postperizinan->uuid }}" />
+                                    <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
                                     <button type="submit" class="btn btn-success btn-sm">Download</button>
                                 </form>
-                                {{-- <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
+                                {{-- <a href="/perizinan/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach
@@ -185,7 +190,7 @@
                         <label for="exampleFormControlSelect1">Jenis Perizinan</label>
                         <select name="jenis_perizinan" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
                             @foreach ($tablemasterperizinan as $tmp)
-                                    <option value="{{$tmp['jenis_perizinan']}}" @if(old('jenis') == $tmp['jenis_perizinan']) selected @endif>{{$tmp['jenis_perizinan']}}</option>
+                                    <option value="{{$tmp['id']}}" @if(old('jenis') == $tmp['id']) selected @endif>{{$tmp['nama']}}</option>
                             @endforeach
                         </select>
                         @error('jenis')

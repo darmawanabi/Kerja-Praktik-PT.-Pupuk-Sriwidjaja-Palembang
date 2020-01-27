@@ -16,7 +16,6 @@ class CreateTableMasterPerizinansTable extends Migration
         Schema::create('table_master_perizinans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('jenis_perizinan')->unique();
-            $table->timestamps();
         });
     }
 
