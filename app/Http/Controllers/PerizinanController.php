@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Kategori;
-use App\LogPerizinan;
+use App\Log;
 use App\Perizinan;
-use App\PostPerizinan;
+use App\Post;
 use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +24,7 @@ class PerizinanController extends Controller
             'tanggal_berakhir' => 'required'
         ]);
 
-        $post = PostPerizinan::find($request->post_perizinan_id);
+        $post = Post::find($request->post_id);
 
         $exist = Storage::disk('local')->exists(Str::kebab($post['nama']) . '/' . $request->file->getClientOriginalName());
 
@@ -39,7 +39,7 @@ class PerizinanController extends Controller
 
         $temp = $post;
 
-        PostPerizinan::where('id', $perizinan['post_perizinan_id'])->update([
+        Post::where('id', $perizinan['post_id'])->update([
             'uuid' => $perizinan['uuid'],
             'user_id' => $perizinan['user_id'],
             'file' => $request->file->getClientOriginalName(),
@@ -48,9 +48,10 @@ class PerizinanController extends Controller
             'keterangan' => $perizinan['keterangan']
         ]);
 
-        LogPerizinan::create([
+        Log::create([
+            'jenis' => $request->jenis,
             'user_id' => $perizinan['user_id'],
-            'post_perizinan_id' => $perizinan['post_perizinan_id'],
+            'post_id' => $perizinan['post_id'],
             'file' => $request->file->getClientOriginalName(),
             'keterangan' => "Revisi"
         ]);
@@ -82,58 +83,21 @@ class PerizinanController extends Controller
             ['post_id' => $post['id']],
             ['repeat' => 3, 'when' => $reminder, 'to' => $post->user->email]
         );
-        // if (Todo::where('post_id', '=', $post['id'])->exists()){
-        //     Todo::where('post_id', $post['id'])->update([
-        //         'name' => $post['nama'],
-        //         'repeat' => 3,
-        //         'when' => $reminder,
-        //         'to' => $post->user->email
-        //     ]);
-        // } else {
-        //     Todo::create([
-        //         'post_id' => $post['id'],
-        //         'name' => $post['nama'],
-        //         'repeat' => 3,
-        //         'when' => $reminder,
-        //         'to' => $post->user->email
-        //     ]);
-        // }
 
         return back()->with('status', 'Revisi Berhasil Ditambahkan.');
     }
-
-
-    // public function download($post_id, $uuid) {
-    //     date_default_timezone_set('Asia/Bangkok');
-
-    //     $perizinan = Perizinan::where('uuid', $uuid)->firstOrFail();
-
-    //     $post = PostPerizinan::where('id', $post_id)->firstOrFail();
-
-    //     $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $perizinan->file);
-
-    //     LogPerizinan::create([
-    //         'user_id' => auth()->user()->id,
-    //         'post_perizinan_id' => $perizinan->post_perizinan_id,
-    //         'file' => $perizinan->file,
-    //         'keterangan' => "Download"
-    //     ]);
-
-    //     return response()->download($pathToFile);
-
-    //     // return back();
-    // }
 
     public function loggingDownload(Request $request) {
         date_default_timezone_set('Asia/Bangkok');
 
         $perizinan = Perizinan::where('uuid', $request->uuid)->firstOrFail();
 
-        $post = PostPerizinan::where('id', $request->post_id)->firstOrFail();
+        $post = Post::where('id', $request->post_id)->firstOrFail();
 
-        LogPerizinan::create([
+        Log::create([
+            'jenis' => $post->jenis,
             'user_id' => auth()->user()->id,
-            'post_perizinan_id' => $perizinan->post_perizinan_id,
+            'post_id' => $perizinan->post_id,
             'file' => $perizinan->file,
             'keterangan' => "Download"
         ]);
@@ -146,7 +110,7 @@ class PerizinanController extends Controller
 
         $perizinan = Perizinan::where('uuid', $uuid)->firstOrFail();
 
-        $post = PostPerizinan::where('id', $post_id)->firstOrFail();
+        $post = Post::where('id', $post_id)->firstOrFail();
 
         $pathToFile = storage_path('app\\' . Str::kebab($post->nama) . '\\' . $perizinan->file);
 

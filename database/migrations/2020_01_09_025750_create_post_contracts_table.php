@@ -15,17 +15,31 @@ class CreatePostContractsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('jenis');
             $table->uuid('uuid')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('table_master_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('nama');
             $table->string('file')->nullable();
+            $table->string('kategori')->nullable();
+            $table->date('tanggal_berakhir')->nullable();
             $table->text('keterangan');
             $table->timestamps();
         });
 
         Schema::create('contracts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->integer('post_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->string('file')->nullable();
+            $table->text('keterangan');
+            $table->timestamps();
+        });
+
+        Schema::create('perizinans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
             $table->integer('user_id')->unsigned();
@@ -46,5 +60,6 @@ class CreatePostContractsTable extends Migration
     {
         Schema::dropIfExists('posts');
         Schema::dropIfExists('contracts');
+        Schema::dropIfExists('perizinans');
     }
 }

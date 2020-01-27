@@ -1,6 +1,6 @@
 @extends('layouts/master')
 
-@section('title', 'Perizinan')
+@section('title', 'Perizinan | Departemen Hukum')
 
 @section('content')
 @if(auth()->user()->role == 'admin')
@@ -41,7 +41,7 @@
                 </button>
             </div>
             @enderror
-            @error('jenis_perizinan')
+            @error('jenis_dokumen')
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>{{ $message }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -137,7 +137,7 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($post as $post)
+                    @foreach ($perizinan as $post)
                         @php
                             $jenis = \App\TableMaster::where('id',$post->table_master_id)->get('nama');
                             $date1 = date("d-m-Y | H:i:s", strtotime($post->updated_at));
@@ -182,14 +182,15 @@
             <div class="modal-body">
                 <form action="/perizinan" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="jenis" value="perizinan">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Perizinan</label>
                         <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Perizinan" value="{{ old('nama') }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Jenis Perizinan</label>
-                        <select name="jenis_perizinan" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
-                            @foreach ($tablemasterperizinan as $tmp)
+                        <select name="jenis_dokumen" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
+                            @foreach ($table_perizinan as $tmp)
                                     <option value="{{$tmp['id']}}" @if(old('jenis') == $tmp['id']) selected @endif>{{$tmp['nama']}}</option>
                             @endforeach
                         </select>

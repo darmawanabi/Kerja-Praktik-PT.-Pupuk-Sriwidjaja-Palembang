@@ -1,6 +1,6 @@
 @extends('layouts/master')
 
-@section('title', $post->nama)
+@section('title', $post->nama . ' - Contract Pool | Departemen Hukum')
 
 @section('content')
 {{-- @if(auth()->user()->role == 'admin')
@@ -62,7 +62,7 @@
 <div class="card mb-3">
     <div class="card-header">
         <div class="float-left">
-            <a class="btn btn-danger btn-sm" href="/contracts" role="button">
+            <a class="btn btn-danger btn-sm" href="/contract" role="button">
                 &nbsp;
                 <i class="fas fa-long-arrow-alt-left"></i>
                 &nbsp;
@@ -119,9 +119,10 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form action="/contracts/{{ $post->id }}" method="post" enctype="multipart/form-data">
+            <form action="/contract/{{ $post->id }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                    <input type="hidden" name="jenis" value="kontrak" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kontrak</label>
                         <input class="form-control" type="text" value="{{ $post->nama }}" readonly>

@@ -1,6 +1,6 @@
 @extends('layouts/master')
 
-@section('title', 'Contract Pool')
+@section('title', 'Contract Pool | Departemen Hukum')
 
 @section('content')
 @if(auth()->user()->role == 'admin')
@@ -53,7 +53,7 @@
                     </button>
                 </div>
             @enderror
-            @error('jenis')
+            @error('jenis_dokumen')
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{{ $message }}</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -118,7 +118,7 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($posts as $post)
+                    @foreach ($contract as $post)
                     @php
                         $jenis = \App\TableMaster::where('id', $post->table_master_id)->get('nama');
                         $date = date("d-m-Y | H:i:s", strtotime($post->updated_at));
@@ -129,14 +129,14 @@
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $date }}</td>
                             <td class="text-center justify-content-center align-self-center">
-                                <a href="/contracts/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
-                                <form action="/contracts" class="d-inline" method="post">
+                                <a href="/contract/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
+                                <form action="/contract" class="d-inline" method="post">
                                     @csrf
                                     @method('patch')
                                     <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
                                     <button type="submit" class="btn btn-success btn-sm">Download</button>
                                 </form>
-                            {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
+                            {{-- <a href="/contract/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
                             </td>
                         </tr>
                     @endforeach
@@ -157,26 +157,20 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/contracts" method="post" enctype="multipart/form-data">
+                <form action="/contract" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="jenis" value="kontrak">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kontrak</label>
                         <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Kontrak" value="{{ old('nama') }}">
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="exampleInputEmail1">Jenis Kontrak</label>
-                        <input name="jenis" type="text" class="form-control @error('jenis') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="{{ old('jenis') }}">
-                    </div> --}}
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Jenis Kontrak</label>
-                        <select name="jenis" class="form-control @error('jenis') is-invalid @enderror" id="exampleFormControlSelect1">
-                            @foreach ($tablemaster as $tm)
-                                <option value="{{$tm['id']}}" @if(old('jenis') == $tm['id']) selected @endif>{{$tm['nama']}}</option>
+                        <select name="jenis_dokumen" class="form-control @error('jenis_dokumen') is-invalid @enderror" id="exampleFormControlSelect1">
+                            @foreach ($table_contract as $tm)
+                                <option value="{{$tm['id']}}" @if(old('jenis_dokumen') == $tm['id']) selected @endif>{{$tm['nama']}}</option>
                             @endforeach
                         </select>
-                        @error('jenis')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>

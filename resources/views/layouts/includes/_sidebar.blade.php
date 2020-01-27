@@ -21,14 +21,14 @@
 
     @if(auth()->user()->role == 'std_user')
     <li class="nav-item">
-        <a class="nav-link" href="/contracts">
+        <a class="nav-link" href="{{ route('post', ['menu' => 'contract']) }}">
           <span>Contract Pool</span>
         </a>
     </li>
     @endif
     @if(auth()->user()->role == 'std_user')
     <li class="nav-item">
-        <a class="nav-link" href="/perizinan">
+        <a class="nav-link" href="{{ route('post', ['menu' => 'perizinan']) }}">
           <span>Perizinan</span>
         </a>
     </li>
@@ -36,14 +36,14 @@
 
     @if(auth()->user()->role == 'access_user')
     <li class="nav-item">
-        <a class="nav-link" href="/contracts">
+        <a class="nav-link" href="{{ route('post', ['menu' => 'contract']) }}">
           <span>Contract Pool (Full Access)</span>
         </a>
     </li>
     @endif
     @if(auth()->user()->role == 'access_user')
     <li class="nav-item">
-        <a class="nav-link" href="/perizinan">
+        <a class="nav-link" href="{{ route('post', ['menu' => 'perizinan']) }}">
           <span>Perizinan (Full Access)</span>
         </a>
     </li>

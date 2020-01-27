@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Table Master | Departemen Hukum')
+
 @section('content')
 @if (session('status'))
     <div class="row">
@@ -23,15 +25,7 @@
                     </button>
             </div>
             @endif
-            @error('jenis_kontrak')
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>{{ $message }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @enderror
-            @error('jenis_perizinan')
+            @error('nama')
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>{{ $message }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -92,8 +86,8 @@
                                                     </h6>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                    <a href="/master/kontrak/{{ $mkontrak->id }}/delete" class="btn btn-primary" >Yakin</a>
+                                                    <a href="/master/kontrak/{{ $mkontrak->id }}/delete" class="btn btn-primary" >Iya</a>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,8 +150,8 @@
                                                     </h6>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                                    <a href="/master/perizinan/{{ $mperizinan->id }}/delete" class="btn btn-primary" >Yakin</a>
+                                                    <a href="/master/perizinan/{{ $mperizinan->id }}/delete" class="btn btn-primary" >Iya</a>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                                                 </div>
                                             </div>
                                         </div>

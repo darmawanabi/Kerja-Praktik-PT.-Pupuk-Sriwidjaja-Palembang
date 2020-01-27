@@ -1,6 +1,6 @@
 @extends('layouts/master')
 
-@section('title', $postperizinan->nama)
+@section('title', $post->nama . ' - Perizinan | Departemen Hukum')
 
 @section('content')
 {{-- @if(auth()->user()->role == 'admin')
@@ -93,39 +93,39 @@
     </div>
     <div class="card-body">
         @php
-            $date = date("d-m-Y", strtotime($postperizinan->tanggal_berakhir));
-            $jenis = \App\TableMaster::find($postperizinan->table_master_id);
+            $date = date("d-m-Y", strtotime($post->tanggal_berakhir));
+            $jenis = \App\TableMaster::find($post->table_master_id);
         @endphp
-        <h1 class="card-title">{{ $postperizinan->nama }}</h1>
+        <h1 class="card-title">{{ $post->nama }}</h1>
         <h4 class="card-title">{{ $jenis->nama }}</h4>
         <p class="card-text d-inline">Kategori</p>
-        <strong class="card-title d-inline"> {{ $postperizinan->kategori }} | </strong>
+        <strong class="card-title d-inline"> {{ $post->kategori }} | </strong>
         <p class="card-text d-inline">Tanggal Berakhir</p>
         <strong class="card-title"> {{ $date }}</strong><br><br>
-        <p class="card-text">{{ $postperizinan->keterangan }}</p>
-            <form action="/perizinan/{{ $postperizinan->id }}" class="d-inline" method="post">
+        <p class="card-text">{{ $post->keterangan }}</p>
+            <form action="/perizinan/{{ $post->id }}" class="d-inline" method="post">
                 @csrf
                 @method('patch')
-                <input type="hidden" name="uuid" value="{{ $postperizinan->uuid }}" />
+                <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
                 <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
             </form>
-            {{-- <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
-            <small id="helpId" class="text-muted">{{ $postperizinan->file }}</small>
+            {{-- <a href="/perizinan/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
+            <small id="helpId" class="text-muted">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">
         @php
-            $date = date("d-m-Y | H:i:s", strtotime($postperizinan->updated_at));
+            $date = date("d-m-Y | H:i:s", strtotime($post->updated_at));
         @endphp
-        {{ $postperizinan->user->name }} | {{ $date }}
+        {{ $post->user->name }} | {{ $date }}
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-8">
-        @include('perizinan.oldPerizinan', ['perizinan' => $postperizinan->perizinan, 'post_id' => $postperizinan->id])
+        @include('perizinan.oldPerizinan', ['perizinan' => $post->perizinan, 'post_id' => $post->id])
     </div>
     <div class="col-md-4">
-        @include('perizinan.logs', ['logs' => $postperizinan->logs, 'post_id' => $postperizinan->id])
+        @include('perizinan.logs', ['logs' => $post->logs, 'post_id' => $post->id])
     </div>
 </div>
 
@@ -140,36 +140,37 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/perizinan/{{$postperizinan->id}}" method="post" enctype="multipart/form-data">
+                <form action="/perizinan/{{$post->id}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="post_perizinan_id" value="{{ $postperizinan->id }}" />
+                    <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                    <input type="hidden" name="jenis" value="perizinan" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Perizinan</label>
-                        <input class="form-control" type="text" value="{{ $postperizinan->nama }}" readonly>
+                        <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
                     </div>
                     <div class="form-group">
                         @php
-                            $jenis = \App\TableMaster::find($postperizinan->table_master_id);
+                            $jenis = \App\TableMaster::find($post->table_master_id);
                         @endphp
                         <label for="exampleInputEmail1">Jenis Perizinan</label>
                         <input class="form-control" type="text" value="{{ $jenis->nama }}" readonly>
                     </div>
                     {{-- <div class="form-group">
                         <label for="exampleInputEmail1">Kategori Perizinan</label>
-                        <div class="form-control" aria-describedby="emailHelp">{{ $postperizinan->kategori }}</div>
+                        <div class="form-control" aria-describedby="emailHelp">{{ $post->kategori }}</div>
                     </div> --}}
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Kategori</label>
                         <select name="kategori" class="form-control @error('kategori') is-invalid @enderror" id="exampleFormControlSelect1">
-                            <option value="3 Bulan" @if($postperizinan->kategori == '3 Bulan') selected @endif>3 Bulan</option>
-                            <option value="6 Bulan" @if($postperizinan->kategori == '6 Bulan') selected @endif>6 Bulan</option>
-                            <option value="1 Tahun" @if($postperizinan->kategori == '1 Tahun') selected @endif>1 Tahun</option>
-                            <option value="2 Tahun" @if($postperizinan->kategori == '2 Tahun') selected @endif>2 Tahun</option>
+                            <option value="3 Bulan" @if($post->kategori == '3 Bulan') selected @endif>3 Bulan</option>
+                            <option value="6 Bulan" @if($post->kategori == '6 Bulan') selected @endif>6 Bulan</option>
+                            <option value="1 Tahun" @if($post->kategori == '1 Tahun') selected @endif>1 Tahun</option>
+                            <option value="2 Tahun" @if($post->kategori == '2 Tahun') selected @endif>2 Tahun</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tanggal Berakhir</label>
-                        <input name="tanggal_berakhir" type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$postperizinan->tanggal_berakhir}}">
+                        <input name="tanggal_berakhir" type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$post->tanggal_berakhir}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
@@ -186,7 +187,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$postperizinan->keterangan}}</textarea>
+                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$post->keterangan}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

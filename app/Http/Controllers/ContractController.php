@@ -67,6 +67,7 @@ class ContractController extends Controller
         $temp = $post;
 
         Post::where('id', $contract['post_id'])->update([
+            'jenis' => $contract['jenis'],
             'uuid' => $contract['uuid'],
             'user_id' => $contract['user_id'],
             'file' => $request->file->getClientOriginalName(),
@@ -74,6 +75,7 @@ class ContractController extends Controller
         ]);
 
         Log::create([
+            'jenis' => $contract['jenis'],
             'user_id' => $contract['user_id'],
             'post_id' => $contract['post_id'],
             'file' => $request->file->getClientOriginalName(),
@@ -103,6 +105,7 @@ class ContractController extends Controller
         $post = Post::where('id', $request->post_id)->firstOrFail();
 
         Log::create([
+            'jenis' => $post->jenis,
             'user_id' => auth()->user()->id,
             'post_id' => $contract->post_id,
             'file' => $contract->file,

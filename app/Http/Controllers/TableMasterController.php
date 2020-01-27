@@ -61,26 +61,24 @@ class TableMasterController extends Controller
 
     public function delete($jenis, $id)
     {
-        if($jenis == "kontrak"){
-            $kontrak = TableMaster::find($id);
+        $table = TableMaster::find($id);
 
-            if(count($kontrak->kontrak) > 0){
-                return redirect('/master')->with('error', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' tidak bisa dihapus, karena jenis kontrak ini sudah digunakan.');
+        if($jenis == "kontrak") {
+            if(count($table->kontrak) > 0) {
+                return redirect('/master')->with('error', 'Jenis kontrak ' . $table->nama . ' tidak bisa diubah, karena jenis kontrak ini sudah digunakan.');
             }
+        } elseif($jenis == "perizinan") {
+            if(count($table->perizinan) > 0) {
+                return redirect('/master')->with('error', 'Jenis perizinan ' . $table->nama . ' tidak bisa diubah, karena jenis perizinan ini sudah digunakan.');
+            }
+        }
 
-            TableMaster::destroy($id);
+        TableMaster::destroy($id);
 
-            return redirect('/master')->with('status', 'Jenis kontrak ' . $kontrak->jenis_kontrak . ' berhasil dihapuskan.');
+        if($jenis == "kontrak") {
+            return redirect('/master')->with('status', 'Jenis kontrak ' . $table->nama . ' berhasil dihapuskan.');
         } elseif ($jenis == "perizinan") {
-            $perizinan = TableMasterPerizinan::find($id);
-
-            if(count($perizinan->perizinan) > 0){
-                return redirect('/master')->with('error', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' tidak bisa dihapus, karena jenis perizinan ini sudah digunakan.');
-            }
-
-            TableMasterPerizinan::destroy($id);
-
-            return redirect('/master')->with('status', 'Jenis perizinan ' . $perizinan->jenis_perizinan . ' berhasil dihapuskan.');
+            return redirect('/master')->with('status', 'Jenis perizinan ' . $table->nama . ' berhasil dihapuskan.');
         }
     }
 }

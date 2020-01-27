@@ -18,7 +18,7 @@ class TableMaster extends Model
     }
 
     public function perizinan(){
-        return $this->hasMany(PostPerizinan::class)->whereNull('parent_id');
+        return $this->hasMany(Post::class)->whereNull('parent_id');
     }
 
 }

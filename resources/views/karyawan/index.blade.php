@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Kelola Akun Karyawan | Departemen Hukum')
+
 @section('content')
         <!-- DataTables Example -->
         <div class="card mb-3">
