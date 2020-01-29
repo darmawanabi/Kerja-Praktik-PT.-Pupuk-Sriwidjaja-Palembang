@@ -82,13 +82,13 @@
         <h1 class="card-title d-inline">{{ $post->nama }}</h1>
         <h4 class="card-title">{{ $jenis->nama }}</h4>
         <p class="card-text">{{ $post->keterangan }}</p>
-            <form action="/contracts/{{ $post->id }}" class="d-inline" method="post">
+            <form action="/contract/{{ $post->id }}" class="d-inline" method="post">
                 @csrf
                 @method('patch')
                 <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
                 <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
             </form>
-            {{-- <a href="/contracts/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
+            {{-- <a href="/contract/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
             <small id="helpId" class="text-muted d-inline">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">

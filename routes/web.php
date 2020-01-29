@@ -48,12 +48,12 @@ Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']],
 });
 
 // Download Contract
-Route::patch('/contracts', 'PostController@loggingDownload');
-Route::patch('/contracts/{contract}', 'PostController@loggingDownload');
-Route::put('/contracts/{contract}', 'ContractController@loggingDownload');
+Route::patch('/contract', 'PostController@loggingDownload');
+Route::patch('/contract/{contract}', 'PostController@loggingDownload');
+Route::put('/contract/{contract}', 'ContractController@loggingDownload');
 
-Route::get('contracts/{uuid}/download', 'PostController@download');
-Route::get('contracts/{post_id}/{uuid}/download', 'ContractController@download');
+Route::get('contract/{uuid}/download', 'PostController@download');
+Route::get('contract/{post_id}/{uuid}/download', 'ContractController@download');
 
 // Download Perizinan
 Route::patch('/perizinan', 'PostController@loggingDownload');
