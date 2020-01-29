@@ -130,7 +130,7 @@
                             <td>{{ $date }}</td>
                             <td class="text-center justify-content-center align-self-center">
                                 <a href="/contract/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
-                                <form action="/contract" class="d-inline" method="post">
+                                <form action="/contracts" class="d-inline" method="post">
                                     @csrf
                                     @method('patch')
                                     <input type="hidden" name="uuid" value="{{ $post->uuid }}" />

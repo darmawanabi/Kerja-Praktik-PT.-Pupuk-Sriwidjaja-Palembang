@@ -17,6 +17,7 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
+                    <th>No. Badge</th>
                     <th>Nama</th>
                     <th>Jenis Kelamin</th>
                     <th>Alamat</th>
@@ -26,6 +27,7 @@
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>No.Badge</th>
                     <th>Nama</th>
                     <th>Jenis Kelamin</th>
                     <th>Alamat</th>
@@ -35,14 +37,12 @@
                 </tfoot>
                 <tbody>
                     @foreach($data_karyawan as $karyawan)
-                    @php
-                      $user = \App\User::find($karyawan->user_id)
-                    @endphp
                   <tr>
-                    <td>{{$karyawan->nama}}</td>
+                    <td>{{$karyawan->id}}</td>
+                    <td>{{$karyawan->name}}</td>
                     <td>{{$karyawan->jenis_kelamin}}</td>
                     <td>{{$karyawan->alamat}}</td>
-                    <td>{{$user->role}}</td>
+                    <td>{{$karyawan->role}}</td>
                     <td>
                         <a href="/karyawan/{{$karyawan->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
                         <a href="/karyawan/{{$karyawan->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus?')">Delete</a>

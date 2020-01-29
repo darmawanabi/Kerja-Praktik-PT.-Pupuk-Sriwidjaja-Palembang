@@ -6,6 +6,7 @@ use App\Contract;
 use App\Perizinan;
 use App\Post;
 use App\PostPerizinan;
+use App\PostController;
 use App\TableMaster;
 use App\TableMasterPerizinan;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class DashboardController extends Controller
     public function index(){
         date_default_timezone_set('Asia/Bangkok');
 
-        $tanggal = PostPerizinan::all('id','tanggal_berakhir','kategori')->toArray();
+        $tanggal = Post::all('id','tanggal_berakhir','kategori')->toArray();
 
         $tgl_reminder = [];
 
@@ -57,7 +58,7 @@ class DashboardController extends Controller
     }
 
     public static function getPerizinan($id){
-        return PostPerizinan::where('id', $id)->firstOrFail();
+        return Post::where('id', $id)->firstOrFail();
     }
 
     public static function showNotification(){
