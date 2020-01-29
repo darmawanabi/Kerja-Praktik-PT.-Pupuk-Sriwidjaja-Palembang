@@ -7,7 +7,6 @@
 @section('title', 'Dashboard | Departemen Hukum')
 
 @section('content')
-
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 
 @if(auth()->user()->role == 'admin' || auth()->user()->role == 'std_user' || auth()->user()->role == 'access_user')
