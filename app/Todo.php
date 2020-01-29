@@ -8,6 +8,8 @@ class Todo extends Model
 {
     public $timestamps = false;
 
+    public $primaryKey = 'id';
+
     protected $dates = ['when'];
 
     protected $fillable = ['post_id','repeat','when','to'];

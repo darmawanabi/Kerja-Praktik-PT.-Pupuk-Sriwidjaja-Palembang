@@ -8,6 +8,8 @@ class TableMaster extends Model
 {
     public $timestamps = false;
 
+    public $primaryKey = 'id';
+
     protected $fillable = [
          'jenis',
          'nama'

@@ -14,7 +14,7 @@ class CreateLogsTable extends Migration
     public function up()
     {
         Schema::create('logs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->integer('id')->unsigned()->autoIncrement();
             $table->string('jenis');
             $table->integer('user_id')->unsigned();
             $table->integer('post_id')->unsigned();
@@ -23,6 +23,14 @@ class CreateLogsTable extends Migration
             $table->text('keterangan');
             $table->timestamps();
         });
+
+        Schema::table('logs', function (Blueprint $table) {
+            $table->index('user_id');
+            $table->index('post_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+        });
+
     }
 
     /**

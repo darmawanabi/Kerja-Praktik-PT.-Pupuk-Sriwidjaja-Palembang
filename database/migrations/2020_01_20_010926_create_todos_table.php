@@ -14,12 +14,18 @@ class CreateTodosTable extends Migration
     public function up()
     {
         Schema::create('todos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('post_id');
+            $table->integer('id')->unsigned()->autoIncrement();
+            $table->integer('post_id')->unsigned();
             $table->integer('repeat');
             $table->date('when');
             $table->string('to');
         });
+
+        Schema::table('todos', function (Blueprint $table) {
+            $table->index('post_id');
+            $table->foreign('post_id')->references('id')->on('posts');
+        });
+
     }
 
     /**

@@ -14,10 +14,16 @@ class CreateTableMastersTable extends Migration
     public function up()
     {
         Schema::create('table_masters', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->integer('id')->unsigned()->autoIncrement();
             $table->string('jenis');
             $table->string('nama')->unique();
         });
+
+        Schema::table('posts', function (Blueprint $table) {
+            $table->index('table_master_id');
+            $table->foreign('table_master_id')->references('id')->on('table_masters')->onDelete('cascade');
+        });
+
     }
 
     /**

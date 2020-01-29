@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    public $primaryKey = 'id';
+
     protected $fillable = ['jenis','uuid','user_id','table_master_id','parent_id','nama','file','kategori','tanggal_berakhir','keterangan'];
 
     public function user(){

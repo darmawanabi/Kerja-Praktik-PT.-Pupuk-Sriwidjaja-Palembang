@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Perizinan extends Model
 {
+    public $primaryKey = 'id';
+
     protected $date = ['deleted_at'];
 
     protected $fillable = ['uuid','user_id','post_id','parent_id','file','keterangan','created_at'];

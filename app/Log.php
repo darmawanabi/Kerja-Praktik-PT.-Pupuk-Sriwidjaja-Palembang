@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
+    public $primaryKey = 'id';
+
     protected $fillable = ['jenis','user_id','post_id','parent_id','file','keterangan'];
 
     public function user(){
