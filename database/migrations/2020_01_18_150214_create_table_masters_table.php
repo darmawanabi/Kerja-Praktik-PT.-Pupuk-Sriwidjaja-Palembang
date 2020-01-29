@@ -14,7 +14,7 @@ class CreateTableMastersTable extends Migration
     public function up()
     {
         Schema::create('table_masters', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('table_master_id');
             $table->string('jenis');
             $table->string('nama')->unique();
         });

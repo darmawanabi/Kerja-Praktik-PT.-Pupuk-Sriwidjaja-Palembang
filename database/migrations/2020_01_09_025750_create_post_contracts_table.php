@@ -14,7 +14,7 @@ class CreatePostContractsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('post_id');
             $table->string('jenis');
             $table->uuid('uuid')->nullable();
             $table->integer('user_id')->unsigned();

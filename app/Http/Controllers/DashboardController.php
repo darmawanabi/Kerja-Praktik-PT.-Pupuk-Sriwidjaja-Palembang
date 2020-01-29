@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function index(){
         date_default_timezone_set('Asia/Bangkok');
 
-        $tanggal = Post::all('id','tanggal_berakhir','kategori')->toArray();
+        $tanggal = Post::where('jenis','perizinan')->select('id','tanggal_berakhir','kategori')->get()->toArray();
 
         $tgl_reminder = [];
 
@@ -72,26 +72,29 @@ class DashboardController extends Controller
     }
 
     public static function totalContract(){
-        $posts = Post::all();
+        $posts = Post::where('jenis', 'kontrak')->get();
 
         return count($posts);
     }
 
     public static function totalPerizinan(){
-        $posts = PostPerizinan::all();
+        $posts = Post::where('jenis', 'perizinan')->get();
 
         return count($posts);
     }
 
     public static function contractByJenis(){
-        $table = TableMaster::all('jenis_kontrak')->toArray();
+        $table = TableMaster::where('jenis','kontrak')->select('id','nama')->get()->toArray();
 
         $array = Array();
         foreach ($table as $tab) {
-            $post = Post::where('jenis', $tab['jenis_kontrak'])->get();
+            $post = Post::where([
+                ['jenis', '=', 'kontrak'],
+                ['table_master_id', '=', $tab['id']]
+            ])->get();
             if(count($post) > 0) {
                 $total = count($post);
-                array_push($array, Arr::add(['jenis' => $tab['jenis_kontrak']], 'total', $total));
+                array_push($array, Arr::add(['jenis' => $tab['nama']], 'total', $total));
             }
         }
 
@@ -99,14 +102,17 @@ class DashboardController extends Controller
     }
 
     public static function perizinanByJenis(){
-        $table = TableMasterPerizinan::all('jenis_perizinan')->toArray();
+        $table = TableMaster::where('jenis', 'perizinan')->select('id','nama')->get()->toArray();
 
         $array = Array();
         foreach ($table as $tab) {
-            $post = PostPerizinan::where('jenis_perizinan', $tab['jenis_perizinan'])->get();
+            $post = Post::where([
+                ['jenis', '=', 'perizinan'],
+                ['table_master_id', '=', $tab['id']]
+            ])->get();
             if(count($post) > 0) {
                 $total = count($post);
-                array_push($array, Arr::add(['jenis' => $tab['jenis_perizinan']], 'total', $total));
+                array_push($array, Arr::add(['jenis' => $tab['nama']], 'total', $total));
             }
         }
 
@@ -122,7 +128,7 @@ class DashboardController extends Controller
 
         $array = Array();
         foreach ($kategori as $ktg) {
-            $post = PostPerizinan::where('kategori', $ktg['kategori'])->get();
+            $post = Post::where('kategori', $ktg['kategori'])->get();
             if(count($post) > 0) {
                 $total = count($post);
                 array_push($array, Arr::add(['kategori' => $ktg['kategori']], 'total', $total));
