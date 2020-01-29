@@ -43,9 +43,6 @@
     <!-- /.content-wrapper -->
 
 </div>
-<div class="container">
-    <div class="row pb-3"></div>
-</div>
 <!-- /#wrapper -->
 @include('layouts/includes/_footer')
   <!-- Scroll to Top Button-->
