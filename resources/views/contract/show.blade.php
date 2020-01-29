@@ -129,7 +129,7 @@
                     </div>
                     <div class="form-group">
                         @php
-                            $jenis = \App\TableMaster::find($post->id);
+                            $jenis = \App\TableMaster::find($post->table_master_id);
                         @endphp
                         <label for="exampleInputEmail1">Jenis Kontrak</label>
                         <input class="form-control" type="text" value="{{ $jenis->nama }}" readonly>
