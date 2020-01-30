@@ -3,7 +3,7 @@
 @section('title', 'Perizinan | Departemen Hukum')
 
 @section('content')
-@if(auth()->user()->role == 'admin')
+{{-- @if(auth()->user()->role == 'admin')
     <h1>Perizinan Admin</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif
@@ -16,7 +16,7 @@
 @if(auth()->user()->role == 'access_user')
     <h1>Perizinan Full Access User</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
-@endif
+@endif --}}
 
 {{-- Form Error --}}
 @if (session('status'))
