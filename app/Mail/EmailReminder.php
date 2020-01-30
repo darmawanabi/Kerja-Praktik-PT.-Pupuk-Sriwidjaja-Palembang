@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\PostPerizinan;
+use App\Post;
 use App\Todo;
 
 class EmailReminder extends Mailable
@@ -33,7 +33,7 @@ class EmailReminder extends Mailable
     {
         date_default_timezone_set('Asia/Bangkok');
         $todo = $this->todo;
-        $post = PostPerizinan::find($todo->post_id);
+        $post = Post::find($todo->post_id);
         return $this->subject('Reminder Untuk Perizinan | ' . $post->nama)->markdown('emails.sites.reminder', compact('todo'));
     }
 }

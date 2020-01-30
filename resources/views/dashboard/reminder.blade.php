@@ -14,15 +14,18 @@
         <tbody>
             @foreach ($check as $cek)
                 @php
-                    $post = App\Http\Controllers\DashboardController::getPerizinan($cek['post_id'])
+                    $post = App\Http\Controllers\DashboardController::getPerizinan($cek['post_id']);
+                    $jenis = \App\TableMaster::where('id',$post->table_master_id)->get('nama');
+                    $date1 = date("d-m-Y | H:i:s", strtotime($post->updated_at));
+                    $date2 = date("d-m-Y", strtotime($post->tanggal_berakhir));
                 @endphp
                 <tr>
                     <td>{{$post->user->name}}</td>
                     <td>{{$post->nama}}</td>
-                    <td>{{$post->jenis_perizinan}}</td>
+                    <td>{{$jenis[0]['nama']}}</td>
                     <td>{{$post->kategori}}</td>
-                    <td>{{$post->updated_at}}</td>
-                    <td>{{$post->tanggal_berakhir}}</td>
+                    <td>{{$date1}}</td>
+                    <td>{{$date2}}</td>
                     <td style="width:13%">
                         <a href="/perizinan/{{ $post->id }}" class="btn btn-info btn-sm">Detail</a>
                     <button class="btn btn-primary btn-sm" type="button" id="btnRevisi{{$loop->iteration}}">Revisi</button>
@@ -44,14 +47,15 @@
                             <div class="modal-body">
                                 <form action="/perizinan/{{$post->id}}" method="post" enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="post_perizinan_id" value="{{ $post->id }}" />
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                                    <input type="hidden" name="jenis" value="perizinan" />
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Nama Perizinan</label>
                                         <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                                        <input class="form-control" type="text" value="{{ $post->jenis_perizinan }}" readonly>
+                                        <input class="form-control" type="text" value="{{ $jenis[0]['nama'] }}" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Kategori</label>

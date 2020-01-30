@@ -1,5 +1,5 @@
 @php
-    $post = \App\PostPerizinan::find($todo->post_id);
+    $post = \App\Post::find($todo->post_id);
     $tgl = date('d-m-Y', strtotime($post->tanggal_berakhir));
     $link = "http://localhost:8000/perizinan/" . $todo->post_id;
 @endphp
