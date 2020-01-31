@@ -1,6 +1,6 @@
 @extends('layouts/master')
 
-@section('title', $post->nama)
+@section('title', $post->nama . ' - Contract Pool | Departemen Hukum')
 
 @section('content')
 {{-- @if(auth()->user()->role == 'admin')
@@ -17,23 +17,25 @@
     <h1>Contract Pool Full Access User</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif --}}
-<!-- DataTables Example -->
-@if (session('status'))
+
+{{-- Form Error --}}
+@if (session('error'))
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ session('status') }}</strong>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         </div>
     </div>
-@elseif (session('error'))
+@endif
+@if (session('status'))
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>{{ session('error') }}</strong>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('status') }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -51,22 +53,16 @@
                     </button>
                 </div>
             @enderror
-            @error('keterangan')
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @enderror
         </div>
     </div>
 @endif
 
+<!-- DataTables Example -->
+
 <div class="card mb-3">
     <div class="card-header">
         <div class="float-left">
-            <a class="btn btn-danger btn-sm" href="/contracts" role="button">
+            <a class="btn btn-danger btn-sm" href="/contract" role="button">
                 &nbsp;
                 <i class="fas fa-long-arrow-alt-left"></i>
                 &nbsp;
@@ -80,8 +76,11 @@
         @endif
     </div>
     <div class="card-body">
+        @php
+            $jenis = \App\TableMaster::find($post->table_master_id);
+        @endphp
         <h1 class="card-title d-inline">{{ $post->nama }}</h1>
-        <h4 class="card-title">{{ $post->jenis }}</h4>
+        <h4 class="card-title">{{ $jenis->nama }}</h4>
         <p class="card-text">{{ $post->keterangan }}</p>
             <form action="/contracts/{{ $post->id }}" class="d-inline" method="post">
                 @csrf
@@ -93,7 +92,10 @@
             <small id="helpId" class="text-muted d-inline">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">
-        {{ $post->user->name }} | {{ $post->updated_at }}
+        @php
+            $date = date("d-m-Y | H:i:s", strtotime($post->updated_at));
+        @endphp
+        {{ $post->user->name }} | {{ $date }}
     </div>
 </div>
 
@@ -111,18 +113,26 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Revisi Kontrak</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Revisi Data Kontrak</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-            <form action="/contracts/{{ $post->id }}" method="post" enctype="multipart/form-data">
+            <form action="/contract/{{ $post->id }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                    <input type="hidden" name="jenis" value="kontrak" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Kontrak</label>
-                        <div class="form-control" aria-describedby="emailHelp">{{ $post->nama }}</div>
+                        <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        @php
+                            $jenis = \App\TableMaster::find($post->table_master_id);
+                        @endphp
+                        <label for="exampleInputEmail1">Jenis Kontrak</label>
+                        <input class="form-control" type="text" value="{{ $jenis->nama }}" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
@@ -139,12 +149,12 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{ $post->keterangan }}</textarea>
+                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $post->keterangan }}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Tambah</button>
+                    <button type="submit" class="btn btn-primary">Revisi</button>
                 </div>
             </form>
         </div>

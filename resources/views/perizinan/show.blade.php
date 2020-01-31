@@ -1,7 +1,9 @@
 @extends('layouts/master')
 
+@section('title', $post->nama . ' - Perizinan | Departemen Hukum')
+
 @section('content')
-@if(auth()->user()->role == 'admin')
+{{-- @if(auth()->user()->role == 'admin')
     <h1>Perizinan Admin</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
 @endif
@@ -14,9 +16,21 @@
 @if(auth()->user()->role == 'access_user')
     <h1>Perizinan Full Access User</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit cumque reprehenderit voluptate, ratione unde cupiditate odit dolorem corrupti ullam quam aspernatur deleniti quidem minus asperiores veniam illo minima doloribus harum.</p>
-@endif
+@endif --}}
 
-<!-- DataTables Example -->
+{{-- Form Error --}}
+@if (session('error'))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+@endif
 @if (session('status'))
     <div class="row">
         <div class="col-md-12">
@@ -28,39 +42,38 @@
             </div>
         </div>
     </div>
-@elseif (session('error'))
+@else
     <div class="row">
         <div class="col-md-12">
+            @error('kategori')
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>{{ session('error') }}</strong>
+                <strong>{{ $message }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        </div>
-    </div>
-@else
-    <div class="row">
-        <div class="col-md-12">
-            @error('file')
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
             @enderror
-            @error('keterangan')
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>{{ $message }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            @error('tanggal_berakhir')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ $message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @enderror
+            @error('file')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ $message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             @enderror
         </div>
     </div>
 @endif
+
+<!-- DataTables Example -->
 
 <div class="card mb-3">
     <div class="card-header">
@@ -79,22 +92,40 @@
         @endif
     </div>
     <div class="card-body">
-        <h1 class="card-title">{{ $postperizinan->nama }}</h1>
-        <p class="card-text">{{ $postperizinan->keterangan }}</p>
-            <a href="/perizinan/{{ $postperizinan->uuid }}/download" class="btn btn-success btn-sm">Download</a>
-            <small id="helpId" class="text-muted">{{ $postperizinan->file }}</small>
+        @php
+            $date = date("d-m-Y", strtotime($post->tanggal_berakhir));
+            $jenis = \App\TableMaster::find($post->table_master_id);
+        @endphp
+        <h1 class="card-title">{{ $post->nama }}</h1>
+        <h4 class="card-title">{{ $jenis->nama }}</h4>
+        <p class="card-text d-inline">Kategori</p>
+        <strong class="card-title d-inline"> {{ $post->kategori }} | </strong>
+        <p class="card-text d-inline">Tanggal Berakhir</p>
+        <strong class="card-title"> {{ $date }}</strong><br><br>
+        <p class="card-text">{{ $post->keterangan }}</p>
+            <form action="/perizinan/{{ $post->id }}" class="d-inline" method="post">
+                @csrf
+                @method('patch')
+                <input type="hidden" name="uuid" value="{{ $post->uuid }}" />
+                <button type="submit" class="btn btn-success btn-sm" id="btn-download">Download</button>
+            </form>
+            {{-- <a href="/perizinan/{{ $post->uuid }}/download" class="btn btn-success btn-sm">Download</a> --}}
+            <small id="helpId" class="text-muted">{{ $post->file }}</small>
     </div>
     <div class="card-footer text-muted">
-        {{ $postperizinan->user->name }} | {{ $postperizinan->updated_at }}
+        @php
+            $date = date("d-m-Y | H:i:s", strtotime($post->updated_at));
+        @endphp
+        {{ $post->user->name }} | {{ $date }}
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-8">
-        @include('perizinan.oldPerizinan', ['perizinan' => $postperizinan->perizinan, 'post_id' => $postperizinan->id])
+        @include('perizinan.oldPerizinan', ['perizinan' => $post->perizinan, 'post_id' => $post->id])
     </div>
     <div class="col-md-4">
-        @include('perizinan.logs', ['logs' => $postperizinan->logs, 'post_id' => $postperizinan->id])
+        @include('perizinan.logs', ['logs' => $post->logs, 'post_id' => $post->id])
     </div>
 </div>
 
@@ -103,60 +134,43 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Perizinan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Revisi Data Perizinan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/perizinan/{{$postperizinan->id}}" method="post" enctype="multipart/form-data">
+                <form action="/perizinan/{{$post->id}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="post_perizinan_id" value="{{ $postperizinan->id }}" />
+                    <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                    <input type="hidden" name="jenis" value="perizinan" />
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nama Perizinan</label>
-                        <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Perizinan" value="{{$postperizinan->nama}}">
-                        <!-- @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
+                        <input class="form-control" type="text" value="{{ $post->nama }}" readonly>
                     </div>
                     <div class="form-group">
+                        @php
+                            $jenis = \App\TableMaster::find($post->table_master_id);
+                        @endphp
                         <label for="exampleInputEmail1">Jenis Perizinan</label>
-                        <input name="jenis_perizinan" type="text" class="form-control @error('jenis_pirizinan') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="{{$postperizinan->jenis_perizinan}}">
-                        <!-- @error('jenis')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
+                        <input class="form-control" type="text" value="{{ $jenis->nama }}" readonly>
                     </div>
+                    {{-- <div class="form-group">
+                        <label for="exampleInputEmail1">Kategori Perizinan</label>
+                        <div class="form-control" aria-describedby="emailHelp">{{ $post->kategori }}</div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Kategori</label>
                         <select name="kategori" class="form-control @error('kategori') is-invalid @enderror" id="exampleFormControlSelect1">
-                        @if (old('kategori') == "3 Bulan")
-                            <option value="{{$postperizinan->kategori}}" selected>3 Bulan</option>
-                        @else
-                            <option value="{{$postperizinan->kategori}}">3 Bulan</option>
-                        @endif
-                        @if (old('kategori') == "6 Bulan")
-                            <option value="{{$postperizinan->kategori}}" selected>6 Bulan</option>
-                        @else
-                            <option value="{{$postperizinan->kategori}}">6 Bulan</option>
-                        @endif
-                        @if (old('kategori') == "1 Tahun")
-                            <option value="{{$postperizinan->kategori}}" selected>1 Tahun</option>
-                        @else
-                            <option value="{{$postperizinan->kategori}}">1 Tahun</option>
-                        @endif
-                        @if (old('kategori') == "2 Tahun")
-                            <option value="{{$postperizinan->kategori}}" selected>2 Tahun</option>
-                        @else
-                            <option value="{{$postperizinan->kategori}}">2 Tahun</option>
-                        @endif
+                            <option value="3 Bulan" @if($post->kategori == '3 Bulan') selected @endif>3 Bulan</option>
+                            <option value="6 Bulan" @if($post->kategori == '6 Bulan') selected @endif>6 Bulan</option>
+                            <option value="1 Tahun" @if($post->kategori == '1 Tahun') selected @endif>1 Tahun</option>
+                            <option value="2 Tahun" @if($post->kategori == '2 Tahun') selected @endif>2 Tahun</option>
                         </select>
-                        <!-- @error('jenis_kelamin')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tanggal Berakhir</label>
-                        <input name="tanggal_berakhir" type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$postperizinan->tanggal_berakhir}}">
+                        <input name="tanggal_berakhir" type="date" class="form-control @error('tanggal_berakhir') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$post->tanggal_berakhir}}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Upload File</label>
@@ -170,21 +184,15 @@
                                 <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                             </div>
                         </div>
-                        <!-- @error('file')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Keterangan</label>
-                        <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3">{{$postperizinan->keterangan}}</textarea>
-                        <!-- @error('keterangan')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror -->
+                        <textarea name="keterangan" class="form-control" id="exampleFormControlTextarea1" rows="3">{{$post->keterangan}}</textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Revisi</button>
                 </div>
             </form>
         </div>

@@ -43,9 +43,6 @@
     <!-- /.content-wrapper -->
 
 </div>
-<div class="container">
-    <div class="row pb-3"></div>
-</div>
 <!-- /#wrapper -->
 @include('layouts/includes/_footer')
   <!-- Scroll to Top Button-->
@@ -68,46 +65,50 @@
   <script src="{{('/admin/assets/vendor/chart.js/Chart.min.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/jquery.dataTables.js')}}"></script>
   <script src="{{('/admin/assets/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-        $('#dataPost').DataTable({
-            "order": [[ 3, "desc" ]],
-            initComplete: function () {
-                this.api().columns('.jenis').every( function () {
-                    var column = this;
-                    var select = $('<select name="dataPost_length" aria-controls="dataPost" class="custom-select custom-select-sm form-control form-control-sm" id="exampleFormControlSelect1"><option value=""></option></select>')
-                        .appendTo( $('#typePost') )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search( val ? '^'+val+'$' : '', true, false )
-                                .draw();
-                        });
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    });
-                });
-            }
-        });
-        $('#dataContract').DataTable({
-            "order": [[ 1, "desc" ]]
-        });
-        $('#dataLog').DataTable({
-            "ordering": false,
-            "lengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "All"]]
-        });
-        $('#dataLogDetail').DataTable({
-            "order": [[ 3, "desc" ]]
-        });
-    });
-  </script>
 
   <!-- Custom scripts for all pages-->
   <script src="{{('/admin/assets/js/sb-admin.min.js')}}"></script>
+  <script src="{{('/admin/assets/js/datatables-custom.js')}}"></script>
+  <script src="{{('/admin/assets/js/reminder-button.js')}}"></script>
+  <script type="text/javascript">
+    window.setTimeout(function () {
+        $(".alert").alert('close');
+    }, 5000);
+    $( document ).ready(function() {
+        $('button[id^="btnEditKontrak"]').on('click', function() {
+            var full_id = this.id;
+            var id = full_id.replace("btnEditKontrak", "");
+            var tr = $('#kontrak' + id);
+            var jenis = document.getElementById("jenisKontrak" + id).innerHTML;
+
+            tr.children().remove();
+
+            var td = $('<td colspan="2"><form action="/master" method="post">@method("patch")@csrf<input type="hidden" name="id" value="' + id + '" /><input type="hidden" name="jenis" value="kontrak" /><div class="row no-gutters"><div class="col-md-8 text-left justify-content-center align-self-center"><div class="form-group mb-0"><input name="nama" type="text" class="form-control @error("nama") is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Kontrak" value="' + jenis + '"></div></div><div class="col-md-4 text-right justify-content-center align-self-center"><button type="submit" class="btn btn-primary btn-sm">Ubah</button>\n<button type="button" class="btn btn-secondary btn-sm" id="btnBatalKontrak' + id + '">Batal</button></div></div></form></td>').appendTo($('#kontrak' + id));
+
+            $('button[id^="btnBatalKontrak"]').on('click', function() {
+                tr.children().remove();
+
+                var td2 = $('<td id="jenisKontrak' + id + '">' + jenis + '</td><td class="text-right"><button type="button" class="btn btn-warning btn-sm" id="btnEditKontrak' + id + '">Edit</button>\n<a href="/master/kontrak/' + id + '/delete" class="btn btn-danger btn-sm">Delete</a></td>').appendTo($('#kontrak' +id));
+            });
+        });
+        $('button[id^="btnEditPerizinan"]').on('click', function() {
+            var full_id = this.id;
+            var id = full_id.replace("btnEditPerizinan", "");
+            var tr = $('#perizinan' + id);
+            var jenis = document.getElementById("jenisPerizinan" + id).innerHTML;
+
+            tr.children().remove();
+
+            var td = $('<td colspan="2"><form action="/master" method="post">@method("patch")@csrf<input type="hidden" name="id" value="' + id + '" /><input type="hidden" name="jenis" value="perizinan" /><div class="row no-gutters"><div class="col-md-8 text-left justify-content-center align-self-center"><div class="form-group mb-0"><input name="nama" type="text" class="form-control @error("nama") is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis Perizinan" value="' + jenis + '"></div></div><div class="col-md-4 text-right justify-content-center align-self-center"><button type="submit" class="btn btn-primary btn-sm">Ubah</button>\n<button type="button" class="btn btn-secondary btn-sm" id="btnBatalPerizinan' + id + '">Batal</button></div></div></form></td>').appendTo($('#perizinan' + id));
+
+            $('button[id^="btnBatalPerizinan"]').on('click', function() {
+                tr.children().remove();
+
+                var td2 = $('<td id="jenisPerizinan' + id + '">' + jenis + '</td><td class="text-right"><button type="button" class="btn btn-warning btn-sm" id="btnEditPerizinan' + id + '">Edit</button>\n<a href="/master/perizinan/' + id + '/delete" class="btn btn-danger btn-sm">Delete</a></td>').appendTo($('#perizinan' +id));
+            });
+        });
+    });
+  </script>
 
   <!-- Demo scripts for this page-->
   <script src="{{('/admin/assets/js/demo/datatables-demo.js')}}"></script>

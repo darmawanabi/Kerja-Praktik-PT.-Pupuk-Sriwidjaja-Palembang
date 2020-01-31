@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Contract;
+use App\Todo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 
-class ContractPoolController extends Controller
+class TodoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class ContractPoolController extends Controller
      */
     public function index()
     {
-        $contract = Contract::all();
-        return view('contract.index', ['contracts' => $contract]);
+        //
     }
 
     /**
@@ -37,36 +36,16 @@ class ContractPoolController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,odt'
-        ]);
-
-        $contract = $request->all();
-
-        $contract['uuid'] = Str::uuid();
-
-        if($request->hasFile('file')) {
-            $contract['file'] = $request->file->getClientOriginalName();
-            $request->file->storeAs(Str::kebab($contract['nama']), $contract['file']);
-        }
-
-        // $nama_file = time()."_".$contract->getClientOriginalName();
-
-        // $tujuan_upload = $request->nama;
-
-        Contract::create($contract);
-
-        return redirect('/contractpool');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Contract  $contract
+     * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function show(Contract $contract)
+    public function show(Todo $todo)
     {
         //
     }
@@ -74,10 +53,10 @@ class ContractPoolController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Contract  $contract
+     * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contract $contract)
+    public function edit(Todo $todo)
     {
         //
     }
@@ -86,10 +65,10 @@ class ContractPoolController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Contract  $contract
+     * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request, Todo $todo)
     {
         //
     }
@@ -97,10 +76,10 @@ class ContractPoolController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Contract  $contract
+     * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(Todo $todo)
     {
         //
     }

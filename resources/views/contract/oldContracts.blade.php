@@ -8,19 +8,17 @@
             <table class="table table-bordered" id="dataContract" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Upload</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
-                        <th class="w-25">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        {{-- <th>No </th> --}}
                         <th>Nama Akun</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Upload</th>
                         <th>Keterangan</th>
                         <th>Nama File</th>
                         <th>Aksi</th>
@@ -28,10 +26,12 @@
                 </tfoot>
                 <tbody>
                     @foreach ($contracts as $contract)
+                     @php
+                        $date = date("d-m-Y | H:i:s", strtotime($contract->created_at));
+                     @endphp
                         <tr>
-                            {{-- <td>{{ $loop->iteration }}</td> --}}
                             <td>{{ $contract->user->name }}</td>
-                            <td>{{ $contract->created_at }}</td>
+                            <td>{{ $date }}</td>
                             <td>{{ $contract->keterangan }}</td>
                             <td>
                                 <small id="helpId" class="text-muted">{{ $contract->file }}</small>

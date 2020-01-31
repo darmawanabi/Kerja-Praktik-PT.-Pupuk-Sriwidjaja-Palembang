@@ -15,47 +15,51 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::post('/postregister/create', 'RegisterController@create');
-
 //login
 Route::get('/login', 'AuthController@login')->name('login');
 Route::post('/postlogin', 'AuthController@postlogin');
 Route::get('logout', 'AuthController@logout');
 
+Route::post('/password/change', 'PasswordController@change');
+Route::post('/password/reset', 'PasswordController@reset');
+
 //karyawan-admin
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){
-    // Route::get('/dashboard', 'DashboardController@index');
     Route::get('/karyawan', 'KaryawanController@index');
     Route::post('/karyawan', 'KaryawanController@store');
     Route::get('/karyawan/{id}/edit', 'KaryawanController@edit');
     Route::post('/karyawan/{id}/update', 'KaryawanController@update');
     Route::get('/karyawan/{id}/delete', 'KaryawanController@delete');
+    Route::get('/master', 'TableMasterController@index');
+    Route::post('/master', 'TableMasterController@store');
+    Route::patch('/master', 'TableMasterController@update');
+    Route::get('/master/{jenis}/{id}/delete', 'TableMasterController@delete');
 });
-//std_user
-Route::group(['middleware' => ['auth', 'checkRole:admin,std_user']], function(){
-    // Route::get('/dashboard', 'StandarUser@index');
-    // Route::get('/dashboard', 'DashboardController@index');
-});
-//access_user
+//access_user & std_user
 Route::group(['middleware' => ['auth', 'checkRole:admin,std_user,access_user']], function(){
-    // Route::get('/dashboard', 'AccessUser@index');
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/contracts', 'PostController@index');
-    Route::post('/contracts', 'PostController@store');
-    Route::get('/contracts/{contract}', 'PostController@show');
-    Route::post('/contracts/{contract}', 'ContractController@store');
-    Route::get('/perizinan', 'PostPerizinanController@index');
-    Route::post('/perizinan', 'PostPerizinanController@store');
-    Route::get('/perizinan/{perizinan}', 'PostPerizinanController@show')->name('perizinan');
+    Route::get('/{menu}', 'PostController@index')->name('posts');
+    Route::post('/{menu}', 'PostController@store');
+    Route::get('/{menu}/{id}', 'PostController@show');
+    Route::post('/contract/{contract}', 'ContractController@store');
     Route::post('/perizinan/{perizinan}', 'PerizinanController@store');
+    Route::get('/perizinan', 'PostController@index');
+    Route::post('/perizinan', 'PostController@store');
+    Route::get('/perizinan/{perizinan}', 'PostController@show');
 });
 
 // Download Contract
 Route::patch('/contracts', 'PostController@loggingDownload');
 Route::patch('/contracts/{contract}', 'PostController@loggingDownload');
 Route::put('/contracts/{contract}', 'ContractController@loggingDownload');
-Route::get('{uuid}/download', 'PostController@download');
-Route::get('{post_id}/{uuid}/download', 'ContractController@download');
 
-// Route::get('/contracts/{uuid}/download', 'PostController@log_for_download');
-// Route::get('/contracts/{post_id}/{uuid}/download', 'ContractController@download');
+Route::get('contracts/{uuid}/download', 'PostController@download');
+Route::get('contracts/{post_id}/{uuid}/download', 'ContractController@download');
+
+// Download Perizinan
+Route::patch('/perizinan', 'PostController@loggingDownload');
+Route::patch('/perizinan/{perizinan}', 'PostController@loggingDownload');
+Route::put('/perizinan/{perizinan}', 'PerizinanController@loggingDownload');
+
+Route::get('perizinan/{uuid}/download', 'PostController@download');
+Route::get('perizinan/{post_id}/{uuid}/download', 'PerizinanController@download');

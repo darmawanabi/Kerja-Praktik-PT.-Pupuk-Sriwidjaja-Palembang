@@ -3,15 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    public $primaryKey = 'id';
 
-    protected $dates = ['deleted_at'];
-
-    protected $fillable = ['uuid','user_id','nama','jenis','file','keterangan'];
+    protected $fillable = ['jenis','uuid','user_id','table_master_id','parent_id','nama','file','kategori','tanggal_berakhir','keterangan'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -19,6 +16,10 @@ class Post extends Model
 
     public function contracts(){
         return $this->hasMany(Contract::class)->whereNull('parent_id');
+    }
+
+    public function perizinan(){
+        return $this->hasMany(Perizinan::class)->whereNull('parent_id');
     }
 
     public function logs(){

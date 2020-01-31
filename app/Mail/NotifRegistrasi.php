@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifPendaftaranKaryawan extends Mailable
+class NotifRegistrasi extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +16,9 @@ class NotifPendaftaranKaryawan extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -28,6 +28,7 @@ class NotifPendaftaranKaryawan extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.sites.registrasi');
+        $token = $this->token;
+        return $this->subject('Register User | Departemen Hukum PT. Pupuk Sriwidjaja Palembang')->markdown('emails.sites.pendaftaran', compact('token'));
     }
 }

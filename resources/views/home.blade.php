@@ -49,7 +49,7 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">Contract Pool<br>Departemen Hukum <br>PT. Pupuk Sriwidjaja Palembang</h1>
+          <h1 class="text-uppercase text-white font-weight-bold">Sistem Pengelolaan<br>Kontrak dan Perizinan<br>Departemen Hukum<br>PT. Pupuk Sriwidjaja Palembang</h1>
           <hr class="divider my-4">
         </div>
         <div class="col-lg-8 align-self-baseline">
@@ -67,6 +67,19 @@
           <div class="row">
               <div class="col-md-3"></div>
               <div class="col-md-6">
+                @if (session('status'))
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>{{ session('status') }}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
               <form class="form-auth-small text-center" action="/postlogin" method="POST">
               @csrf
                   <div class="form-group">
@@ -85,20 +98,85 @@
                       </label>
                   </div> -->
                   <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-                  <a class="nav-link js-scroll-trigger" href="#register">Register</a>
+                  {{-- <a class="nav-link js-scroll-trigger" href="#register">Register</a> --}}
                   <!-- <div class="bottom">
                       <span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
                   </div> -->
               </form>
+              <div class="dropdown-divider"></div>
+              <button class="btn btn-light btn-block" type="button" data-toggle="modal" data-target="#modalReset">Reset Password</button>
               </div>
           </div>
   </div>
   </section>
 
+  <div class="modal fade bd-example-modal-lg" id="modalReset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (session('error'))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ session('error') }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if (session('status'))
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ session('status') }}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="row">
+                        <div class="col-md-12">
+                            @error('email')
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                @endif
+                <form action="/password/reset" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan email anda">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
   <!-- Footer -->
   <footer class="bg-light py-5">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 - PT. Pupuk Sriwidjaja</div>
+        <div class="small text-center text-muted">© {{ date('Y') }} PT. Pupuk Sriwidjaja Palembang. @lang('All rights reserved.')</div>
     </div>
   </footer>
 
@@ -112,6 +190,11 @@
 
   <!-- Custom scripts for this template -->
   <script src="{{asset('/home/js/creative.min.js')}}"></script>
+  <script type="text/javascript">
+    window.setTimeout(function () {
+        $(".alert").alert('close');
+    }, 5000);
+  </script>
 
 </body>
 

@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Kelola Akun Karyawan | Departemen Hukum')
+
 @section('content')
         <!-- DataTables Example -->
         <div class="card mb-3">
@@ -15,26 +17,32 @@
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
+                    <th>No. Badge</th>
                     <th>Nama</th>
                     <th>Jenis Kelamin</th>
                     <th>Alamat</th>
+                    <th>Role</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
+                    <th>No.Badge</th>
                     <th>Nama</th>
                     <th>Jenis Kelamin</th>
                     <th>Alamat</th>
+                    <th>Role</th>
                     <th>Aksi</th>
                   </tr>
                 </tfoot>
                 <tbody>
                     @foreach($data_karyawan as $karyawan)
                   <tr>
-                    <td>{{$karyawan->nama}}</td>
+                    <td>{{$karyawan->id}}</td>
+                    <td>{{$karyawan->name}}</td>
                     <td>{{$karyawan->jenis_kelamin}}</td>
                     <td>{{$karyawan->alamat}}</td>
+                    <td>{{$karyawan->role}}</td>
                     <td>
                         <a href="/karyawan/{{$karyawan->id}}/edit" class="btn btn-warning btn-sm">Edit</a>
                         <a href="/karyawan/{{$karyawan->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus?')">Delete</a>
@@ -49,7 +57,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">Tambah Data</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -78,10 +86,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <!-- <div class="form-group">
-                    <label for="exampleInputEmail1">Email</label>
-                    <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
-                </div> -->
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                     <select name="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror" id="exampleFormControlSelect1">
@@ -110,21 +114,9 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Role</label>
                     <select name="role" class="form-control @error('role') is-invalid @enderror" id="exampleFormControlSelect1">
-                        @if (old('role') == "std_user")
-                            <option value="std_user" selected>Standard User</option>
-                        @else
-                            <option value="std_user">Standard User</option>
-                        @endif
-                        @if (old('role') == "access_user")
-                            <option value="access_user" selected>Full Access User</option>
-                        @else
-                            <option value="access_user">Full Access User</option>
-                        @endif
-                        @if (old('role') == "admin")
-                            <option value="admin" selected>Admin</option>
-                        @else
-                            <option value="admin">Admin</option>
-                        @endif
+                        <option value="std_user" @if(old('kategori') == 'std_user') selected @endif>Standard User</option>
+                        <option value="access_user" @if(old('kategori') == 'access_user') selected @endif>Access User</option>
+                        <option value="admin" @if(old('kategori') == 'admin') selected @endif>Admin</option>
                     </select>
                     @error('role')
                         <div class="invalid-feedback">{{ $message }}</div>

@@ -4,7 +4,7 @@
             <h5 class="card-title d-inline">Log Activity</h5>
         </div>
         <div class="float-right">
-            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#logDetail">Detail</button>
+            <button class="btn btn-info btn-sm" type="button" data-toggle="modal" data-target="#logDetail">Detail</button>
         </div>
     </div>
     <div class="card-body">
@@ -17,9 +17,13 @@
                 </thead>
                 <tbody>
                     @for ($i = count($logs) - 1; $i >= 0; $i--)
+                        @php
+                            $date = date("d-m-Y", strtotime($logs[$i]->created_at));
+                            $time = date("H:i:s", strtotime($logs[$i]->created_at));
+                        @endphp
                         <tr>
                             <td>
-                                <strong>{{ $logs[$i]->user->name }}</strong> melakukan <strong>{{ $logs[$i]->keterangan }}</strong> terhadap file <strong>{{ $logs[$i]->file }}</strong> pada tanggal <strong>{{ $logs[$i]->created_at }}</strong>.
+                                <strong>{{ $logs[$i]->user->name }}</strong> melakukan <strong>{{ $logs[$i]->keterangan }}</strong> terhadap file <strong>{{ $logs[$i]->file }}</strong> pada tanggal <strong>{{ $date }}</strong> pukul <strong>{{ $time }} </strong>.
                             </td>
                         </tr>
                     @endfor
@@ -68,11 +72,14 @@
                                 </tfoot>
                                 <tbody>
                                     @foreach ($logs as $log)
+                                    @php
+                                    $date = date("d-m-Y | H:i:s", strtotime($log->created_at));
+                                    @endphp
                                         <tr>
                                             <td>{{ $log->user->name }}</td>
                                             <td>{{ $log->keterangan }}</td>
-                                            <td>{{ $log->file }}</td>
-                                            <td>{{ $log->created_at }}</td>
+                                            <td><small id="helpId" class="text-muted d-inline">{{ $log->file }}</small></td>
+                                            <td>{{ $date }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
