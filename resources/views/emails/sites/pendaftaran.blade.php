@@ -5,9 +5,9 @@ PT. PUPUK SRIWIDJAJA PALEMBANG
 @endcomponent
 @endslot
 
-# Registrasi Contract Pool dan Reminder Perizinan Departemen Hukum
+# Registrasi Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum
 
-Selamat registrasi anda di website Contract Pool Departemen Hukum berhasil. <br>
+Selamat, registrasi anda di website Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum berhasil. <br>
 Silahkan login dengan menggunakan nomor badge anda dengan password 12345678
 
 @component('mail::button', ['url' => 'http://localhost:8000'])

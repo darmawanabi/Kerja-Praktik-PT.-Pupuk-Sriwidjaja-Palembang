@@ -55,4 +55,11 @@
         </a>
     </li>
     @endif
+    <div class="dropdown-divider"></div>
+    <li class="nav-item">
+        <a class="nav-link" href="" data-toggle="modal" data-target="#modalReset">
+            <i class="fas fa-lock"></i>
+            <span>Reset Password</span>
+        </a>
+    </li>
 </ul>

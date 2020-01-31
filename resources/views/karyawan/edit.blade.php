@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="panel-heading">
-<h3 class="panel-title">Edit Data Siswa</h3>
+<h3 class="panel-title">Edit Data Karyawan</h3>
 </div>
     <form action="/karyawan/{{$data_karyawan->id}}/update" method="post">
     @csrf
         <div class="form-group">
             <label for="exampleInputEmail1">No. Badge</label>
-            <input name="id" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="No. Badge" value="{{$data_karyawan->id}}">
+            <input class="form-control" type="text" value="{{$data_karyawan->id}}" readonly>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Nama Lengkap</label>

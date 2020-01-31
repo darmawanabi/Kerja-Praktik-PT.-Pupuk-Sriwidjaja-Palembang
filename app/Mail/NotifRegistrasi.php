@@ -28,6 +28,6 @@ class NotifRegistrasi extends Mailable
      */
     public function build()
     {
-        return $this->subject('Register User | Departemen Hukum PT. Pupuk Srwidijaja Palembang')->markdown('emails.sites.pendaftaran');
+        return $this->subject('Register User | Departemen Hukum PT. Pupuk Sriwidjaja Palembang')->markdown('emails.sites.pendaftaran');
     }
 }

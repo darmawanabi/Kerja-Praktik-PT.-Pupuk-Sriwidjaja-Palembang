@@ -90,10 +90,39 @@
                       <span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
                   </div> -->
               </form>
+              <div class="dropdown-divider"></div>
+                <button class="btn btn-light btn-block" type="button" data-toggle="modal" data-target="#modalReset">Reset Password</button>
               </div>
           </div>
   </div>
   </section>
+
+
+  <div class="modal fade bd-example-modal-lg" id="modalReset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/password/email" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan email anda">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
   <!-- Footer -->
   <footer class="bg-light py-5">
