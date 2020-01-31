@@ -1,13 +1,13 @@
-@component('mail::layout', ['token' => $token])
+@component('mail::layout', ['token' => $token], ['name' => $name])
 @slot('header')
 @component('mail::header', ['url' => 'http://localhost:8000'])
 PT. PUPUK SRIWIDJAJA PALEMBANG
 @endcomponent
 @endslot
 
-# Registrasi Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum
+# Reset Password Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum
 
-Selamat, registrasi anda di website Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum berhasil. <br>
+Yth. Bpk/Ibu **{{ $name }}**, anda telah mengirimkan permintaan untuk me-reset password akun anda.
 Silahkan login dengan menggunakan nomor badge anda dengan password **{{ $token }}**
 
 @component('mail::button', ['url' => 'http://localhost:8000'])

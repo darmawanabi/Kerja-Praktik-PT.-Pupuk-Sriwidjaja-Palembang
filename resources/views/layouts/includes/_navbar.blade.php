@@ -15,7 +15,7 @@
           <i class="fas fa-user fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <button class="btn btn-light btn-block" type="button" data-toggle="modal" data-target="#modalReset">Reset Password</button>
+            <button class="btn btn-light btn-block" type="button" data-toggle="modal" data-target="#modalReset">Change Password</button>
             <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/logout">Logout</a>
         </div>
@@ -28,7 +28,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 @endif
-                <form action="/password" method="post">
+                <form action="/password/change" method="post">
                     @csrf
                     <input type="hidden" name="id" value="{{ auth()->user()->id }}">
                     <div class="form-group">
