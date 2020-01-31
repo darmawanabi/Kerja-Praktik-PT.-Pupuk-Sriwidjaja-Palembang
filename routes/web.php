@@ -15,12 +15,12 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::post('/postregister/create', 'RegisterController@create');
-
 //login
 Route::get('/login', 'AuthController@login')->name('login');
 Route::post('/postlogin', 'AuthController@postlogin');
 Route::get('logout', 'AuthController@logout');
+
+Route::post('/password', 'PasswordController@reset');
 
 //karyawan-admin
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function(){

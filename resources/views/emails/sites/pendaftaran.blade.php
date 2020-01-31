@@ -1,4 +1,4 @@
-@component('mail::layout')
+@component('mail::layout', ['token' => $token])
 @slot('header')
 @component('mail::header', ['url' => 'http://localhost:8000'])
 PT. PUPUK SRIWIDJAJA PALEMBANG
@@ -8,7 +8,7 @@ PT. PUPUK SRIWIDJAJA PALEMBANG
 # Registrasi Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum
 
 Selamat, registrasi anda di website Sistem Pengelolaan Kontrak dan Perizinan Departemen Hukum berhasil. <br>
-Silahkan login dengan menggunakan nomor badge anda dengan password 12345678
+Silahkan login dengan menggunakan nomor badge anda dengan password {{ $token }}
 
 @component('mail::button', ['url' => 'http://localhost:8000'])
 Klik di sini!

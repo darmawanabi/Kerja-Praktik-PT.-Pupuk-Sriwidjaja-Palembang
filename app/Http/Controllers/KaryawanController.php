@@ -23,6 +23,8 @@ class KaryawanController extends Controller
             'role' => 'required'
         ]);
 
+        $password = str_random(8);
+
         //insert table user
         $user = new \App\User;
         $user->id = $request->user_id;
@@ -31,12 +33,12 @@ class KaryawanController extends Controller
         $user->alamat = $request->alamat;
         $user->email = $request->email;
         $user->role = $request->role;
-        $user->password = bcrypt('12345678');
+        $user->password = bcrypt($password);
         $user->remember_token = str_random(60);
         $user->save();
 
         //send email registrasi
-        \Mail::to($user->email)->send(new NotifRegistrasi);
+        \Mail::to($user->email)->send(new NotifRegistrasi($password));
         return redirect('/karyawan');
     }
 
